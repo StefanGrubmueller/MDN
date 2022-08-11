@@ -1,0 +1,27 @@
+.footer {
+  background-color: black;
+  height: 5em;
+  min-width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  div {
+    flex: 1;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    .material-icons {
+      flex:1;
+      font-weight: 800;
+      font-size: 2em;
+    }
+    span {
+      flex: 1;
+    }
+  }
+
+}
+

@@ -1,0 +1,26 @@
+<h2 class="login-form-title" mat-dialog-title>Login</h2>
+  <div *ngIf="loggedIn!==null" class="login-message">
+    <span *ngIf="!loggedIn" class="login-failed">{{loginFailErrorMsg}}</span>
+  </div>
+  <form [formGroup]="loginForm" class="login-form">
+      <span>Email</span>
+      <input formControlName="email"
+             matInput
+             placeholder="Please enter your mail"
+             required>
+      <mat-error *ngIf="loginForm.controls['email'].invalid">{{getEmailErrorMessage()}}</mat-error>
+
+      <span>Password</span>
+      <input formControlName="password"
+             matInput
+             placeholder="Please enter your password"
+             required>
+      <mat-error *ngIf="loginForm.invalid">{{getPasswordErrorMessage()}}</mat-error>
+  </form>
+
+
+  <div class="login-form-buttons">
+    <button (click)="logIn()" [disabled]="isUserDataValid()" class="login-form-login-button" mat-raised-button>Sign in
+    </button>
+  </div>
+

@@ -10,22 +10,27 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import { MainPageComponent } from './main-page/main-page.component';
-
+import {MatButtonModule} from "@angular/material/button";
+import { FooterComponent } from './footer/footer.component';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    MainPageComponent
+    MainPageComponent,
+    FooterComponent
   ],
   imports: [
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     BrowserModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatIconModule
   ],
   providers: [{
     provide: MatDialogRef,
