@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from "./app.component";
 import {LoginComponent} from "./login/login.component";
 import {AngularFireAuthModule} from "@angular/fire/compat/auth";
@@ -9,19 +9,23 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
-import { MainPageComponent } from './main-page/main-page.component';
+import {MainPageComponent} from './main-page/main-page.component';
 import {MatButtonModule} from "@angular/material/button";
-import { FooterComponent } from './footer/footer.component';
+import {FooterComponent} from './footer/footer.component';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
-import { MovieInfoComponent } from './movie-info/movie-info.component';
+import {MovieInfoComponent} from './movie-info/movie-info.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { SearchComponent } from './footer/search/search.component';
-import { LibraryComponent } from './footer/library/library.component';
-import { AddMovieComponent } from './footer/add-movie/add-movie.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {SearchComponent} from './footer/search/search.component';
+import {LibraryComponent} from './footer/library/library.component';
+import {AddMovieComponent} from './footer/add-movie/add-movie.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatInputModule} from "@angular/material/input";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AngularFireDatabaseModule,
     BrowserModule,
     MatButtonModule,
+    MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
     ReactiveFormsModule,
@@ -49,12 +54,15 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatNativeDateModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   providers: [{
     provide: MatDialogRef,
@@ -63,4 +71,5 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     LoginComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

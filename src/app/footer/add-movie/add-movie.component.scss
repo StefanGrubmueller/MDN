@@ -1,6 +1,17 @@
 .row {
-  height: 3em;
+  height: 10em;
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.form-element {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-movie-form-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 7em;
 }
