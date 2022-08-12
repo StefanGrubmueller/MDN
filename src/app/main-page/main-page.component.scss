@@ -1,0 +1,20 @@
+.row {
+  height: 3em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .mat-button {
+    width: 100%;
+    text-transform: uppercase;
+  }
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.footer-row {
+  height: 5em;
+  min-width: 100%;
+  position: fixed;
+  bottom: 0;
+}

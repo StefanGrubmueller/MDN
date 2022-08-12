@@ -7,19 +7,31 @@ import {environment} from "../environments/environment";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import { MainPageComponent } from './main-page/main-page.component';
 import {MatButtonModule} from "@angular/material/button";
 import { FooterComponent } from './footer/footer.component';
 import {MatIconModule} from '@angular/material/icon';
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import { MovieInfoComponent } from './movie-info/movie-info.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { SearchComponent } from './footer/search/search.component';
+import { LibraryComponent } from './footer/library/library.component';
+import { AddMovieComponent } from './footer/add-movie/add-movie.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainPageComponent,
-    FooterComponent
+    FooterComponent,
+    MovieInfoComponent,
+    SearchComponent,
+    LibraryComponent,
+    AddMovieComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -30,7 +42,12 @@ import {MatIconModule} from '@angular/material/icon';
     MatFormFieldModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule,
   ],
   providers: [{
     provide: MatDialogRef,
