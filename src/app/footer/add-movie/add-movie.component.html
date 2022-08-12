@@ -2,10 +2,10 @@
 <form [formGroup]="addMovieForm" class="login-form">
   <div class="row">
     <div class="form-element">
-      <span>Name</span>
+      <mat-label>Name</mat-label>
       <input formControlName="name"
              matInput
-             placeholder="Please enter the name of the movie"
+             placeholder="Please enter the name"
              required>
       <mat-error *ngIf="addMovieForm.controls['name'].invalid">Must not be empty</mat-error>
     </div>
