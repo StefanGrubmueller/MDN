@@ -26,5 +26,9 @@ export class FooterComponent implements OnInit {
     this.router.navigate(['library']);
   }
 
+  routeToHome(): void {
+    this.router.navigate( [""]);
+  }
+
 
 }
