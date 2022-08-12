@@ -5,3 +5,11 @@ html, body {
   font-family: Tahoma, sans-serif;
   font-weight: bolder;
 }
+
+.footer-row {
+  z-index: 100;
+  height: 5em;
+  min-width: 100%;
+  position: fixed;
+  bottom: 0;
+}

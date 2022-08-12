@@ -464,20 +464,20 @@ export class MainPageComponent implements OnInit {
     this.router.navigate(['movie'], {queryParams: {movieName: movie.name} });
   }
 
-  importExistingMovies() {
-    const movieCollection = this.db.collection('stefan.grubmueller@icloud.com');
-    this.existingMovies.forEach(existingMovie => {
-      movieCollection.doc(existingMovie).set({name: existingMovie});        console.log('finished');
-
-    });
-  }
-
-  deleteExistingMovies() {
-    const movieCollection = this.db.collection('stefan.grubmueller@icloud.com');
-      this.existingMovies.forEach(existingMovie => {
-        movieCollection.doc(existingMovie).delete();
-        console.log('finished');
-      });
-  }
+  // importExistingMovies() {
+  //   const movieCollection = this.db.collection('stefan.grubmueller@icloud.com');
+  //   this.existingMovies.forEach(existingMovie => {
+  //     movieCollection.doc(existingMovie).set({name: existingMovie});        console.log('finished');
+  //
+  //   });
+  // }
+  //
+  // deleteExistingMovies() {
+  //   const movieCollection = this.db.collection('stefan.grubmueller@icloud.com');
+  //     this.existingMovies.forEach(existingMovie => {
+  //       movieCollection.doc(existingMovie).delete();
+  //       console.log('finished');
+  //     });
+  // }
 
 }

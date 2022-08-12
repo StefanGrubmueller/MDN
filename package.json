@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@angular/service-worker": "^14.1.0",
     "@material/dialog": "^14.0.0",
     "firebase": "^9.9.1",
     "rxjs": "~7.5.0",
