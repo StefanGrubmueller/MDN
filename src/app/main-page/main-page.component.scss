@@ -1,9 +1,25 @@
+//.header {
+//  background-color: white;
+//  padding-left: 2em;
+//  color: rgb(131, 58, 180);
+//  position: fixed;
+//  top: 0;
+//  width: 100%;
+//  z-index: 100;
+//  font-weight: 500;
+//  letter-spacing: 3px;
+//  height: 2em;
+//  align-items: center;
+//  display: flex;
+//} not used in this version but maybe in further versions
+
 .row {
   height: 5em;
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100% !important;
+  border-bottom: 0.8px solid white;
+  margin: 0 0.8em;
 
 
   .mat-button {

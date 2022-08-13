@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {MovieType} from "../movieType";
-import { map } from 'rxjs/operators';
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,7 +15,7 @@ export class MainPageComponent implements OnInit {
 
   tutorials: any;
 
-  movies: Array<MovieType> = [];
+  movies: Array<string> = [];
 
 
   existingMovies: Array<string> = [
@@ -451,17 +450,25 @@ export class MainPageComponent implements OnInit {
     "GOODFELLAS"
   ];
 
-  constructor(private db: AngularFirestore, private router: Router) { }
+  constructor(private db: AngularFirestore, private router: Router) {
+  }
 
   ngOnInit(): void {
-    this.tutorials = this.db.collection('stefan.grubmueller@icloud.com').valueChanges();
-
-    this.tutorials.subscribe((movies: Array<MovieType>) => movies.forEach(movie => {
-      this.movies.push(movie)}));
+    // this.getMovieDataFromDB();
+    this.movies = [...this.existingMovies];
+    console.log('movies: ', this.movies)
   }
 
   routeToMovieInfo(movie: MovieType): void {
-    this.router.navigate(['movie'], {queryParams: {movieName: movie.name} });
+    this.router.navigate(['movie'], {queryParams: {movieName: movie.name}});
+  }
+
+  private getMovieDataFromDB() {
+    this.tutorials = this.db.collection('stefan.grubmueller@icloud.com').valueChanges();
+
+    this.tutorials.subscribe((movies: Array<MovieType>) => movies.forEach(movie => {
+      // this.movies.push(movie)
+    }));
   }
 
   // importExistingMovies() {
