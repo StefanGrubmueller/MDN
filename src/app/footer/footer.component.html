@@ -1,18 +1,18 @@
 <div class="footer">
-  <div>
-    <mat-icon fontIcon="home" (click)="routeToHome()"></mat-icon>
+  <div (click)="routeToHome()">
+    <mat-icon class="icon" fontIcon="home"></mat-icon>
     <span>HOME</span>
   </div>
-  <div>
-    <mat-icon fontIcon="search" (click)="routeToSearch()"></mat-icon>
+  <div (click)="routeToSearch()">
+    <mat-icon fontIcon="search"></mat-icon>
     <span>SUCHE</span>
   </div>
-  <div>
-    <mat-icon fontIcon="add" (click)="routeToAddMovie()"></mat-icon>
-    <span>ADD MOVIE</span>
+  <div (click)="routeToAddMovie()">
+    <mat-icon fontIcon="add"></mat-icon>
+    <span>ADD</span>
   </div>
-  <div>
-    <mat-icon fontIcon="bookmarks" (click)="routeToLibrary()"></mat-icon>
+  <div (click)="routeToLibrary()">
+    <mat-icon fontIcon="bookmarks"></mat-icon>
     <span>LIBRARY</span>
   </div>
 </div>

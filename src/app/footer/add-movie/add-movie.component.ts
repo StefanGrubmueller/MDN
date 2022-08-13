@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {numbers} from "@material/dialog";
 
 @Component({
   selector: 'app-add-movie',
@@ -7,9 +9,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddMovieComponent implements OnInit {
 
-  constructor() { }
+  addMovieForm: FormGroup;
 
-  ngOnInit(): void {
+  disableDetails = true;
+
+  constructor(private formBuilder: FormBuilder) {
   }
 
+  ngOnInit(): void {
+    this.addMovieForm = this.formBuilder.group({
+        name: ['',],
+        genre: [''],
+        author: [''],
+        watchDate: [Date],
+        releaseDate: [Date],
+        rating: [numbers],
+      },
+    );
+
+  }
+
+  addMovie(): void {
+    console.log(this.addMovieForm.controls['name'].value);
+    console.log(this.addMovieForm.controls['genre'].value);
+    console.log(this.addMovieForm.controls['author'].value);
+    console.log(this.addMovieForm.controls['watchDate'].value);
+    console.log(this.addMovieForm.controls['releaseDate'].value);
+    console.log(this.addMovieForm.controls['rating'].value);
+  }
+
+  enableDetails(): void {
+    this.disableDetails = !this.disableDetails;
+  }
 }

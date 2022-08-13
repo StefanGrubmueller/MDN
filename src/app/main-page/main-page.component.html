@@ -1,5 +1,8 @@
 <!--<button (click)="importExistingMovies()">Import</button>-->
 <!--<button (click)="deleteExistingMovies()">Delete</button>-->
+<!--<div class="header">-->
+<!--  <span>NAME</span>-->
+<!--</div>-->
 <div *ngFor="let movie of movies" class="row">
-  <button mat-button style="text-align:left" (click)="routeToMovieInfo(movie)">{{movie.name}}</button>
+  <button mat-button style="text-align:left">{{movie}}</button>
 </div>
