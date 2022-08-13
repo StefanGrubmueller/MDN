@@ -1,87 +1,84 @@
-<h2 class="add-movie-form-title">ADD A movie</h2>
-<form [formGroup]="addMovieForm" class="login-form">
-  <div class="row">
+<form [formGroup]="addMovieForm" class="add-movie-form">
+  <div class="entry">
+    <h2 class="add-movie-form-title">Gib einen Namen für deinen</h2>
+    <h2 class="add-movie-form-title">neuen Film ein.</h2>
     <div class="form-element">
-      <mat-label>Name</mat-label>
-      <input formControlName="name"
-             matInput
-             placeholder="Please enter the name"
-             required>
-      <mat-error *ngIf="addMovieForm.controls['name'].invalid">Must not be empty</mat-error>
+      <input class="makeSelected"
+             formControlName="name"
+             matInput placeholder="Neuer Film">
     </div>
-  </div>
-  <div class="row">
-    <div class="form-element">
-      <span>Regisseur</span>
-      <input formControlName="author"
-             matInput
-             placeholder="Please enter the regisseur">
-    </div>
+    <div *ngIf="!disableDetails">
+      <div class="form-element">
+        <span>Regisseur</span>
+        <input formControlName="author"
+               matInput
+               placeholder="Please enter the regisseur">
+      </div>
 
-  </div>
-  <div class="row">
-    <div class="form-element">
-      <span>Genre</span>
-      <mat-select formControlName="genre"
-                  placeholder="Please enter the genre">
-        <mat-option value="Romantic">Romantic</mat-option>
-        <mat-option value="Thriller">Thriller</mat-option>
-        <mat-option value="Action">Action</mat-option>
-        <mat-option value="Sci-Fi">Sci-Fi</mat-option>
-        <mat-option value="Fantasy">Fantasy</mat-option>
-        <mat-option value="Anime">Anime</mat-option>
-        <mat-option value="Animation">Animation</mat-option>
-        <mat-option value="Comic">Comic</mat-option>
-        <mat-option value="Indie">Indie</mat-option>
-      </mat-select>
+      <div class="form-element">
+        <span>Genre</span>
+        <mat-select formControlName="genre"
+                    placeholder="Please enter the genre">
+          <mat-option value="Romantic">Romantic</mat-option>
+          <mat-option value="Thriller">Thriller</mat-option>
+          <mat-option value="Action">Action</mat-option>
+          <mat-option value="Sci-Fi">Sci-Fi</mat-option>
+          <mat-option value="Fantasy">Fantasy</mat-option>
+          <mat-option value="Anime">Anime</mat-option>
+          <mat-option value="Animation">Animation</mat-option>
+          <mat-option value="Comic">Comic</mat-option>
+          <mat-option value="Indie">Indie</mat-option>
+        </mat-select>
+      </div>
+      <div class="form-element">
+        <mat-form-field appearance="fill">
+          <mat-label>Watch Date</mat-label>
+          <!-- #docregion toggle -->
+          <input [matDatepicker]="watchDate" formControlName="watchDate" matInput>
+          <mat-datepicker-toggle [for]="watchDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #watchDate></mat-datepicker>
+          <!-- #enddocregion toggle -->
+        </mat-form-field>
+      </div>
+      <div class="form-element">
+        <mat-form-field appearance="fill">
+          <mat-label>Release Date</mat-label>
+          <input [matDatepicker]="releaseDate" formControlName="releaseDate" matInput>
+          <mat-datepicker-toggle [for]="releaseDate" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #releaseDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="form-element">
+        <span>Rating</span>
+        <mat-select formControlName="rating"
+                    placeholder="Please enter the rating">
+          <mat-option value=0>0</mat-option>
+          <mat-option value=1>1</mat-option>
+          <mat-option value=2>2</mat-option>
+          <mat-option value=3>3</mat-option>
+          <mat-option value=4>4</mat-option>
+          <mat-option value=5>5</mat-option>
+          <mat-option value=6>6</mat-option>
+          <mat-option value=7>7</mat-option>
+          <mat-option value=8>8</mat-option>
+          <mat-option value=9>9</mat-option>
+          <mat-option value=10>10</mat-option>
+        </mat-select>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="form-element">
-      <mat-form-field appearance="fill">
-        <mat-label>Watch Date</mat-label>
-        <!-- #docregion toggle -->
-        <input [matDatepicker]="watchDate" formControlName="watchDate" matInput>
-        <mat-datepicker-toggle [for]="watchDate" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #watchDate></mat-datepicker>
-        <!-- #enddocregion toggle -->
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-element">
-      <mat-form-field appearance="fill">
-        <mat-label>Release Date</mat-label>
-        <input [matDatepicker]="releaseDate" formControlName="releaseDate" matInput>
-        <mat-datepicker-toggle [for]="releaseDate" matSuffix></mat-datepicker-toggle>
-        <mat-datepicker #releaseDate></mat-datepicker>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-element">
-      <span>Rating</span>
-      <mat-select formControlName="rating"
-                  placeholder="Please enter the rating">
-        <mat-option value=0>0</mat-option>
-        <mat-option value=1>1</mat-option>
-        <mat-option value=2>2</mat-option>
-        <mat-option value=3>3</mat-option>
-        <mat-option value=4>4</mat-option>
-        <mat-option value=5>5</mat-option>
-        <mat-option value=6>6</mat-option>
-        <mat-option value=7>7</mat-option>
-        <mat-option value=8>8</mat-option>
-        <mat-option value=9>9</mat-option>
-        <mat-option value=10>10</mat-option>
-      </mat-select>
-    </div>
-  </div>
+
 </form>
 
 <div class="add-movie-form-buttons">
-  <button (click)="routeToHome()" class="cancel-button" mat-raised-button>Cancel</button>
-  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].invalid" class="add-movie-button"
+  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value == ''" class="add-movie-button"
           mat-raised-button>Add
   </button>
 </div>
+
+<div (click)="enableDetails()" class="details">
+  <button class="cancel-button" mat-button>Details</button>
+  <mat-icon *ngIf="disableDetails" fontIcon="keyboard_arrow_down"></mat-icon>
+  <mat-icon *ngIf="!disableDetails" fontIcon="keyboard_arrow_up"></mat-icon>
+</div>
+

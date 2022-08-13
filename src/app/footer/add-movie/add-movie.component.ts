@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {numbers} from "@material/dialog";
 
 @Component({
@@ -12,23 +11,22 @@ export class AddMovieComponent implements OnInit {
 
   addMovieForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  disableDetails = true;
+
+  constructor(private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.addMovieForm = this.formBuilder.group({
-        name: ['', [Validators.required]],
+        name: ['',],
         genre: [''],
         author: [''],
         watchDate: [Date],
         releaseDate: [Date],
         rating: [numbers],
       },
-    )
-  }
+    );
 
-  routeToHome(): void {
-    this.router.navigate([''])
   }
 
   addMovie(): void {
@@ -38,5 +36,9 @@ export class AddMovieComponent implements OnInit {
     console.log(this.addMovieForm.controls['watchDate'].value);
     console.log(this.addMovieForm.controls['releaseDate'].value);
     console.log(this.addMovieForm.controls['rating'].value);
+  }
+
+  enableDetails(): void {
+    this.disableDetails = !this.disableDetails;
   }
 }

@@ -1,7 +1,36 @@
 .add-movie-form-title {
   display: flex;
   justify-content: center;
-  margin: 1em;
+  margin: 0;
+}
+
+.add-movie-form {
+  display: flex;
+  justify-content: center;
+  text-transform: none;
+
+  .mat-input-element {
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    margin: 3em 0;
+    height: 5em;
+  }
+
+  .mat-input-element::placeholder {
+    color: white;
+  }
+
+
+}
+
+.entry {
+  margin-top: 10em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
 }
 
 .row {
@@ -15,10 +44,31 @@
 .form-element {
   display: flex;
   flex-direction: column;
+  margin: 3em 0;
 }
 
 .add-movie-form-buttons {
   display: flex;
   justify-content: space-around;
+  margin-bottom: 2em;
+
+  .mat-raised-button {
+    width: 70%;
+  }
+}
+
+.makeSelected {
+  -webkit-user-select: all; /* Covers Blink-land & Firefox (yup) */
+  user-select: all;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 7em;
+
+  :hover {
+    cursor: pointer;
+  }
 }
