@@ -1,14 +1,11 @@
-// db.ts
+/*// db.ts
 import Dexie, {Table} from 'dexie';
 import {MovieType} from "./app/movieType";
-import {Input, OnChanges, SimpleChanges} from "@angular/core";
 
-export class IndexMovieDB extends Dexie implements OnChanges {
+export class IndexMovieDB extends Dexie {
 
-  @Input()
-  movies: Array<MovieType>;
+  downloadedMovies!: Table<Array<MovieType>, number>;
 
-  downloadedMovies!: Table<MovieType, number>;
 
   constructor() {
     super('ngdexieliveQuery');
@@ -19,23 +16,23 @@ export class IndexMovieDB extends Dexie implements OnChanges {
     //this.on('populate', () => this.populate());
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes && changes.movies && changes.movies.currentValue) {
-      db.downloadedMovies = changes.movies.currentValue.map((movie: MovieType) => {
-        return {
-          name: movie.name,
-          author: movie.author,
-          genre: movie.genre,
+  async populate(movies: Array<MovieType>) {
+    const mappedMovies = movies.map((movie: MovieType) => {
+      return {
+        name: movie.name,
+        author: movie.author,
+        genre: movie.genre,
 
-          //id: movie.id
-          //rating: movie.rating,
-          //releaseDate: movie.releaseDate,
-          //watchDate: movie.watchDate,
-          //id: movie.id
-        }
-      });
-    }
+        //id: movie.id
+        //rating: movie.rating,
+        //releaseDate: movie.releaseDate,
+        //watchDate: movie.watchDate,
+        //id: movie.id
+      }
+    })
+    await indexMovieDB.downloadedMovies.add(mappedMovies);
   }
 }
 
-export const db = new IndexMovieDB();
+export const indexMovieDB = new IndexMovieDB();
+*/
