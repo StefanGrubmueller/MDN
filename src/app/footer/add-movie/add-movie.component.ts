@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {numbers} from "@material/dialog";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
@@ -9,7 +9,7 @@ import {MovieType} from "../../movieType";
   templateUrl: './add-movie.component.html',
   styleUrls: ['./add-movie.component.scss']
 })
-export class AddMovieComponent implements OnInit, OnChanges {
+export class AddMovieComponent implements OnInit {
 
   addMovieForm: FormGroup;
 
@@ -48,9 +48,6 @@ export class AddMovieComponent implements OnInit, OnChanges {
 
   enableDetails(): void {
     this.disableDetails = !this.disableDetails;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
   }
 
   private getDetailedMovieInformationIfAvailable(): MovieType {
