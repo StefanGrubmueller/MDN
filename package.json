@@ -24,6 +24,7 @@
     "@angular/router": "^14.1.0",
     "@angular/service-worker": "^14.1.0",
     "@material/dialog": "^14.0.0",
+    "dexie": "^3.2.2",
     "firebase": "^9.9.1",
     "rxjs": "~7.5.0",
     "rxjs-operators": "^1.1.3",

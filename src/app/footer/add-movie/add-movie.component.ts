@@ -39,7 +39,11 @@ export class AddMovieComponent implements OnInit {
     console.log(this.addMovieForm.controls['releaseDate'].value);
     console.log(this.addMovieForm.controls['rating'].value);*/
 
-    const tutRef = this.db.collection('stefan.grubmueller@icloud.com');
+    // PROD COLLECTION
+    //const tutRef = this.db.collection('stefan.grubmuellerTEST@icloud.com');
+
+    // TEST COLLECTION
+    const tutRef = this.db.collection('TEST@icloud.com');
 
     const movieDetails = this.getDetailedMovieInformationIfAvailable();
     console.log('movieDetails', movieDetails);
