@@ -456,7 +456,6 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     // this.getMovieDataFromDB();
     this.movies = [...this.existingMovies];
-    console.log('movies: ', this.movies)
   }
 
   routeToMovieInfo(movie: MovieType): void {
