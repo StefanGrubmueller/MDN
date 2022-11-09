@@ -1,4 +1,5 @@
 export type MovieType = {
+  id?: string;
   name: string;
   author?: string;
   watchDate?: Date;
@@ -7,4 +8,4 @@ export type MovieType = {
   rating?: number;
 }
 
-export type Genre = 'ACTION'| 'ROMANCE' | 'COMEDY';
+export type Genre = 'ACTION' | 'ROMANCE' | 'COMEDY';
