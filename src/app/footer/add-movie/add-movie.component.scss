@@ -10,16 +10,43 @@
   text-transform: none;
 
   .mat-input-element {
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
     border: none;
     border-bottom: 2px solid white;
     margin: 3em 0;
     height: 5em;
+    border-radius: 12px;
+  }
+
+  .mat-select {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    border-bottom: 2px solid white;
+    margin: 3em 0;
+    height: 5em;
+    border-radius: 12px;
+    box-shadow: black;
+
   }
 
   .mat-input-element::placeholder {
     color: white;
+    padding-left: 3em;
+    letter-spacing: 0.2em;
+    font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  ::ng-deep .mat-select-placeholder {
+    color: white;
+    padding-left: 3em;
+    letter-spacing: 0.2em;
+    font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  ::ng-deep .mat-select-value {
+    margin-top: 4em !important;
   }
 
 
@@ -44,7 +71,6 @@
 .form-element {
   display: flex;
   flex-direction: column;
-  margin: 3em 0;
 }
 
 .add-movie-form-buttons {
@@ -71,4 +97,35 @@
   :hover {
     cursor: pointer;
   }
+}
+
+::ng-deep .mat-select-arrow {
+  color: white;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent !important;
+}
+
+::ng-deep .mat-form-field-suffix {
+  color: white !important;
+  position: absolute !important;
+  right: 0;
+
+  .mat-icon-button {
+    color: white;
+  }
+}
+
+::ng-deep .mat-form-field-label {
+  color: white !important;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {
+  height: 0 !important;
+}
+
+
+::ng-deep {
+  font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
 }
