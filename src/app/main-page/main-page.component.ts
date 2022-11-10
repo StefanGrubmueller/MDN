@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MovieType} from "../movieType";
 import {Router} from "@angular/router";
-import {GetAllMoviesFromDBService} from "../shared/get-all-movies-from-db.service";
+import {ManageMoviesOfDbService} from "../shared/manage-movies-of-db.service";
 
 @Component({
   selector: 'app-main-page',
@@ -15,13 +15,11 @@ export class MainPageComponent implements OnInit {
 
   movies: Array<MovieType> = [];
 
-  constructor(private router: Router, private getDBMovieService: GetAllMoviesFromDBService) {
+  constructor(private router: Router, private getDBMovieService: ManageMoviesOfDbService) {
   }
 
   ngOnInit(): void {
-    this.movies = this.getDBMovieService.getAllMovies()
-    //indexMovieDB.populate(moviesFromDB)
-    //this.movies = [...this.existingMovies];
+    this.movies = this.getDBMovieService.getAllMovies();
   }
 
   routeToMovieInfo(movie: MovieType): void {
