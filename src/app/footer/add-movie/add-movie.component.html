@@ -9,16 +9,14 @@
     </div>
     <div *ngIf="!disableDetails">
       <div class="form-element">
-        <span>Regisseur</span>
         <input formControlName="author"
                matInput
-               placeholder="Please enter the regisseur">
+               placeholder="Name des Regisseurs">
       </div>
 
       <div class="form-element">
-        <span>Genre</span>
         <mat-select formControlName="genre"
-                    placeholder="Please enter the genre">
+                    placeholder="Bitte Genre eingeben">
           <mat-option value="Romantic">Romantic</mat-option>
           <mat-option value="Thriller">Thriller</mat-option>
           <mat-option value="Action">Action</mat-option>
@@ -36,7 +34,7 @@
           <!-- #docregion toggle -->
           <input [matDatepicker]="watchDate" formControlName="watchDate" matInput>
           <mat-datepicker-toggle [for]="watchDate" matSuffix></mat-datepicker-toggle>
-          <mat-datepicker #watchDate></mat-datepicker>
+          <mat-datepicker #watchDate touchUi></mat-datepicker>
           <!-- #enddocregion toggle -->
         </mat-form-field>
       </div>
@@ -45,13 +43,12 @@
           <mat-label>Release Date</mat-label>
           <input [matDatepicker]="releaseDate" formControlName="releaseDate" matInput>
           <mat-datepicker-toggle [for]="releaseDate" matSuffix></mat-datepicker-toggle>
-          <mat-datepicker #releaseDate></mat-datepicker>
+          <mat-datepicker #releaseDate touchUi></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="form-element">
-        <span>Rating</span>
         <mat-select formControlName="rating"
-                    placeholder="Please enter the rating">
+                    placeholder="Bitte Rating eingeben">
           <mat-option>None</mat-option>
           <mat-option value=0>0</mat-option>
           <mat-option value=1>1</mat-option>

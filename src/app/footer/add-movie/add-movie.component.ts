@@ -16,6 +16,9 @@ export class AddMovieComponent implements OnInit {
   disableDetails = true;
   errors: any = {};
 
+  startDate = new Date(1990, 0, 1);
+
+
   constructor(private formBuilder: FormBuilder, private db: AngularFirestore, private manageMovieService: ManageMoviesOfDbService) {
   }
 
