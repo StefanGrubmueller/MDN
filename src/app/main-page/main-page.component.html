@@ -1,10 +1,25 @@
-<!--<button (click)="importExistingMovies()">Import</button>-->
+<!--<button (click)="addIdToExistingProdData()">Import</button>-->
 <!--<button (click)="deleteExistingMovies()">Delete</button>-->
-<!--<div class="header">-->
-<!--  <span>NAME</span>-->
-<!--</div>-->
-<div *ngFor="let movie of movies" class="row">
-  <button (click)="routeToMovieInfo(movie)" mat-button style="text-align:left">{{movie.name}}</button>
+<body>
+<div class="flex-row header">
+  <span class="index">#</span>
+  <span class="title">Title</span>
+  <span class="date">Date Added</span>
+  <span class="liked"> </span>
 </div>
+
+<main>
+  <div *ngFor="let movie of movies; let i = index;" class="flex-row">
+    <span class="index">{{i + 1}}</span>
+    <div (click)="routeToMovieInfo(movie.id)" style="text-align:left" class="title">
+      {{movie.name}}
+    </div>
+    <span class="date">{{movie?.meta?.uploadedOn?.toDate()?.toLocaleDateString()}}</span>
+    <div (click)="likeMovie(movie)">
+      <mat-icon  [class]="movie.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
+    </div>
+  </div>
+</main>
+</body>
 
 

@@ -2,6 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MovieType} from "../movieType";
 import {Router} from "@angular/router";
 import {ManageMoviesOfDbService} from "../shared/manage-movies-of-db.service";
+import {existingMovies} from "../shared/allMoviesBackup";
+import {v4 as uuidv4} from "uuid";
+import firebase from "firebase/compat/app";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-main-page',
@@ -15,15 +19,21 @@ export class MainPageComponent implements OnInit {
 
   movies: Array<MovieType> = [];
 
-  constructor(private router: Router, private getDBMovieService: ManageMoviesOfDbService) {
+  constructor(private router: Router, private manageMoviesOfDbService: ManageMoviesOfDbService) {
   }
 
   ngOnInit(): void {
-    this.movies = this.getDBMovieService.getAllMovies();
+    this.movies = this.manageMoviesOfDbService.getAllMovies();
   }
 
-  routeToMovieInfo(movie: MovieType): void {
-    this.router.navigate(['movie'], {queryParams: {movieName: movie.name}});
+  routeToMovieInfo(movieId: string): void {
+    this.router.navigate(['movie'], {queryParams: {movieId: movieId}});
+  }
+
+  public likeMovie(movie: MovieType): void {
+    //update liked attribute of movie in the db and the session and think about lazy loading
+    movie.liked = !movie.liked;
+    this.manageMoviesOfDbService.updateMovie(movie);
   }
 
   // importExistingMovies() {
@@ -41,5 +51,19 @@ export class MainPageComponent implements OnInit {
   //       console.log('finished');
   //     });
   // }
+
+  /*public addIdToExistingProdData() {
+    let migratedMovies: Array<MovieType> = [];
+    migratedMovies = existingMovies.map(movie => {
+      return {
+        ...movie,
+        id: uuidv4(),
+        meta: {uploadedOn: Timestamp.now()}
+      }
+    });
+
+    this.manageMoviesOfDbService.uploadMovies(migratedMovies);
+
+  }*/
 
 }

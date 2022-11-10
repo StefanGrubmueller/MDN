@@ -1,17 +1,17 @@
 <div class="footer">
-  <div (click)="routeToHome()">
+  <div (click)="routeToHome()" [class]="selectedItem | getFooterItemClass: 'HOME'">
     <mat-icon class="icon" fontIcon="home"></mat-icon>
     <span>HOME</span>
   </div>
-  <div (click)="routeToSearch()">
+  <div (click)="routeToSearch()" [class]="selectedItem | getFooterItemClass : 'SEARCH'">
     <mat-icon fontIcon="search"></mat-icon>
     <span>SUCHE</span>
   </div>
-  <div (click)="routeToAddMovie()">
+  <div (click)="routeToAddMovie()" [class]="selectedItem | getFooterItemClass : 'ADD'">
     <mat-icon fontIcon="add"></mat-icon>
     <span>ADD</span>
   </div>
-  <div (click)="routeToLibrary()">
+  <div (click)="routeToLibrary()" [class]="selectedItem | getFooterItemClass : 'LIB'">
     <mat-icon fontIcon="bookmarks"></mat-icon>
     <span>LIBRARY</span>
   </div>
