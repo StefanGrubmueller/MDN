@@ -3,9 +3,9 @@
     <h2 class="add-movie-form-title">Gib einen Namen für deinen</h2>
     <h2 class="add-movie-form-title">neuen Film ein.</h2>
     <div class="form-element">
-      <input class="makeSelected"
-             formControlName="name"
-             matInput placeholder="Neuer Film">
+      <input
+        formControlName="name"
+        matInput placeholder="Neuer Film">
     </div>
     <div *ngIf="!disableDetails">
       <div class="form-element">
@@ -52,6 +52,7 @@
         <span>Rating</span>
         <mat-select formControlName="rating"
                     placeholder="Please enter the rating">
+          <mat-option>None</mat-option>
           <mat-option value=0>0</mat-option>
           <mat-option value=1>1</mat-option>
           <mat-option value=2>2</mat-option>
@@ -71,7 +72,7 @@
 </form>
 
 <div class="add-movie-form-buttons">
-  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value == ''" class="add-movie-button"
+  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null" class="add-movie-button"
           mat-raised-button>Add
   </button>
 </div>
