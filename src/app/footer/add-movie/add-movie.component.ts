@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {MovieType} from "../../movieType";
+import {ManageMoviesOfDbService} from "../../shared/manage-movies-of-db.service";
 
 @Component({
   selector: 'app-add-movie',
@@ -15,11 +16,7 @@ export class AddMovieComponent implements OnInit {
   disableDetails = true;
   errors: any = {};
 
-  constructor(private formBuilder: FormBuilder, private db: AngularFirestore) {
-  }
-
-  get name() {
-    return this.addMovieForm.get('name');
+  constructor(private formBuilder: FormBuilder, private db: AngularFirestore, private manageMovieService: ManageMoviesOfDbService) {
   }
 
   ngOnInit(): void {
@@ -36,14 +33,8 @@ export class AddMovieComponent implements OnInit {
   }
 
   addMovie(): void {
-    // PROD COLLECTION
-    const collection = this.db.collection('stefan.grubmueller@icloud.com');
-
-    // TEST COLLECTION
-    //const collection = this.db.collection('TEST@icloud.com');
-
     const movieDetails = this.getDetailedMovieInformationIfAvailable();
-    collection.doc(this.addMovieForm.controls['name'].value).set(movieDetails);
+    this.manageMovieService.uploadMovie(movieDetails);
   }
 
   enableDetails(): void {
