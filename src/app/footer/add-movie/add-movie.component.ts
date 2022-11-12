@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {MovieType} from "../../movieType";
 import {ManageMoviesOfDbService} from "../../shared/manage-movies-of-db.service";
+import { v4 as uuidv4 } from 'uuid';
+import firebase from "firebase/compat/app";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-add-movie',
@@ -46,12 +49,15 @@ export class AddMovieComponent implements OnInit {
 
   private getDetailedMovieInformationIfAvailable(): MovieType {
     return {
-      name: this.addMovieForm.controls['name'].value,
+      name: this.addMovieForm.controls['name'].value.toUpperCase(),
       genre: this.addMovieForm.controls['genre'].value ?? null,
       author: this.addMovieForm.controls['author'].value ?? null,
       watchDate: this.addMovieForm.controls['watchDate'].value ?? null,
       releaseDate: this.addMovieForm.controls['releaseDate'].value ?? null,
-      rating: this.addMovieForm.controls['rating'].value ?? null
+      rating: this.addMovieForm.controls['rating'].value ?? null,
+      id: uuidv4(),
+      meta: {uploadedOn: Timestamp.now()},
+      liked: false
     }
   }
 }

@@ -1,26 +1,57 @@
-//.header {
-//  background-color: white;
-//  padding-left: 2em;
-//  color: rgb(131, 58, 180);
-//  position: fixed;
-//  top: 0;
-//  width: 100%;
-//  z-index: 100;
-//  font-weight: 500;
-//  letter-spacing: 3px;
-//  height: 2em;
-//  align-items: center;
-//  display: flex;
-//} not used in this version but maybe in further versions
+.header {
+  position: sticky;
+  color: white;
+  height: 2em;
+  border-bottom: 0.8px solid rgb(178,178,178);
+  top: 0;
+  z-index: 1000;
+  background: rgb(15,18,24);
+  text-transform: lowercase !important;
+}
 
-.row {
+.index {
+  margin-left: 3em;
+  flex: 0.5;
+}
+
+.title {
+  flex: 15 0 0!important;
+  width: 0;
+  color: white;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.date {
+  flex: 10;
+}
+
+.liked {
+  flex: 1;
+  color: rgb(101,212,110);
+  margin-right: 3em;
+}
+
+.not-liked {
+  flex: 1;
+  color: rgb(178,178,178);
+  margin-right: 3em;
+}
+
+.flex-row {
   height: 5em;
   display: flex;
-  flex-direction: row;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
   align-items: center;
-  border-bottom: 0.8px solid white;
-  margin: 0 0.8em;
 
+  span {
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    font-size: 16px !important;
+    overflow: hidden;
+    font-weight: 500;
+  }
 
   .mat-button {
     width: 100%;
@@ -29,11 +60,21 @@
     letter-spacing: 3px;
     text-overflow: ellipsis;
     text-transform: uppercase;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   :hover {
     cursor: pointer;
   }
+}
+
+main {
+  margin-bottom: 5em;
+}
+
+body {
+  background: rgb(15,18,24);
 }
 
 

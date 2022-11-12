@@ -1,1 +1,26 @@
-<p>{{movieName}}</p>
+<div class="wrapper">
+  <div class="left-box">
+    <div *ngFor="let movieOfList of allMovies" class="movie-list" (click)="loadNewMovie(movieOfList)">
+      <span [class]="movieOfList?.id === movie?.id ? 'isSelected' : ''" >{{movieOfList?.name}}</span>
+    </div>
+  </div>
+  <div class="right-box-top">
+    <span>
+      {{movie?.name}}
+    </span>
+    <div>
+      <mat-icon  [class]="movie?.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
+    </div>
+  </div>
+  <div class="right-box-bottom">
+    <h2>
+      {{movie?.name}}
+    </h2>
+    <h2>
+      {{movie?.id}}
+    </h2>
+    <h2>
+      {{movie?.genre}}
+    </h2>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 .footer {
-  background-color: white;
+  background-color: black;
   height: 5em;
   min-width: 100%;
   position: absolute;
@@ -10,7 +10,7 @@
 
   div {
     flex: 1;
-    color: rgb(131, 58, 180);
+    color: rgb(178,178,178);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -34,5 +34,23 @@
 
 .footer :hover {
   cursor: pointer;
+}
+
+.footer {
+  .HOME {
+    color: white;
+  }
+
+  .SEARCH {
+    color: white;
+  }
+
+  .ADD {
+    color: white;
+  }
+
+  .LIB {
+    color: white;
+  }
 }
 

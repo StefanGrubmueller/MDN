@@ -1,6 +1,6 @@
 import {MovieType} from "../movieType";
 
-export const existingMovies: Array<MovieType> = [
+export const existingMovies: Array<any> = [
   {name: "10000BC"},
   {name: "12 YEARS ASLAVE"},
   {name: "21 BRIDGES"},

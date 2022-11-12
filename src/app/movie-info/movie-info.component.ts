@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MovieType} from "../movieType";
+import {ManageMoviesOfDbService} from "../shared/manage-movies-of-db.service";
 
 @Component({
   selector: 'app-movie-info',
@@ -9,14 +10,20 @@ import {MovieType} from "../movieType";
 })
 export class MovieInfoComponent implements OnInit {
 
-  movieName: string;
+  movie: MovieType | undefined ;
+  allMovies: Array<MovieType>;
 
-  constructor(private activeRoute: ActivatedRoute,) { }
+  constructor(private activeRoute: ActivatedRoute, private manageMovieService: ManageMoviesOfDbService) { }
 
   ngOnInit(): void {
+    this.allMovies = this.manageMovieService.getAllMovies();
     this.activeRoute.queryParams.pipe().subscribe((p) => {
-      this.movieName = p.movieName;
+      this.manageMovieService.downloadMovieInformation(p.movieId).subscribe(movie => this.movie = movie);
     })
+  }
+
+  public loadNewMovie(newMovie: MovieType) {
+    this.movie = newMovie;
   }
 
 }

@@ -26,6 +26,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatNativeDateModule} from "@angular/material/core";
+import { GetFooterItemClassPipe } from './footer/get-footer-item-class.pipe';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatNativeDateModule} from "@angular/material/core";
     MovieInfoComponent,
     SearchComponent,
     LibraryComponent,
-    AddMovieComponent
+    AddMovieComponent,
+    GetFooterItemClassPipe
   ],
   imports: [
     AngularFireAuthModule,

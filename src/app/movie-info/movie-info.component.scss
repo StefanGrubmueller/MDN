@@ -1,0 +1,80 @@
+.wrapper {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 100%;
+  width: 100%;
+  grid-template-areas:
+    "a b b b b"
+    "a c c c c"
+    "a c c c c";
+  overflow: hidden;
+}
+
+.left-box {
+  padding-top: 2em;
+  padding-left: 1em;
+  grid-area: a;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden !important;
+  text-overflow: ellipsis !important;
+  background: black;
+}
+
+.right-box-top {
+  display: flex;
+  flex-direction: column;
+  row-gap: 3em;
+  grid-area: b;
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(91,91,101,1) 0%, rgb(179, 179, 179) 100%);
+  color: white;
+  padding-left: 3em;
+  justify-content: flex-start;
+
+  span {
+    padding-top: 1em ;
+    flex: 1;
+    max-width: 20em;
+    font-size: 5em;
+    overflow: hidden;
+  }
+}
+
+.right-box-bottom {
+  display: flex;
+  grid-area: c;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(67,67,67,1) 82%, rgba(81,81,81,81) 100%);
+  padding-left: 3em;
+  padding-top: 2em;
+}
+
+.movie-list {
+  font-weight: 500;
+  height: 3em !important;
+  overflow-x: hidden !important;
+  text-overflow: ellipsis !important;
+
+  :hover {
+    cursor: default;
+  }
+}
+
+.isSelected {
+  color: rgb(101,212,110);
+}
+
+.liked {
+  top: 0;
+  left: 0;
+  flex: 1;
+  color: rgb(101,212,110);
+  margin-right: 3em;
+}
+
+.not-liked {
+  flex: 1;
+  color: rgb(178,178,178);
+  margin-right: 3em;
+}
