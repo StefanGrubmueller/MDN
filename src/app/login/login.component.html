@@ -1,26 +1,36 @@
-<h2 class="login-form-title" mat-dialog-title>Login</h2>
-  <div *ngIf="loggedIn!==null" class="login-message">
-    <span *ngIf="!loggedIn" class="login-failed">{{loginFailErrorMsg}}</span>
-  </div>
-  <form [formGroup]="loginForm" class="login-form">
-      <span>Email</span>
-      <input formControlName="email"
-             matInput
-             placeholder="Please enter your mail"
-             required>
-      <mat-error *ngIf="loginForm.controls['email'].invalid">{{getEmailErrorMessage()}}</mat-error>
+<body>
+  <h1>Login</h1>
+  <main [formGroup]="loginForm">
+    <div class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput
+               formControlName="email"
+               placeholder="Please enter email"
+        >
+      </mat-form-field>
 
-      <span>Password</span>
-      <input formControlName="password"
-             matInput
-             placeholder="Please enter your password"
-             required>
-      <mat-error *ngIf="loginForm.invalid">{{getPasswordErrorMessage()}}</mat-error>
-  </form>
+    </div>
 
+    <div class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput
+               formControlName="password"
+               placeholder="Please enter password"
+               [type]="hide ? 'password' : 'text'"
+        >
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
 
-  <div class="login-form-buttons">
-    <button (click)="logIn()" [disabled]="isUserDataValid()" class="login-form-login-button" mat-raised-button>Sign in
-    </button>
-  </div>
+    </div>
+  </main>
 
+  <span *ngIf="loggedIn === false">Wrong credentials</span>
+
+  <button mat-raised-button (click)="login()" [disabled]="isUserDataValid()">Login</button>
+
+  <button mat-button (click)="routeToRegister()">Not registered yet? Register here</button>
+</body>

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {MovieType} from "../movieType";
+import {MovieType} from "../../movieType";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -47,7 +47,8 @@ export class ManageMoviesOfDbService {
 
   private getCollection(): AngularFirestoreCollection<MovieType> {
     // PROD COLLECTION
-    return this.db.collection('stefan.grubmueller@icloud.com');
+    const email = JSON.parse(localStorage.getItem('user') ?? '').email;
+    return this.db.collection(email);
 
 
     // TEST COLLECTION
