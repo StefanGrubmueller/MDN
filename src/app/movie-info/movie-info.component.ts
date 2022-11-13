@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {MovieType} from "../movieType";
-import {ManageMoviesOfDbService} from "../shared/manage-movies-of-db.service";
+import {ManageMoviesOfDbService} from "../shared/services/manage-movies-of-db.service";
 
 @Component({
   selector: 'app-movie-info',

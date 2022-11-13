@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {MovieType} from "../../movieType";
-import {ManageMoviesOfDbService} from "../../shared/manage-movies-of-db.service";
+import {ManageMoviesOfDbService} from "../../shared/services/manage-movies-of-db.service";
 import { v4 as uuidv4 } from 'uuid';
 import firebase from "firebase/compat/app";
 import Timestamp = firebase.firestore.Timestamp;

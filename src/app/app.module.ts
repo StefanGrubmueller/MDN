@@ -27,6 +27,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatNativeDateModule} from "@angular/material/core";
 import { GetFooterItemClassPipe } from './footer/get-footer-item-class.pipe';
+import { RegisterComponent } from './register/register.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { GetFooterItemClassPipe } from './footer/get-footer-item-class.pipe';
     SearchComponent,
     LibraryComponent,
     AddMovieComponent,
-    GetFooterItemClassPipe
+    GetFooterItemClassPipe,
+    RegisterComponent,
+    TopBarComponent
   ],
   imports: [
     AngularFireAuthModule,

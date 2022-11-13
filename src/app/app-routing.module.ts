@@ -6,6 +6,7 @@ import {MovieInfoComponent} from "./movie-info/movie-info.component";
 import {SearchComponent} from "./footer/search/search.component";
 import {AddMovieComponent} from "./footer/add-movie/add-movie.component";
 import {LibraryComponent} from "./footer/library/library.component";
+import {RegisterComponent} from "./register/register.component";
 
 
 const routes: Routes = [
@@ -15,6 +16,8 @@ const routes: Routes = [
   {path: 'search', component: SearchComponent},
   {path: 'addMovie', component: AddMovieComponent},
   {path: 'library', component: LibraryComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
 ];
 
 @NgModule({
