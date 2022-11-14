@@ -1,5 +1,7 @@
 <!--<button (click)="addIdToExistingProdData()">Import</button>-->
 <!--<button (click)="deleteExistingMovies()">Delete</button>-->
+<app-top-bar class="top-bar"></app-top-bar>
+
 <body>
 <div class="flex-row header">
   <span class="index">#</span>
@@ -11,15 +13,17 @@
 <main>
   <div *ngFor="let movie of movies; let i = index;" class="flex-row">
     <span class="index">{{i + 1}}</span>
-    <div (click)="routeToMovieInfo(movie.id)" style="text-align:left" class="title">
+    <div (click)="routeToMovieInfo(movie.id)" class="title" style="text-align:left">
       {{movie.name}}
     </div>
     <span class="date">{{movie?.meta?.uploadedOn?.toDate()?.toLocaleDateString()}}</span>
     <div (click)="likeMovie(movie)">
-      <mat-icon  [class]="movie.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
+      <mat-icon [class]="movie.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
     </div>
   </div>
 </main>
 </body>
+
+<app-footer class="footer-row"></app-footer>
 
 

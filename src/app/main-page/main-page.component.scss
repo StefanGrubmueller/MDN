@@ -1,13 +1,64 @@
-.header {
-  position: sticky;
-  color: white;
-  height: 2em;
-  border-bottom: 0.8px solid rgb(178,178,178);
-  top: 0;
-  z-index: 1000;
-  background: rgb(15,18,24);
-  text-transform: lowercase !important;
+//smartphone
+@media only screen and (max-width: 1499px) {
+
+  body {
+    > div {
+      height: 0;
+    }
+  }
+  .index {
+    display: none;
+  }
+
+  .date {
+    display: none;
+  }
+
+  .title {
+    margin-left: 1em;
+  }
+
+  .liked {
+    margin-right: 1em;
+  }
+
+  .not-liked {
+    margin-right: 1em;
+  }
+
+  .top-bar {
+    display: none;
+  }
+
+  .flex-row.header {
+    .title {
+      display: none;
+    }
+  }
 }
+
+//wide-screen
+@media only screen and (min-width: 1500px) {
+  .liked {
+    margin-right: 3em;
+  }
+
+  .not-liked {
+    margin-right: 3em;
+  }
+
+  .header {
+    position: sticky;
+    color: white;
+    height: 2em;
+    border-bottom: 0.8px solid rgb(178, 178, 178);
+    top: 0;
+    z-index: 1000;
+    background: rgb(15, 18, 24);
+    text-transform: lowercase !important;
+  }
+}
+
 
 .index {
   margin-left: 3em;
@@ -15,7 +66,7 @@
 }
 
 .title {
-  flex: 15 0 0!important;
+  flex: 15 0 0 !important;
   width: 0;
   color: white;
   font-weight: 500;
@@ -28,14 +79,12 @@
 
 .liked {
   flex: 1;
-  color: rgb(101,212,110);
-  margin-right: 3em;
+  color: rgb(101, 212, 110);
 }
 
 .not-liked {
   flex: 1;
-  color: rgb(178,178,178);
-  margin-right: 3em;
+  color: rgb(178, 178, 178);
 }
 
 .flex-row {
@@ -74,7 +123,13 @@ main {
 }
 
 body {
-  background: rgb(15,18,24);
+  background: rgb(15, 18, 24);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 

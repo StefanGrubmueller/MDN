@@ -2,10 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MovieType} from "../movieType";
 import {Router} from "@angular/router";
 import {ManageMoviesOfDbService} from "../shared/services/manage-movies-of-db.service";
-import {existingMovies} from "../shared/allMoviesBackup";
-import {v4 as uuidv4} from "uuid";
 import firebase from "firebase/compat/app";
-import Timestamp = firebase.firestore.Timestamp;
+import {AuthService} from "../shared/services/auth.service";
 
 @Component({
   selector: 'app-main-page',
@@ -18,11 +16,16 @@ export class MainPageComponent implements OnInit {
   email: string = "";
 
   movies: Array<MovieType> = [];
+  logged: boolean = false;
 
-  constructor(private router: Router, private manageMoviesOfDbService: ManageMoviesOfDbService) {
+  constructor(private router: Router, private manageMoviesOfDbService: ManageMoviesOfDbService, private authSerice: AuthService) {
   }
 
   ngOnInit(): void {
+    this.logged = this.authSerice.getUserStatus();
+    if (!this.logged) {
+      this.router.navigate(['login']);
+    }
     this.movies = this.manageMoviesOfDbService.getAllMovies();
   }
 
