@@ -42,7 +42,7 @@ export class ManageMoviesOfDbService {
   }
 
   private downloadMovies(): void {
-    this.dbCollection.ref.get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(d.data())));
+    this.dbCollection.ref.orderBy('name').get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(d.data())));
   }
 
   private getCollection(): AngularFirestoreCollection<MovieType> {

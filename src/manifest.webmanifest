@@ -1,6 +1,6 @@
 {
-  "name": "MDNetwork",
-  "short_name": "MDNetwork",
+  "name": "Movie Network",
+  "short_name": "MDN",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
