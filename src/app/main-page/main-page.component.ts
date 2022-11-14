@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MovieType} from "../movieType";
 import {Router} from "@angular/router";
 import {ManageMoviesOfDbService} from "../shared/services/manage-movies-of-db.service";
+import firebase from "firebase/compat/app";
 import {AuthService} from "../shared/services/auth.service";
 
 @Component({
