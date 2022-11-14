@@ -37,12 +37,12 @@ export class ManageMoviesOfDbService {
     }
   }*/
 
-  private downloadMovies(): void {
-    this.dbCollection.ref.get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(d.data())));
+  public downloadMovieInformation(id: string): Observable<MovieType | undefined> {
+    return this.dbCollection.doc(id).valueChanges();
   }
 
-  public downloadMovieInformation(id: string):  Observable<MovieType | undefined>  {
-   return this.dbCollection.doc(id).valueChanges();
+  private downloadMovies(): void {
+    this.dbCollection.ref.get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(d.data())));
   }
 
   private getCollection(): AngularFirestoreCollection<MovieType> {

@@ -14,8 +14,16 @@ body {
   align-items: center;
 }
 
-::ng-deep .mat-form-field {
-  width: 60%;
+@media only screen and (max-width: 1499px) {
+  ::ng-deep .mat-form-field {
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  ::ng-deep .mat-form-field {
+    width: 20%;
+  }
 }
 
 

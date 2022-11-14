@@ -1,3 +1,21 @@
+//smartphone
+@media only screen and (max-width: 1499px) {
+  .top-bar {
+    display: none;
+  }
+
+  .entry {
+    width: 85%;
+  }
+}
+
+//wide-screen
+@media only screen and (min-width: 1500px) {
+  .entry {
+    width: 85%;
+  }
+}
+
 .add-movie-form-title {
   display: flex;
   justify-content: center;
@@ -10,9 +28,9 @@
 
   .mat-input-element {
     background-color: rgba(255, 255, 255, 0.2);
-    color: rgb(178,178,178);
+    color: rgb(178, 178, 178);
     border: none;
-    border-bottom: 2px solid rgb(178,178,178);
+    border-bottom: 2px solid rgb(178, 178, 178);
     margin: 3em 0;
     height: 5em;
     border-radius: 12px;
@@ -20,25 +38,25 @@
 
   .mat-select {
     background-color: rgba(255, 255, 255, 0.2);
-    color: rgb(178,178,178);
+    color: rgb(178, 178, 178);
     border: none;
-    border-bottom: 2px solid rgb(178,178,178);
+    border-bottom: 2px solid rgb(178, 178, 178);
     margin: 3em 0;
     height: 5em;
     border-radius: 12px;
-    box-shadow: rgb(178,178,178);
+    box-shadow: rgb(178, 178, 178);
 
   }
 
   .mat-input-element::placeholder {
-    color: rgb(178,178,178);
+    color: rgb(178, 178, 178);
     padding-left: 3em;
     letter-spacing: 0.2em;
     font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
   }
 
   ::ng-deep .mat-select-placeholder {
-    color: rgb(178,178,178);
+    color: rgb(178, 178, 178);
     padding-left: 3em;
     letter-spacing: 0.2em;
     font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
@@ -56,8 +74,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 70%;
 }
+
+.mat-input-element::placeholder {
+  color: rgb(178, 178, 178);
+  padding-left: 3em;
+  font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-input-element::content {
+  color: rgb(178, 178, 178);
+  padding-left: 3em;
+  font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
+}
+
 
 .row {
   height: 8em;
@@ -99,7 +129,7 @@
 }
 
 ::ng-deep .mat-select-arrow {
-  color: rgb(178,178,178);
+  color: rgb(178, 178, 178);
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
@@ -107,17 +137,17 @@
 }
 
 ::ng-deep .mat-form-field-suffix {
-  color: rgb(178,178,178) !important;
+  color: rgb(178, 178, 178) !important;
   position: absolute !important;
   right: 0;
 
   .mat-icon-button {
-    color: rgb(178,178,178);
+    color: rgb(178, 178, 178);
   }
 }
 
 ::ng-deep .mat-form-field-label {
-  color: rgb(178,178,178) !important;
+  color: rgb(178, 178, 178) !important;
 }
 
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {

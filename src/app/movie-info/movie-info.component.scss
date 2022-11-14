@@ -1,13 +1,38 @@
-.wrapper {
-  position: absolute;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  height: 100%;
-  width: 100%;
-  grid-template-areas:
+//smartphone
+@media only screen and (max-width: 1499px) {
+  .top-bar {
+    display: none;
+  }
+  .wrapper {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+    "b b b b"
+    "c c c c"
+    "c c c c";
+  }
+
+  .left-box {
+    display: none;
+  }
+}
+
+//wide-screen
+@media only screen and (min-width: 1500px) {
+  .wrapper {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-areas:
     "a b b b b"
     "a c c c c"
     "a c c c c";
+  }
+
+}
+
+.wrapper {
+  position: absolute;
+  display: grid;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -27,13 +52,13 @@
   flex-direction: column;
   row-gap: 3em;
   grid-area: b;
-  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(91,91,101,1) 0%, rgb(179, 179, 179) 100%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(91, 91, 101, 1) 0%, rgb(179, 179, 179) 100%);
   color: white;
   padding-left: 3em;
   justify-content: flex-start;
 
   span {
-    padding-top: 1em ;
+    padding-top: 1em;
     flex: 1;
     max-width: 20em;
     font-size: 5em;
@@ -44,8 +69,8 @@
 .right-box-bottom {
   display: flex;
   grid-area: c;
-  background: rgb(0,0,0);
-  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(67,67,67,1) 82%, rgba(81,81,81,81) 100%);
+  background: rgb(0, 0, 0);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 1) 82%, rgba(81, 81, 81, 81) 100%);
   padding-left: 3em;
   padding-top: 2em;
 }
@@ -62,19 +87,19 @@
 }
 
 .isSelected {
-  color: rgb(101,212,110);
+  color: rgb(101, 212, 110);
 }
 
 .liked {
   top: 0;
   left: 0;
   flex: 1;
-  color: rgb(101,212,110);
+  color: rgb(101, 212, 110);
   margin-right: 3em;
 }
 
 .not-liked {
   flex: 1;
-  color: rgb(178,178,178);
+  color: rgb(178, 178, 178);
   margin-right: 3em;
 }
