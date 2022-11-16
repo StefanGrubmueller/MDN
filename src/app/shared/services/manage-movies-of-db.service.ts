@@ -12,13 +12,11 @@ export class ManageMoviesOfDbService {
   moviesFromDB: Array<MovieType> = [];
 
   constructor(private db: AngularFirestore) {
-    // PROD
     this.dbCollection = this.getCollection();
     this.downloadMovies();
   }
 
   public getAllMovies(): Array<MovieType> {
-    // return existingMovies; // TEST
     return this.moviesFromDB; // PROD
   }
 
@@ -31,25 +29,25 @@ export class ManageMoviesOfDbService {
     this.dbCollection.doc(movie.id).set(movie);
   }
 
-  /*public uploadMovies(movies: Array<MovieType>): void {
+  public uploadMovies(movies: Array<MovieType>): void {
     for(let movie of movies) {
       this.dbCollection.doc(movie.id).set(movie);
     }
-  }*/
+  }
 
   public downloadMovieInformation(id: string): Observable<MovieType | undefined> {
     return this.dbCollection.doc(id).valueChanges();
   }
 
   private downloadMovies(): void {
-    this.dbCollection.ref.get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(d.data())));
+    const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
+    this.db.collection(email).ref?.orderBy('name').get().then((elem) => elem.docs.map(d => this.moviesFromDB.push(<MovieType>d.data())));
   }
 
   private getCollection(): AngularFirestoreCollection<MovieType> {
     // PROD COLLECTION
-    const email = JSON.parse(localStorage.getItem('user') ?? '').email;
+    const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
     return this.db.collection(email);
-
 
     // TEST COLLECTION
     //return this.db.collection('TEST@icloud.com');

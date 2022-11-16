@@ -1,5 +1,5 @@
 //smartphone
-@media only screen and (max-width: 1499px) {
+@media only screen and (max-width: 900px) {
 
   body {
     > div {
@@ -37,8 +37,9 @@
   }
 }
 
+
 //wide-screen
-@media only screen and (min-width: 1500px) {
+@media only screen and (min-width: 1201px) {
   .liked {
     margin-right: 3em;
   }
@@ -62,15 +63,19 @@
 
 .index {
   margin-left: 3em;
-  flex: 0.5;
+  flex-basis: 3%;
 }
 
 .title {
-  flex: 15 0 0 !important;
+  flex-basis: 80%;
   width: 0;
   color: white;
   font-weight: 500;
   overflow: hidden;
+
+  :hover {
+    color: rgb(101, 212, 110);
+  }
 }
 
 .date {

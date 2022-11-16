@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {AngularFirestoreCollection} from "@angular/fire/compat/firestore";
+import {User} from "../types/user";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private firebaseAuth: AngularFireAuth) { }
+  userCollection: AngularFirestoreCollection<User>;
+  allUsers: Array<User> = [];
 
-  public getUserStatus(): boolean {
-    return localStorage.getItem('user') != null;
+  constructor(private firebaseAuth: AngularFireAuth, private userService: UserService) {
   }
+
 
   public async signIn(email: string, password: string): Promise<any> {
     await this.firebaseAuth.signInWithEmailAndPassword(email, password)
@@ -18,9 +22,12 @@ export class AuthService {
       .catch((error) => console.log('error', error));
   }
 
-  public async signUp(email: string, password: string): Promise<any> {
-    await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
-      .then(res => localStorage.setItem('user', JSON.stringify(res.user)))
+  public async signUp(user: User): Promise<any> {
+    await this.firebaseAuth.createUserWithEmailAndPassword(user.email, user.password)
+      .then(res => {
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.userService.uploadUserInformation(user);
+      })
       .catch((error) => console.log('error', error));
   }
 
@@ -28,4 +35,5 @@ export class AuthService {
     this.firebaseAuth.signOut();
     localStorage.removeItem('user')
   }
+
 }

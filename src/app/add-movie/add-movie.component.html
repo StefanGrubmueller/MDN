@@ -1,0 +1,25 @@
+<app-top-bar class="top-bar"></app-top-bar>
+
+<form [formGroup]="addMovieForm" class="add-movie-form">
+  <div class="entry">
+    <h2 class="add-movie-form-title">Gib einen Namen für deinen</h2>
+    <h2 class="add-movie-form-title">neuen Film ein.</h2>
+    <div class="form-element">
+      <input
+        formControlName="name"
+        matInput placeholder="Neuer Film">
+    </div>
+  </div>
+</form>
+
+<div *ngFor="let movieFromIMDBResults of searchResults" class="list">
+  <span (click)="setMovie(movieFromIMDBResults)" [class]="movieFromIMDBResults.title === addMovieForm.controls['name'].value ? 'selected-item' : 'list-item'">{{movieFromIMDBResults?.title}}</span>
+</div>
+
+<div class="add-movie-form-buttons">
+  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null" class="add-movie-button"
+          mat-raised-button>Add
+  </button>
+</div>
+
+<app-footer class="footer-row"></app-footer>

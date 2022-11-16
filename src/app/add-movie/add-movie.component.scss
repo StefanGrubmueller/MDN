@@ -1,5 +1,5 @@
 //smartphone
-@media only screen and (max-width: 1499px) {
+@media only screen and (max-width: 900px) {
   .top-bar {
     display: none;
   }
@@ -7,12 +7,38 @@
   .entry {
     width: 85%;
   }
+
+  .list {
+    margin-left: 5em;
+  }
 }
 
 //wide-screen
-@media only screen and (min-width: 1500px) {
+@media only screen and (min-width: 901px) and (max-width: 2000px) {
+  .list {
+    margin-left: 10em;
+  }
   .entry {
     width: 85%;
+  }
+}
+
+@media only screen and (min-width: 2001px) {
+  .list {
+    margin-left: 20em;
+
+  }
+  .entry {
+    width: 85%;
+  }
+}
+
+.list {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  :hover {
+    cursor: pointer;
+    color: rgb(101, 212, 110);
   }
 }
 
@@ -20,6 +46,7 @@
   display: flex;
   justify-content: center;
   margin: 0;
+  color: white;
 }
 
 .add-movie-form {
@@ -157,4 +184,8 @@
 
 ::ng-deep {
   font: 400 14px / 32px Roboto, "Helvetica Neue", sans-serif;
+}
+
+.selected-item {
+  color: rgb(101, 212, 110);
 }

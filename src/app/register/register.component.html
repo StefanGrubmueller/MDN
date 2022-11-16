@@ -4,8 +4,8 @@
   <div class="form">
     <mat-form-field appearance="fill">
       <mat-label>Email</mat-label>
-      <input matInput
-             formControlName="email"
+      <input formControlName="email"
+             matInput
              placeholder="Please enter email"
       >
     </mat-form-field>
@@ -15,12 +15,14 @@
   <div class="form">
     <mat-form-field appearance="fill">
       <mat-label>Password</mat-label>
-      <input matInput
+      <input [type]="hidePw1 ? 'password' : 'text'"
              formControlName="password"
+             matInput
              placeholder="Please enter password"
-             [type]="hidePw1 ? 'password' : 'text'"
       >
-      <button mat-icon-button matSuffix (click)="hidePw1 = !hidePw1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePw1">
+      <button (click)="hidePw1 = !hidePw1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePw1"
+              mat-icon-button
+              matSuffix>
         <mat-icon>{{hidePw1 ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
@@ -29,19 +31,31 @@
   <div class="form">
     <mat-form-field appearance="fill">
       <mat-label>Confirm Password</mat-label>
-      <input matInput
+      <input [type]="hidePw2 ? 'password' : 'text'"
              formControlName="confirmPassword"
+             matInput
              placeholder="Confirm password"
-             [type]="hidePw2 ? 'password' : 'text'"
       >
-      <button mat-icon-button matSuffix (click)="hidePw2 = !hidePw2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePw2">
+      <button (click)="hidePw2 = !hidePw2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePw2"
+              mat-icon-button
+              matSuffix>
         <mat-icon>{{hidePw2 ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
   </div>
+
+  <div class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Please enter username</mat-label>
+      <input formControlName="username"
+             matInput
+             placeholder="Please enter username"
+      >
+    </mat-form-field>
+  </div>
 </main>
 
-<button mat-raised-button (click)="register()" [disabled]="isUserDataValid()">Register</button>
+<button (click)="register()" [disabled]="isUserDataValid()" mat-raised-button>Register</button>
 
-<button mat-button (click)="routeToLogin()">Back To Login</button>
+<button (click)="routeToLogin()" mat-button>Back To Login</button>
 </body>
