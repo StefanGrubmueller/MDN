@@ -56,7 +56,7 @@
 
 .right-box-top {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   grid-area: b;
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(91, 91, 101, 1) 0%, rgb(179, 179, 179) 100%);
   color: white;
@@ -72,13 +72,19 @@
   }
 }
 
-.right-box-bottom {
+.right-box-bottom-column {
   display: flex;
-  grid-area: c;
+  flex-direction: column;
   background: rgb(0, 0, 0);
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(67, 67, 67, 1) 82%, rgba(81, 81, 81, 81) 100%);
   padding-left: 3em;
   padding-top: 2em;
+  grid-area: c;
+}
+.right-box-bottom {
+  display: flex;
+  flex-direction: row;
+  gap: 15em;
 }
 
 .movie-list {
@@ -108,4 +114,12 @@
   flex: 1;
   color: rgb(178, 178, 178);
   margin-right: 3em;
+}
+
+.poster {
+  max-height: 20em;
+  max-width: 20em;
+  object-fit: scale-down;
+  margin-top: 3em;
+  margin-right: 5em;
 }

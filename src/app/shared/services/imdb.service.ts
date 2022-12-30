@@ -36,7 +36,6 @@ export class ImdbService {
       movies.push({
         title: jsonMovie['#TITLE'],
         actors: jsonMovie['#ACTORS'],
-        aka: jsonMovie['#AKA'],
         imdb_id: jsonMovie['#IMDB_ID'],
         imdb_iv: jsonMovie['#IMDB_IV'],
         imdb_url: jsonMovie['#IMDB_URL'],
@@ -51,6 +50,9 @@ export class ImdbService {
   }
 
   private mapToMovie(value: any): MovieType {
+    let actors: Array<string> = [];
+    value.short.actor.map((actor: any) => actors.push(actor.name));
+    console.log('rank', value.main.ratingsSummary.topRanking ?value.main.ratingsSummary.topRanking : null);
     return {
       id: value.imdbId,
       author: value.short.creator[1].name ? value.short.creator[1].name : null,
@@ -58,7 +60,15 @@ export class ImdbService {
       name: value.main.titleText.text,
       liked: false,
       releaseDate: new Date(`${value.main.releaseDate.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`),
-      rating: value.short.review.reviewRating.ratingValue
+      rating: value.short.review.reviewRating ? value.short.review.reviewRating.ratingValue : null,
+      imdb: {
+        title: value.main.titleText.text,
+        imdb_id: value.imdbId,
+        actors: actors,
+        year: value.main.releaseYear.year,
+        rank: value.main.ratingsSummary.topRanking ?value.main.ratingsSummary.topRanking.rank : null,
+        img_poster: value.short.image,
+      }
     }
   }
 

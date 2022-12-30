@@ -1,5 +1,6 @@
 import firebase from "firebase/compat";
 import Timestamp = firebase.firestore.Timestamp;
+import {ImdbDescription} from "./shared/types/imdb";
 
 export type MovieType = {
   id: string;
@@ -11,6 +12,7 @@ export type MovieType = {
   rating?: number;
   liked: boolean;
   meta?: Meta;
+  imdb?: ImdbDescription;
 }
 
 export type Meta = {

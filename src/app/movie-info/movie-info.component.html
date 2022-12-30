@@ -9,19 +9,38 @@
     <span>
       {{movie?.name}}
     </span>
+
+    <img [src]="movie?.imdb?.img_poster" class="poster">
     <div>
       <mat-icon (click)="likeMovie(movie)" [class]="movie?.liked ? 'liked' : 'not-liked'"
                 fontIcon="favorite"></mat-icon>
     </div>
   </div>
-  <div class="right-box-bottom">
-    <h2>
-      {{movie?.genre}}
-    </h2>
-    <h2 *ngIf="movie?.rating">
-      {{movie?.rating}} / 10
-    </h2>
+  <div class="right-box-bottom-column">
+    <div class="right-box-bottom">
+      <h2>
+        {{movie?.genre}}
+      </h2>
+      <h2 *ngIf="movie?.rating">
+        {{movie?.rating}} / 10
+      </h2>
+    </div>
+    <div class="right-box-bottom">
+      <h2 *ngIf="movie?.author">
+        {{movie?.author}}
+      </h2>
+      <h2>
+        {{movie?.releaseDate?.toLocaleDateString()}}
+      </h2>
+    </div>
+    <div class="right-box-bottom">
+      <h2>
+        {{movie?.imdb?.actors}}
+      </h2>
+      <h2>
+        {{movie?.imdb?.rank}}
+      </h2>
+    </div>
   </div>
 </div>
-
 <app-footer class="footer-row"></app-footer>
