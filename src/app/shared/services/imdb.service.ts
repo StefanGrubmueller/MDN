@@ -60,7 +60,7 @@ export class ImdbService {
       name: value.main.titleText.text,
       liked: false,
       releaseDate: new Date(`${value.main.releaseDate.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`),
-      rating: value.short.review.reviewRating ? value.short.review.reviewRating.ratingValue : null,
+      rating: value.short.reviewbash ? value.short.review.reviewRating.ratingValue : null,
       imdb: {
         title: value.main.titleText.text,
         imdb_id: value.imdbId,
