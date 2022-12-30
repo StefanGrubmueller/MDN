@@ -18,17 +18,21 @@ import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {MovieInfoComponent} from './movie-info/movie-info.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {SearchComponent} from './footer/search/search.component';
-import {LibraryComponent} from './footer/library/library.component';
-import {AddMovieComponent} from './footer/add-movie/add-movie.component';
+import {SearchComponent} from './search/search.component';
+import {LibraryComponent} from './library/library.component';
+import {AddMovieComponent} from './add-movie/add-movie.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {MatSelectModule} from "@angular/material/select";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatNativeDateModule} from "@angular/material/core";
-import { GetFooterItemClassPipe } from './footer/get-footer-item-class.pipe';
-import { RegisterComponent } from './register/register.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
+import {GetFooterItemClassPipe} from './footer/get-footer-item-class.pipe';
+import {RegisterComponent} from './register/register.component';
+import {TopBarComponent} from './top-bar/top-bar.component';
+import {UserSearchFilterPipe} from './search/pipes/user-search-filter.pipe';
+import {GetSearchTextPipe} from './search/pipes/get-search-text.pipe';
+import {MovieSearchFilterPipe} from './search/pipes/movie-search-filter.pipe';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     AddMovieComponent,
     GetFooterItemClassPipe,
     RegisterComponent,
-    TopBarComponent
+    TopBarComponent,
+    UserSearchFilterPipe,
+    GetSearchTextPipe,
+    MovieSearchFilterPipe,
+    UserProfileComponent
   ],
   imports: [
     AngularFireAuthModule,

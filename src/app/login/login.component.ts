@@ -1,10 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {MatDialogRef} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {getAuth, signInWithEmailAndPassword} from "@angular/fire/auth";
 import {AuthService} from "../shared/services/auth.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 type loginUserForm = {
   email: string;
@@ -23,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
+
   constructor(private router: Router, private authService: AuthService, private formBuilder: FormBuilder) {
 
   }
@@ -30,7 +28,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
         email: ['', [Validators.required, Validators.email]],
-        password: ['' , [Validators.required]],
+        password: ['', [Validators.required]],
       },
     )
   }
@@ -40,7 +38,6 @@ export class LoginComponent implements OnInit {
     const email = this.loginForm.get('email')?.value ?? '';
     const password = this.loginForm.get('password')?.value ?? '';
     await this.authService.signIn(email, password);
-    console.log('buf', localStorage.getItem('user'));
     if (localStorage.getItem('user') != null) {
       this.router.navigate([''])
     } else {
@@ -54,6 +51,12 @@ export class LoginComponent implements OnInit {
 
   public routeToRegister(): void {
     this.router.navigate(['register']);
+  }
+
+  public onEnter(event: any) {
+    if (event.keyCode === 13) {
+      this.login();
+    }
   }
 
 }

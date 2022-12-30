@@ -2,7 +2,7 @@
 <div class="wrapper">
   <div class="left-box">
     <div (click)="loadNewMovie(movieOfList)" *ngFor="let movieOfList of allMovies" class="movie-list">
-      <span [class]="movieOfList?.id === movie?.id ? 'isSelected' : ''">{{movieOfList?.name}}</span>
+      <span [class]="movieOfList?.id === movie?.id ? 'isSelected' : ''">{{movieOfList.name}}</span>
     </div>
   </div>
   <div class="right-box-top">
@@ -10,18 +10,16 @@
       {{movie?.name}}
     </span>
     <div>
-      <mat-icon [class]="movie?.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
+      <mat-icon (click)="likeMovie(movie)" [class]="movie?.liked ? 'liked' : 'not-liked'"
+                fontIcon="favorite"></mat-icon>
     </div>
   </div>
   <div class="right-box-bottom">
     <h2>
-      {{movie?.name}}
-    </h2>
-    <h2>
-      {{movie?.id}}
-    </h2>
-    <h2>
       {{movie?.genre}}
+    </h2>
+    <h2 *ngIf="movie?.rating">
+      {{movie?.rating}} / 10
     </h2>
   </div>
 </div>

@@ -1,0 +1,23 @@
+<body>
+<app-top-bar class="top-bar"></app-top-bar>
+<div [formGroup]="searchForm" class="form">
+  <h1>Suche</h1>
+  <input formControlName="searchText"
+         placeholder="Search for movies or users">
+</div>
+
+<div class="results">
+  <div *ngFor="let user of allUsers | userSearchFilter: (searchForm | getSearchText)" class="list">
+    <span (click)="routeToUserProfile(user.id)" class="list-item">{{user?.userName}}</span>
+  </div>
+
+  <div *ngFor="let movie of allMovies | movieSearchFilter: (searchForm | getSearchText)" class="list">
+    <span (click)="routeToMovie(movie.id)" class="list-item">{{movie?.name}}</span>
+  </div>
+
+  <div *ngFor="let movieFromIMDBResults of searchResults" class="list">
+    <span (click)="routeToIMDBMovie(movieFromIMDBResults.imdb_id)" class="list-item">{{movieFromIMDBResults?.title}}</span>
+  </div>
+</div>
+<app-footer class="footer-row"></app-footer>
+</body>

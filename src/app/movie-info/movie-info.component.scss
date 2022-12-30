@@ -1,5 +1,5 @@
 //smartphone
-@media only screen and (max-width: 1499px) {
+@media only screen and (max-width: 900px) {
   .top-bar {
     display: none;
   }
@@ -14,16 +14,23 @@
   .left-box {
     display: none;
   }
+  .right-box-top {
+    padding-left: 1em;
+  }
 }
 
 //wide-screen
-@media only screen and (min-width: 1500px) {
+@media only screen and (min-width: 901px) {
   .wrapper {
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
     "a b b b b"
     "a c c c c"
     "a c c c c";
+  }
+
+  .right-box-top {
+    padding-left: 3em;
   }
 
 }
@@ -50,18 +57,17 @@
 .right-box-top {
   display: flex;
   flex-direction: column;
-  row-gap: 3em;
   grid-area: b;
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(91, 91, 101, 1) 0%, rgb(179, 179, 179) 100%);
   color: white;
-  padding-left: 3em;
   justify-content: flex-start;
 
   span {
     padding-top: 1em;
     flex: 1;
     max-width: 20em;
-    font-size: 5em;
+    line-height: 1em;
+    font-size: 4em;
     overflow: hidden;
   }
 }

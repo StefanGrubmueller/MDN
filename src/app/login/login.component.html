@@ -1,36 +1,39 @@
 <body>
-  <h1>Login</h1>
-  <main [formGroup]="loginForm">
-    <div class="form">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput
-               formControlName="email"
-               placeholder="Please enter email"
-        >
-      </mat-form-field>
+<h1>Login</h1>
+<main [formGroup]="loginForm">
+  <div class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input formControlName="email"
+             matInput
+             placeholder="Please enter email"
+      >
+    </mat-form-field>
 
-    </div>
+  </div>
 
-    <div class="form">
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput
-               formControlName="password"
-               placeholder="Please enter password"
-               [type]="hide ? 'password' : 'text'"
-        >
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
+  <div class="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input [type]="hide ? 'password' : 'text'"
+             formControlName="password"
+             matInput
+             placeholder="Please enter password"
+      >
+      <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
+              matSuffix>
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
 
-    </div>
-  </main>
+  </div>
+</main>
 
-  <span *ngIf="loggedIn === false">Wrong credentials</span>
+<span *ngIf="loggedIn === false">Wrong credentials</span>
 
-  <button mat-raised-button (click)="login()" [disabled]="isUserDataValid()">Login</button>
+<button (click)="login()" (window:keypress)="onEnter($event)" [disabled]="isUserDataValid()" mat-raised-button>
+  Login
+</button>
 
-  <button mat-button (click)="routeToRegister()">Not registered yet? Register here</button>
+<button (click)="routeToRegister()" mat-button>Not registered yet? Register here</button>
 </body>
