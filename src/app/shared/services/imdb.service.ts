@@ -52,12 +52,12 @@ export class ImdbService {
   private mapToMovie(value: any): MovieType {
     let actors: Array<string> = [];
     value.short.actor.map((actor: any) => actors.push(actor.name));
-    console.log('rank', value.main.ratingsSummary.topRanking ?value.main.ratingsSummary.topRanking : null);
+    console.log('rank', value);
     return {
       id: value.imdbId,
-      author: value.short.creator[1].name ? value.short.creator[1].name : null,
+      author: value?.main?.creators[0]?.name  ? value.main.creators[0].name : null,
       genre: value.short.genre,
-      name: value.main.titleText.text,
+      name: value.main.titleText.text? value.main.titleText.text: false,
       liked: false,
       releaseDate: new Date(`${value.main.releaseDate.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`),
       rating: value.short.reviewbash ? value.short.review.reviewRating.ratingValue : null,

@@ -6,13 +6,14 @@
     </div>
   </div>
   <div class="right-box-top">
-    <span>
-      {{movie?.name}}
-    </span>
-
-    <img [src]="movie?.imdb?.img_poster" class="poster">
-    <div>
-      <mat-icon (click)="likeMovie(movie)" [class]="movie?.liked ? 'liked' : 'not-liked'"
+    <div class="title-and-poster">
+      <span>
+        {{movie?.name}}
+      </span>
+      <img [src]="movie?.imdb?.img_poster" class="poster">
+    </div>
+    <div class="like-button">
+      <mat-icon (click)="likeMovie(movie)" *ngIf="movie.liked != null" [class]="movie?.liked ? 'liked' : 'not-liked'"
                 fontIcon="favorite"></mat-icon>
     </div>
   </div>

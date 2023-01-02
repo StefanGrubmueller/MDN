@@ -26,7 +26,10 @@ export class MovieInfoComponent implements OnInit {
     this.activeRoute.queryParams.pipe().subscribe((p) => {
       if (p.imdb === 'true') {
         this.isImdb = true;
-        this.imdbService.getImdbMovieDetails(p.movieId).subscribe(value => this.movie = value);
+        this.imdbService.getImdbMovieDetails(p.movieId).subscribe(value => {
+          console.log('movie', value);
+          this.movie = value;
+        });
       } else {
         this.isImdb = false;
         this.manageMovieService.downloadMovieInformation(p.movieId).subscribe(movie => movie ? this.movie = movie : '');

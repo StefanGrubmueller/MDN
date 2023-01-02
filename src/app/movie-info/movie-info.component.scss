@@ -15,7 +15,19 @@
     display: none;
   }
   .right-box-top {
-    padding-left: 1em;
+    padding-left: 1em !important;
+    font-size: 7vw !important;
+  }
+
+  .poster {
+    margin-top: 1em;
+    margin-right: 1em ;
+    max-height: 40vw ;
+    max-width: 40vw ;
+  }
+
+  .like-button {
+
   }
 }
 
@@ -31,14 +43,24 @@
 
   .right-box-top {
     padding-left: 3em;
+    span {
+      font-size: 4em;
+    }
   }
+
+  .poster {
+    max-height: 20em;
+    max-width: 20em;
+    margin-top: 3em;
+    margin-right: 5em;
+  }
+
 
 }
 
 .wrapper {
   position: absolute;
   display: grid;
-  height: 100%;
   width: 100%;
   overflow: hidden;
 }
@@ -56,7 +78,7 @@
 
 .right-box-top {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   grid-area: b;
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(91, 91, 101, 1) 0%, rgb(179, 179, 179) 100%);
   color: white;
@@ -67,7 +89,6 @@
     flex: 1;
     max-width: 20em;
     line-height: 1em;
-    font-size: 4em;
     overflow: hidden;
   }
 }
@@ -117,9 +138,11 @@
 }
 
 .poster {
-  max-height: 20em;
-  max-width: 20em;
   object-fit: scale-down;
-  margin-top: 3em;
-  margin-right: 5em;
+
 }
+
+.title-and-poster {
+  display: flex;
+}
+
