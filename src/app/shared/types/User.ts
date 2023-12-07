@@ -5,5 +5,11 @@ export type User = {
   userName: string;
   firstName?: string;
   sureName?: string;
-  friends?: Array<string>
-}
+  friends?: Array<string>;
+};
+
+export type FirebaseAuthUser = {
+  username: string;
+  email: string;
+  password: string;
+};

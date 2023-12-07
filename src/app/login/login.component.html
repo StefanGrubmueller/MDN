@@ -1,39 +1,36 @@
-<body>
-<h1>Login</h1>
-<main [formGroup]="loginForm">
-  <div class="form">
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input formControlName="email"
-             matInput
-             placeholder="Please enter email"
-      >
-    </mat-form-field>
+<div class="justify-content-center flex mt-8">
+  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+    <div class="text-center mb-5">
+      <div class="text-900 text-3xl font-medium mb-3" (click)="routeToRegister()">Welcome Back</div>
+      <span class="text-600 font-medium line-height-3">Don't have an account?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="routeToRegister()">Create
+        today!</a>
+    </div>
 
+    <form [formGroup]="loginForm">
+      <label for="email" class="block text-900 font-medium mb-2">Email</label>
+      <input id="email" formControlName="email" type="text" placeholder="Email address" pInputText class="w-full mb-3">
+
+      <label for="password" class="block text-900 font-medium mb-2">Password</label>
+      <div class="min-w-full w-10rem mb-3">
+        <p-password id="password" formControlName="password" type="password" placeholder="Password"
+                    [toggleMask]="true" [inputStyle]="{'width':'100%'}" class="w-full"
+                    [style]="{'width':'100%'}"></p-password>
+
+      </div>
+
+      <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <p-checkbox id="rememberme" formControlName="rememberMe" [binary]="true" styleClass="mr-2"></p-checkbox>
+          <label for="rememberme" class="text-900">Remember me</label>
+        </div>
+        <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
+           (click)="routeToForgetPassword()">Forgot
+          password?</a>
+      </div>
+
+      <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full" (click)="login()"></button>
+    </form>
   </div>
-
-  <div class="form">
-    <mat-form-field appearance="fill">
-      <mat-label>Password</mat-label>
-      <input [type]="hide ? 'password' : 'text'"
-             formControlName="password"
-             matInput
-             placeholder="Please enter password"
-      >
-      <button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" mat-icon-button
-              matSuffix>
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-
-  </div>
-</main>
-
-<span *ngIf="loggedIn === false">Wrong credentials</span>
-
-<button (click)="login()" (window:keypress)="onEnter($event)" [disabled]="isUserDataValid()" mat-raised-button>
-  Login
-</button>
-
-<button (click)="routeToRegister()" mat-button>Not registered yet? Register here</button>
-</body>
+</div>
+<p-toast></p-toast>

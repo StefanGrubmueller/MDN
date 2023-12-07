@@ -1,23 +1,8 @@
-<body>
-<app-top-bar class="top-bar"></app-top-bar>
-<div [formGroup]="searchForm" class="form">
-  <h1>Suche</h1>
-  <input formControlName="searchText"
-         placeholder="Search for movies or users">
+<span class="p-input-icon-left p-input-icon-right">
+    <i class="pi pi-search cursor-pointer" (click)="search(searchValue)"></i>
+    <input type="text" placeholder="Search" pInputText [(ngModel)]="searchValue" (ngModelChange)="search($event)"/>
+  <i class="pi pi-times cursor-pointer" (click)="clearSearchText()"></i>
+</span>
+<div *ngIf="searchValue">
+  <p-listbox [options]="searchResults" (onChange)="gotoSearchResult($event)" optionLabel="title"></p-listbox>
 </div>
-
-<div class="results">
-  <div *ngFor="let user of allUsers | userSearchFilter: (searchForm | getSearchText)" class="list">
-    <span (click)="routeToUserProfile(user.id)" class="list-item">{{user?.userName}}</span>
-  </div>
-
-  <div *ngFor="let movie of allMovies | movieSearchFilter: (searchForm | getSearchText)" class="list">
-    <span (click)="routeToMovie(movie.id)" class="list-item">{{movie?.name}}</span>
-  </div>
-
-  <div *ngFor="let movieFromIMDBResults of searchResults" class="list">
-    <span (click)="routeToIMDBMovie(movieFromIMDBResults.imdb_id)" class="list-item">{{movieFromIMDBResults?.title}}</span>
-  </div>
-</div>
-<app-footer class="footer-row"></app-footer>
-</body>

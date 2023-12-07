@@ -1,25 +1,44 @@
-<app-top-bar class="top-bar"></app-top-bar>
+<form [formGroup]="addMovieForm">
+  <div class="flex justify-content-center">
+    <h2>Gib einen Namen für deinen neuen Film ein.</h2>
+  </div>
+  <div class="flex flex-row gap-4 mb-4 ">
+    <input pInputText
+           class="flex-grow-1"
+           formControlName="name"
+           placeholder="Neuer Film">
+    <button pButton (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null"
+            class="justify-content-center">Add
+    </button>
+  </div>
 
-<form [formGroup]="addMovieForm" class="add-movie-form">
-  <div class="entry">
-    <h2 class="add-movie-form-title">Gib einen Namen für deinen</h2>
-    <h2 class="add-movie-form-title">neuen Film ein.</h2>
-    <div class="form-element">
-      <input
-        formControlName="name"
-        matInput placeholder="Neuer Film">
-    </div>
+  <div class="cursor-pointer" *ngIf="searchResults.length > 0">
+    <p-table [value]="searchResults" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="title">Title
+            <p-sortIcon field="title"></p-sortIcon>
+          </th>
+          <th pSortableColumn="year">Year
+            <p-sortIcon field="year"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actors">Actors
+            <p-sortIcon field="actors"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-movie>
+        <tr (click)="setMovieInSearchBar(movie)"
+            [ngStyle]="{'color': selectedMovieId === movie?.imdb_id ? 'green' : 'primary-color' }">
+          <td
+          >{{ movie.title }}
+          </td>
+          <td>{{ movie.year }}</td>
+          <td>{{ movie.actors }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </form>
 
-<div *ngFor="let movieFromIMDBResults of searchResults" class="list">
-  <span (click)="setMovie(movieFromIMDBResults)" [class]="movieFromIMDBResults.title === addMovieForm.controls['name'].value ? 'selected-item' : 'list-item'">{{movieFromIMDBResults?.title}}</span>
-</div>
-
-<div class="add-movie-form-buttons">
-  <button (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null" class="add-movie-button"
-          mat-raised-button>Add
-  </button>
-</div>
-
-<app-footer class="footer-row"></app-footer>
+<p-toast [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>

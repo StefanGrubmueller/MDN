@@ -1,24 +1,55 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {UserService} from "../shared/services/user.service";
-import {User} from "../shared/types/user";
+import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { AuthService } from '../shared/services/auth.service';
+import { MessageService } from 'primeng/api';
 
+@UntilDestroy()
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  styleUrls: ['./user-profile.component.scss'],
+  providers: [MessageService],
 })
 export class UserProfileComponent implements OnInit {
+  user: any;
 
-  user: User;
-
-  constructor(private activeRoute: ActivatedRoute, private userService: UserService) {
-  }
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService,
+  ) {}
 
   ngOnInit(): void {
-    this.activeRoute.queryParams.pipe().subscribe((p) => {
-      this.user = this.userService.getUser(p.userId);
-    })
+    this.authService
+      .getUserDetails()
+      .pipe(untilDestroyed(this))
+      .subscribe((user) => {
+        this.user = user;
+        console.log('user', user.toJSON());
+      });
   }
 
+  resetPassword() {
+    this.authService
+      .resetPassword(this.user.email)
+      .then(() => this.setResetSuccessMessage())
+      .catch((error) => this.setResetErrorMessage(error));
+  }
+
+  private setResetErrorMessage(error: string) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: error,
+      life: 10000,
+    });
+  }
+
+  private setResetSuccessMessage() {
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'An email with a link has been sent to reset your password.',
+      life: 10000,
+    });
+  }
 }
