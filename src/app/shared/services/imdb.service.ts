@@ -1,36 +1,46 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {MovieType} from "../../movieType";
-import {ImdbDescription} from "../types/imdb";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { MovieType } from '../../movieType';
+import { ImdbDescription } from '../types/imdb';
+import firebase from 'firebase/compat/app';
+import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImdbService {
+  private _searchSubject = new BehaviorSubject<any>({});
+  private _searchObservable = this._searchSubject.asObservable();
 
-  searchSubject = new BehaviorSubject<any>({});
-  searchObservable = this.searchSubject.asObservable();
+  private _detailsSubject = new BehaviorSubject<MovieType>({
+    name: '',
+    id: '',
+    liked: false,
+  });
+  private _detailsObservable = this._detailsSubject.asObservable();
 
-  detailsSubject = new BehaviorSubject<MovieType>({name: '', id: '', liked: false});
-  detailsObservable = this.detailsSubject.asObservable();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   public getImdbMovieDetails(movieId: string): Observable<MovieType> {
-    this.http.get(`https://search.imdbot.workers.dev/?tt=${movieId}`).subscribe((value: any) => {
-      let mappedValue = this.mapToMovie(value);
-      this.detailsSubject.next(mappedValue);
-    });
-    return this.detailsObservable;
+    this.http
+      .get(`https://search.imdbot.workers.dev/?tt=${movieId}`)
+      .subscribe((value: any) => {
+        let mappedValue = this.mapToMovie(value);
+        this._detailsSubject.next(mappedValue);
+      });
+    return this._detailsObservable;
   }
 
-  public getMovieListBasedOnSearch(searchText: string): Observable<any> {
-    this.http.get(`https://search.imdbot.workers.dev/?q=${searchText}`).subscribe((value) => this.searchSubject.next(value));
-    return this.searchObservable;
+  public getMovieListBasedOnSearch(searchText: string | null): Observable<any> {
+    this.http
+      .get(`https://search.imdbot.workers.dev/?q=${searchText}`)
+      .subscribe((value) => this._searchSubject.next(value));
+    return this._searchObservable;
   }
 
   public getMappedMovieList(value: any): Array<ImdbDescription> {
-    let movies: Array<ImdbDescription> =[];
+    let movies: Array<ImdbDescription> = [];
     value.description.map((movie: any) => {
       let jsonMovie = JSON.parse(JSON.stringify(movie));
       movies.push({
@@ -43,7 +53,7 @@ export class ImdbService {
         rank: jsonMovie['#RANK'],
         year: jsonMovie['#YEAR'],
         photo_height: jsonMovie['photo_height'],
-        photo_width: jsonMovie['photo_width']
+        photo_width: jsonMovie['photo_width'],
       });
     });
     return movies;
@@ -51,25 +61,33 @@ export class ImdbService {
 
   private mapToMovie(value: any): MovieType {
     let actors: Array<string> = [];
-    value.short.actor.map((actor: any) => actors.push(actor.name));
-    console.log('rank', value);
+    value.short.actor?.map((actor: any) => actors.push(actor.name));
     return {
       id: value.imdbId,
-      author: value?.main?.creators[0]?.name  ? value.main.creators[0].name : null,
+      author: value?.main?.creators[0]?.name
+        ? value.main.creators[0].name
+        : null,
       genre: value.short.genre,
-      name: value.main.titleText.text? value.main.titleText.text: false,
+      name: value.main.titleText.text ? value.main.titleText.text : false,
       liked: false,
-      releaseDate: new Date(`${value.main.releaseDate.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`),
-      rating: value.short.reviewbash ? value.short.review.reviewRating.ratingValue : null,
+      releaseDate: Timestamp.fromDate(
+        new Date(
+          `${value.main?.releaseDate?.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`,
+        ),
+      ),
+      rating: value.short.reviewbash
+        ? value.short.review.reviewRating.ratingValue
+        : null,
       imdb: {
         title: value.main.titleText.text,
         imdb_id: value.imdbId,
         actors: actors,
         year: value.main.releaseYear.year,
-        rank: value.main.ratingsSummary.topRanking ?value.main.ratingsSummary.topRanking.rank : null,
+        rank: value.main.ratingsSummary.topRanking
+          ? value.main.ratingsSummary.topRanking.rank
+          : null,
         img_poster: value.short.image,
-      }
-    }
+      },
+    };
   }
-
 }

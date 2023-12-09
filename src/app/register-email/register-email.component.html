@@ -1,0 +1,12 @@
+<div class="flex flex-column mt-8 ml-8 row-gap-5 min-h-full align-items-center">
+
+  <div class="flex flex-column column-row-8">
+    <label for="email" class="text-lg font-bold">Please enter your email</label>
+    <input [(ngModel)]="email" type="email" id="email" class="w-full" pInputText placeholder="Email">
+    <label for="emailConfirmation" class="text-lg font-bold mt-5">Please confirm your email</label>
+    <input [(ngModel)]="confirmedEmail" type="email" id="emailConfirmation" class="w-full" pInputText
+           placeholder="Confirm your email">
+    <button pButton label="Next >" [disabled]="email == null || email !== confirmedEmail"
+            (click)="saveEmailAndRouteToStep3()" class="w-full mt-5"></button>
+  </div>
+</div>

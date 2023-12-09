@@ -1,0 +1,8 @@
+<div class="flex flex-column align-items-center mt-8 ml-8 row-gap-5 min-h-full">
+  <div class="flex flex-column column-row-8">
+    <label for="username" class="text-lg font-bold mb-5">Please enter your username :)</label>
+    <input [(ngModel)]="username" id="username" class="w-full mb-5" pInputText placeholder="Username">
+    <button pButton label="Next >" [disabled]="username == null"
+            (click)="saveUserNameAndRouteToStep2()" class="w-full"></button>
+  </div>
+</div>

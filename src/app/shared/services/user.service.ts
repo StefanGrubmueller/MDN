@@ -1,18 +1,23 @@
-import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/compat/firestore";
-import {User} from "../types/user";
-import {AngularFireAuth} from "@angular/fire/compat/auth";
+import { Injectable } from '@angular/core';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
+import { User } from '../types/User';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  private _userCollection: AngularFirestoreCollection<User>;
+  private _allUsers: Array<User> = [];
 
-  userCollection: AngularFirestoreCollection<User>;
-  allUsers: Array<User> = [];
-
-  constructor(private firebaseAuth: AngularFireAuth, private db: AngularFirestore) {
-    this.userCollection = this.getUserCollection();
+  constructor(
+    private firebaseAuth: AngularFireAuth,
+    private db: AngularFirestore,
+  ) {
+    this._userCollection = this.getUserCollection();
     this.downloadAllUsers();
   }
 
@@ -21,7 +26,7 @@ export class UserService {
   }
 
   public geAllUsers(): Array<User> {
-    return this.allUsers;
+    return this._allUsers;
   }
 
   public uploadUserInformation(user: User): void {
@@ -30,11 +35,15 @@ export class UserService {
 
   public getUser(userId: string): User {
     // @ts-ignore
-    return this.allUsers.find((user: User) => user.id as User === userId);
+    return this._allUsers.find((user: User) => (user.id as User) === userId);
   }
 
   private downloadAllUsers(): void {
-    this.userCollection.ref.get().then((elem) => elem.docs.map(user => this.allUsers.push(user.data())));
+    this._userCollection.ref
+      .get()
+      .then((elem) =>
+        elem.docs.map((user) => this._allUsers.push(user.data())),
+      );
   }
 
   private getUserCollection(): AngularFirestoreCollection<User> {

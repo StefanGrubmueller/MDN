@@ -1,66 +1,70 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from "../shared/types/user";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {MovieType} from "../movieType";
-import {ManageMoviesOfDbService} from "../shared/services/manage-movies-of-db.service";
-import {Router} from "@angular/router";
-import {UserService} from "../shared/services/user.service";
-import {BehaviorSubject, debounceTime} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {ImdbDescription} from "../shared/types/imdb";
-import {ImdbService} from "../shared/services/imdb.service";
+import { Component, OnInit } from '@angular/core';
+import { User } from '../shared/types/User';
+import { Router } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
+import { ImdbDescription } from '../shared/types/imdb';
+import { ImdbService } from '../shared/services/imdb.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-
   allUsers: Array<User> = [];
-
-  allMovies: Array<MovieType> = [];
-
-  searchForm: FormGroup;
-
   searchResults: Array<ImdbDescription> = [];
+  searchValue: string | null;
 
-  constructor(private userService: UserService,
-              private formBuilder: FormBuilder,
-              private manageMovieService: ManageMoviesOfDbService,
-              private router: Router,
-              private http: HttpClient,
-              private imdbService: ImdbService) {
-  }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private imdbService: ImdbService,
+  ) {}
 
   ngOnInit(): void {
-    this.searchForm = this.formBuilder.group({
-        searchText: ['', []],
-      },
-    )
     this.allUsers = this.userService.geAllUsers();
-    this.allMovies = this.manageMovieService.getAllMovies();
-    this.searchForm.valueChanges.pipe(debounceTime(500)).subscribe((values: any) => {
-      if(values.searchText && values.searchText != '') {
-        this.imdbService.getMovieListBasedOnSearch(values.searchText).subscribe((value) => {
-          if (value.description) {
-            this.searchResults = this.imdbService.getMappedMovieList(value);
-          }
-        });
-      }
-    })
+  }
+
+  search(searchString: string | null) {
+    this.imdbService
+      .getMovieListBasedOnSearch(searchString)
+      .pipe(untilDestroyed(this))
+      .subscribe((value) => {
+        if (value.description) {
+          this.searchResults = this.imdbService.getMappedMovieList(value);
+        }
+      });
+  }
+
+  gotoSearchResult(event: any) {
+    const searchResult = event.value;
+    if (searchResult?.imdb_id) {
+      this.routeToIMDBMovie(searchResult.imdb_id);
+      this.searchValue = null;
+    }
+  }
+
+  clearSearchText() {
+    this.searchValue = null;
   }
 
   public routeToMovie(movieId: string): void {
-    this.router.navigate(['movie'], {queryParams: {movieId: movieId, imdb: false}})
+    this.router.navigate(['movie'], {
+      queryParams: { movieId: movieId, imdb: false },
+    });
   }
 
+  //has to be implemented - search and show other not yet added movies
   public routeToIMDBMovie(movieId: string): void {
-    this.router.navigate(['movie'], {queryParams: {movieId: movieId, imdb: true}})
+    this.router.navigate(['movie'], {
+      queryParams: { movieId: movieId, imdb: true },
+    });
   }
 
+  //has to be implemented - search and show other users
   public routeToUserProfile(userId: string): void {
-    this.router.navigate(['user'], {queryParams: {userId: userId}})
+    this.router.navigate(['user'], { queryParams: { userId: userId } });
   }
-
 }

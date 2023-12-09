@@ -1,56 +1,9 @@
-.footer {
-  background-color: black;
-  height: 5em;
-  min-width: 100%;
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-
-
-  div {
-    flex: 1;
-    color: rgb(178,178,178);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-
-    .material-icons {
-      flex: 1;
-      font-weight: 800;
-      font-size: 2em;
-    }
-
-    span {
-      font-weight: 500;
-      letter-spacing: 3px;
-      flex: 1;
-      padding-left: 0.7em;
-      font-size: 12px;
-    }
-  }
+::ng-deep .container-centering .p-tabmenu .p-tabmenu-nav {
+  justify-content: center;
 }
 
-.footer :hover {
-  cursor: pointer;
+::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+  padding: 2rem 4rem;
+  border-radius: 0;
+  margin-bottom: 0.5rem;
 }
-
-.footer {
-  .HOME {
-    color: white;
-  }
-
-  .SEARCH {
-    color: white;
-  }
-
-  .ADD {
-    color: white;
-  }
-
-  .LIB {
-    color: white;
-  }
-}
-

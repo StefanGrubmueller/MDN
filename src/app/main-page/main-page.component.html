@@ -1,29 +1,30 @@
-<!--<button (click)="addIdToExistingProdData()">Import</button>
-<button (click)="deleteExistingMovies()">Delete</button>-->
-<app-top-bar class="top-bar"></app-top-bar>
-
-<body>
-<div class="flex-row header">
-  <span class="index">#</span>
-  <span class="title">Title</span>
-  <span class="date">Date Added</span>
-  <span class="liked"> </span>
+<div class="mb-5">
+  <h2>Welcome Home Nerd :) &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; You have watched &nbsp;<span
+    class="text-primary">{{ movies.length }}</span> &nbsp;movies and series!</h2>
+  <button pButton label="Create new entry" (click)="routeToNewEntry()" class="my-4"></button>
 </div>
 
-<main>
-  <div *ngFor="let movie of movies; let i = index;" class="flex-row">
-    <span class="index">{{i + 1}}</span>
-    <div (click)="routeToMovieInfo(movie.id)" class="title" style="text-align:left">
-      {{movie.name}}
-    </div>
-    <span class="date">{{movie?.meta?.uploadedOn?.toDate()?.toLocaleDateString()}}</span>
-    <div (click)="likeMovie(movie)">
-      <mat-icon [class]="movie.liked ? 'liked' : 'not-liked'" fontIcon="favorite"></mat-icon>
-    </div>
-  </div>
-</main>
-</body>
-
-<app-footer class="footer-row"></app-footer>
+<p-table [value]="movies" [tableStyle]="{ 'min-width': '50rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Date Added</th>
+      <th>&nbsp;</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-movie let-i="rowIndex">
+    <tr class="cursor-pointer">
+      <td>{{ i + 1 }}</td>
+      <td (click)="routeToMovieInfo(movie.id)">{{ movie.name }}</td>
+      <td>{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
+      <td>
+        <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+                  [link]="true"></p-button>
+        {{ movie.code }}
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
 
 
