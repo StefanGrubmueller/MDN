@@ -1,7 +1,7 @@
-<div class="min-w-full grid pt-4 ">
-  <i class="pi pi-home align-self-center ml-4 cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
-  <span class="hidden sm:inline align-self-center col cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</span>
-  <app-search class="col sm:col-2 sm:col-offset-8"></app-search>
-  <app-settings class="col"></app-settings>
+<div class="min-w-full flex flex-row gap-4 pt-4 align-items-center">
+  <i class="pi pi-home align-self-center ml-4 flex cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
+  <span class="hidden sm:inline align-self-center flex cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</span>
+  <app-search class="col sm:col-2 sm:col-offset-8" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
+  <app-settings class="flex"></app-settings>
 </div>
 <p-divider class="hidden sm:inline"></p-divider>
