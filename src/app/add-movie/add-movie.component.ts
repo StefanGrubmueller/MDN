@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MovieType } from '../movieType';
 import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
 import { v4 as uuidv4 } from 'uuid';
-import { debounceTime } from 'rxjs';
+import { debounceTime, forkJoin } from 'rxjs';
 import { ImdbService } from '../shared/services/imdb.service';
 import { ImdbDescription } from '../shared/types/imdb';
 import { MessageService } from 'primeng/api';
@@ -61,7 +61,7 @@ export class AddMovieComponent implements OnInit {
       ? this.uploadImdbMovieToDatabase()
       : this.uploadNewlyCreatedMovieToDatabase();
 
-    this.showMessage();
+    this.showMessage(true);
     this.clearForm();
   }
 
@@ -70,31 +70,58 @@ export class AddMovieComponent implements OnInit {
     this.searchResults = [];
   }
 
-  private showMessage() {
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'You have added this movie to your library',
-      life: 1000,
-    });
+  private showMessage(success: boolean) {
+    if (success) {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'You have added this movie to your library',
+        life: 1000,
+      });
+    } else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail:
+          'There has been some problem. It could be that you have already added this movie or that our services experience some kind of issues. Please try later.',
+        life: 1000,
+      });
+    }
   }
 
-  private uploadNewlyCreatedMovieToDatabase() {
+  private uploadNewlyCreatedMovieToDatabase(): boolean {
     const movieDetails = this.gatherDetailedMovieInformationIfAvailable();
     if (movieDetails.name !== '') {
       this.manageMovieService.uploadMovie(movieDetails);
     }
+    return true;
   }
 
-  private uploadImdbMovieToDatabase() {
+  private uploadImdbMovieToDatabase(): boolean {
+    let success: boolean = false;
+
+    forkJoin(
+      this.imdbService.getImdbMovieDetails(
+        this.addMovieForm.controls['id'].value,
+      ),
+    ).subscribe(
+      (value) => {},
+      (error) => {},
+    );
     this.imdbService
       .getImdbMovieDetails(this.addMovieForm.controls['id'].value)
       .pipe(untilDestroyed(this))
       .subscribe((movie) => {
-        if (movie.name !== '') {
+        if (
+          movie.name !== '' &&
+          !this.manageMovieService.movieIsAlreadyInUsersLib(movie)
+        ) {
           this.manageMovieService.uploadMovie(movie);
+          success = true;
         }
+        return success;
       });
+    return success;
   }
 
   private isImdbMovie() {

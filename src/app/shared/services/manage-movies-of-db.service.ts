@@ -38,6 +38,10 @@ export class ManageMoviesOfDbService {
     this._moviesFromDB.push(movie);
   }
 
+  public deleteMovie(id: string): void {
+    this._dbCollection.doc(id).delete();
+  }
+
   public updateMovie(movie: MovieType): void {
     this._dbCollection.doc(movie.id).set(movie);
   }
@@ -46,6 +50,14 @@ export class ManageMoviesOfDbService {
     id: string,
   ): Observable<MovieType | undefined> {
     return this._dbCollection.doc(id).valueChanges();
+  }
+
+  public movieIsAlreadyInUsersLib(movie: MovieType): boolean {
+    return (
+      this._moviesFromDB.filter((localMovie) => {
+        return movie?.imdb?.imdb_id === localMovie?.imdb?.imdb_id;
+      }).length > 1
+    );
   }
 
   private downloadAllMoviesFromFirebase(): void {

@@ -22,7 +22,6 @@ export class TopBarComponent implements OnInit {
 
   @HostListener('window:resize')
   public setScreenSize(): void {
-    console.log('here');
     if (window.innerWidth <= ScreenSize.SMALL) {
       this.screenSize = ScreenSize.SMALL;
     } else if (window.innerWidth <= ScreenSize.MEDIUM) {
@@ -30,7 +29,6 @@ export class TopBarComponent implements OnInit {
     } else {
       this.screenSize = ScreenSize.LARGE;
     }
-    console.log('d', this.screenSize, window.screenX);
   }
 
   protected readonly ScreenSize = ScreenSize;

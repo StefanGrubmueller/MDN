@@ -1,30 +1,44 @@
-<div class="mb-5">
-  <h2>Welcome Home Nerd :) &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; You have watched &nbsp;<span
-    class="text-primary">{{ movies.length }}</span> &nbsp;movies and series!</h2>
-  <button pButton label="Create new entry" (click)="routeToNewEntry()" class="my-4"></button>
+<div *ngIf="localMovies && localMovies.length > 0">
+  <div class="mb-5">
+    <h2>Welcome Home Nerd :) &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; You have watched &nbsp;<span
+      class="text-primary">{{ localMovies.length }}</span> &nbsp;movies and series!</h2>
+    <button pButton label="Create new entry" (click)="routeToNewEntry()" class="my-4"></button>
+  </div>
+
+  <p-table [value]="localMovies" [breakpoint]="'600px'">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngIf="screenSize !== ScreenSize.SMALL">#</th>
+        <th>Title</th>
+        <th *ngIf="screenSize !== ScreenSize.SMALL">Added On</th>
+        <th>&nbsp;</th>
+        <th *ngIf="screenSize !== ScreenSize.SMALL">&nbsp;</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-movie let-i="rowIndex">
+      <tr class="cursor-pointer">
+        <td *ngIf="screenSize !== ScreenSize.SMALL">{{ i + 1 }}</td>
+        <td (click)="routeToMovieInfo(movie.id)">{{ movie.name }}</td>
+        <td *ngIf="screenSize !== ScreenSize.SMALL">{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
+        <td>
+          <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+                    [link]="true"></p-button>
+          {{ movie.code }}
+        </td>
+        <td *ngIf="screenSize !== ScreenSize.SMALL">
+          <p-button [icon]="'pi pi-trash'" (click)="deleteMovie(movie)"
+                    [link]="true"></p-button>
+          {{ movie.code }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="!localMovies || localMovies.length <= 0">
+  <app-skeleton-main-page></app-skeleton-main-page>
 </div>
 
-<p-table [value]="movies">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th>Date Added</th>
-      <th>&nbsp;</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-movie let-i="rowIndex">
-    <tr class="cursor-pointer">
-      <td>{{ i + 1 }}</td>
-      <td (click)="routeToMovieInfo(movie.id)">{{ movie.name }}</td>
-      <td>{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
-      <td>
-        <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
-                  [link]="true"></p-button>
-        {{ movie.code }}
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<p-toast position="bottom-center"></p-toast>
+
 
 
