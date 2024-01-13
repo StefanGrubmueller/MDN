@@ -13,7 +13,7 @@
   </div>
 
   <div class="cursor-pointer" *ngIf="searchResults.length > 0">
-    <p-table [value]="searchResults" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table [value]="searchResults">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="title">Title
