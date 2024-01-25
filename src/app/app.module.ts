@@ -43,6 +43,8 @@ import { RegisterEmailComponent } from './register-email/register-email.componen
 import { RegisterPasswordComponent } from './register-password/register-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegisterFinishedComponent } from './register-finished/register-finished.component';
+import { SkeletonMainPageComponent } from './skeltons/skeleton-main-page/skeleton-main-page.component';
+import {SkeletonModule} from "primeng/skeleton";
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { RegisterFinishedComponent } from './register-finished/register-finished
     RegisterPasswordComponent,
     ResetPasswordComponent,
     RegisterFinishedComponent,
+    SkeletonMainPageComponent,
   ],
   imports: [
     AngularFireAuthModule,
@@ -97,6 +100,7 @@ import { RegisterFinishedComponent } from './register-finished/register-finished
     ImageModule,
     MenuModule,
     StepsModule,
+    SkeletonModule,
   ],
   providers: [LoginComponent],
   bootstrap: [AppComponent],

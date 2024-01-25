@@ -1,0 +1,16 @@
+<div class="max-w-screen">
+  <p-skeleton width="100%" height="3rem" styleClass="mb-2"></p-skeleton>
+  <p-skeleton width="100%" height="3rem" styleClass="mb-2"></p-skeleton>
+  <p-skeleton width="20%" height="3rem" styleClass="mb-8"></p-skeleton>
+  <div *ngFor="let item of skeletonArray">
+    <div class="grid">
+      <p-skeleton height="4rem" styleClass="mb-2" class="col-2"></p-skeleton>
+      <p-skeleton height="4rem" styleClass="mb-2" class="col-6"></p-skeleton>
+      <p-skeleton height="4rem" styleClass="mb-2" class="col-2"></p-skeleton>
+      <p-skeleton height="4rem" styleClass="mb-2" class="col-2"></p-skeleton>
+    </div>
+    <p-skeleton height="0.2rem" styleClass="mb-2" class="w-full"></p-skeleton>
+
+  </div>
+
+</div>
