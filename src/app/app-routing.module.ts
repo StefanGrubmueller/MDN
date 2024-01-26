@@ -13,6 +13,7 @@ import { RegisterEmailComponent } from './register-email/register-email.componen
 import { RegisterPasswordComponent } from './register-password/register-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegisterFinishedComponent } from './register-finished/register-finished.component';
+import { PlaylistsComponent } from './playlists/playlists.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'ADD', component: AddMovieComponent },
   { path: 'LIB', component: LibraryComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'playlist', component: PlaylistsComponent },
   {
     path: 'register',
     component: CreateProfileComponent,

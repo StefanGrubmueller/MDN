@@ -45,6 +45,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { RegisterFinishedComponent } from './register-finished/register-finished.component';
 import { SkeletonMainPageComponent } from './skeltons/skeleton-main-page/skeleton-main-page.component';
 import {SkeletonModule} from "primeng/skeleton";
+import { NavigationComponent } from './navigation/navigation.component';
+import {SidebarModule} from "primeng/sidebar";
+import { PlaylistsComponent } from './playlists/playlists.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,8 @@ import {SkeletonModule} from "primeng/skeleton";
     ResetPasswordComponent,
     RegisterFinishedComponent,
     SkeletonMainPageComponent,
+    NavigationComponent,
+    PlaylistsComponent,
   ],
   imports: [
     AngularFireAuthModule,
@@ -101,6 +106,7 @@ import {SkeletonModule} from "primeng/skeleton";
     MenuModule,
     StepsModule,
     SkeletonModule,
+    SidebarModule,
   ],
   providers: [LoginComponent],
   bootstrap: [AppComponent],

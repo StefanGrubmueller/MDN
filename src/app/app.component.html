@@ -1,6 +1,7 @@
 <html class="max-h-screen max-w-screen">
 <body class="max-h-full max-w-full">
-<app-top-bar *ngIf="isUserLoggedIn"></app-top-bar>
+<app-top-bar *ngIf="isUserLoggedIn" (onNavigationClicked)="setNavigationVisibility($event)"></app-top-bar>
+<app-navigation [isVisible]="isNavigationVisible"></app-navigation>
 <router-outlet></router-outlet>
 </body>
 </html>

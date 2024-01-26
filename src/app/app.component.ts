@@ -11,6 +11,7 @@ import { AuthService } from './shared/services/auth.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   isUserLoggedIn: boolean = false;
+  isNavigationVisible = false;
 
   constructor(
     private authService: AuthService,
@@ -33,6 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
       .getFirebaseAuthState()
       .pipe(untilDestroyed(this))
       .subscribe((state) => (this.isUserLoggedIn = state != null));
+  }
+
+  public setNavigationVisibility(visible: boolean) {
+    this.isNavigationVisible = visible;
   }
 
   ngOnDestroy() {}

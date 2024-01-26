@@ -2,6 +2,7 @@
   <i class="pi pi-home align-self-center ml-4 flex cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
   <span class="hidden sm:inline align-self-center flex cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</span>
   <app-search class="col sm:col-2 sm:col-offset-8" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
-  <app-settings class="flex"></app-settings>
+  <p-button icon="pi pi-bars" (click)="toggleNavigation()"
+            class="size"></p-button>
 </div>
 <p-divider class="hidden sm:inline"></p-divider>

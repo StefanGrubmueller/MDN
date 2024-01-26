@@ -19,6 +19,7 @@ export class MovieInfoComponent implements OnInit {
   newMovieFromList: MovieType;
 
   isImdb: boolean;
+  alreadyWatched: boolean;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -43,7 +44,13 @@ export class MovieInfoComponent implements OnInit {
         this.manageMovieService
           .downloadMovieInformation(p.movieId)
           .pipe(untilDestroyed(this))
-          .subscribe((movie) => (movie ? (this.movie = movie) : ''));
+          .subscribe((movie) => {
+            if (!movie) return;
+            this.alreadyWatched =
+              this.manageMovieService.movieIsAlreadyInUsersLib(movie);
+            console.log('this.', this.alreadyWatched);
+            return movie ? (this.movie = movie) : '';
+          });
       }
     });
   }

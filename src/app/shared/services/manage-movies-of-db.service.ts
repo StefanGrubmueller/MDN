@@ -38,6 +38,12 @@ export class ManageMoviesOfDbService {
     this._moviesFromDB.push(movie);
   }
 
+  public getAllLikedMovies(): MovieType[] {
+    return this._moviesFromDB.filter((movie: MovieType) => {
+      return movie.liked;
+    });
+  }
+
   public deleteMovie(id: string): void {
     this._dbCollection.doc(id).delete();
   }
@@ -53,10 +59,11 @@ export class ManageMoviesOfDbService {
   }
 
   public movieIsAlreadyInUsersLib(movie: MovieType): boolean {
+    console.log('m', movie);
     return (
       this._moviesFromDB.filter((localMovie) => {
         return movie?.imdb?.imdb_id === localMovie?.imdb?.imdb_id;
-      }).length > 1
+      }).length >= 1
     );
   }
 

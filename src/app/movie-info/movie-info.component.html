@@ -1,4 +1,4 @@
-<div class="grid ">
+<div class="grid " *ngIf="movie">
   <div class="hidden sm:inline col-fixed " style="width: 30rem">
     <p-listbox [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
                [listStyle]="{ 'min-height': '100vh' }"
@@ -9,13 +9,17 @@
     <div class="min-w-full grid mb-8 pt-4">
       <div class="ml-4 mt-0 pt-0 col">
         <h1>{{ movie?.name }}</h1>
+        <p *ngIf="alreadyWatched" class="font-bold text-primary">You have already watched this movie</p>
       </div>
 
       <p-image [src]="movie?.imdb?.img_poster" [preview]="true"
                width="300px" class="col"></p-image>
     </div>
-    <p-button [icon]="movie?.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
-              [link]="true" class="size" [rounded]="true" severity="success"></p-button>
+    <div class="flex flex-row align-items-center">
+      <p-button [icon]="movie?.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+                class="size" [rounded]="true" severity="help"></p-button>
+    </div>
+
 
     <div class="grid">
       <div class="col-6">
@@ -54,7 +58,7 @@
         <div *ngIf="!movie?.imdb?.rank" class="font-italic">No information</div>
       </div>
 
-      <button pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold ">
+      <button *ngIf="!alreadyWatched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold ">
         Add movie to library
       </button>
 
