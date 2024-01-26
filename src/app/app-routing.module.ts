@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'movie', component: MovieInfoComponent },
   { path: 'user', component: UserProfileComponent },
-  { path: 'SEARCH', component: SearchComponent },
+  { path: 'search', component: SearchComponent },
   { path: 'ADD', component: AddMovieComponent },
   { path: 'LIB', component: LibraryComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

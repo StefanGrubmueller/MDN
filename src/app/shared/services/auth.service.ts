@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FirebaseAuthUser } from '../types/User';
-import { UserService } from './user.service';
-import { Observable, Subject } from 'rxjs';
-import { ManageMoviesOfDbService } from './manage-movies-of-db.service';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
+import {FirebaseAuthUser} from '../types/User';
+import {Observable, Subject} from 'rxjs';
+import {ManageMoviesOfDbService} from './manage-movies-of-db.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +12,6 @@ export class AuthService {
 
   constructor(
     private firebaseAuth: AngularFireAuth,
-    private userService: UserService,
     private manageMovieService: ManageMoviesOfDbService,
   ) {}
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, map, Observable, switchMap} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MovieType } from '../../movieType';
 import { ImdbDescription } from '../types/imdb';
@@ -23,13 +23,15 @@ export class ImdbService {
   constructor(private http: HttpClient) {}
 
   public getImdbMovieDetails(movieId: string): Observable<MovieType> {
-    this.http
+    return this.http
       .get(`https://search.imdbot.workers.dev/?tt=${movieId}`)
-      .subscribe((value: any) => {
-        let mappedValue = this.mapToMovie(value);
-        this._detailsSubject.next(mappedValue);
-      });
-    return this._detailsObservable;
+      .pipe(
+        map((value: any) => {
+          let mappedValue = this.mapToMovie(value);
+          this._detailsSubject.next(mappedValue);
+          return mappedValue;
+        })
+      );
   }
 
   public getMovieListBasedOnSearch(searchText: string | null): Observable<any> {
@@ -72,7 +74,7 @@ export class ImdbService {
       liked: false,
       releaseDate: Timestamp.fromDate(
         new Date(
-          `${value.main?.releaseDate?.year}-${value.main.releaseDate.month}-${value.main.releaseDate.day}`,
+          `${value.main?.releaseDate?.year}-${value.main.releaseDate?.month}-${value.main.releaseDate?.day}`,
         ),
       ),
       rating: value.short.reviewbash

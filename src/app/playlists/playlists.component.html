@@ -1,1 +1,37 @@
-<p>playlists works!</p>
+<div *ngIf="!playlistIsOpen">
+  <!--Liked-->
+  <div class="flex justify-content-start ml-3">
+    <p-button icon="pi pi-plus" [rounded]="true" (click)="showCreatePlaylist()"></p-button>
+  </div>
+  <div  class="flex flex-row bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
+       (click)="openPlaylist('LIKED')">
+
+    <p>Liked Movies</p>
+    <p>{{likedMovies?.length ?? 0}}</p>
+  </div>
+
+  <!--Other playlists-->
+  <div *ngFor="let playlist of allPlaylists">
+    <div class="flex flex-row align-items-center">
+      <div  class="flex flex-row flex-grow-1 bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
+            (click)="openPlaylist(playlist.id, playlist.movieIds)">
+        <p>{{playlist.name}}</p>
+        <p>{{playlist?.movieIds?.length ?? 0}}</p>
+      </div>
+
+      <p-button type="button" (click)="deletePlaylist(playlist.id)" icon="pi pi-trash" [link]="true"></p-button>
+    </div>
+  </div>
+</div>
+
+<!--Playlist content-->
+<app-movie-list *ngIf="playlistIsOpen" [movies]="moviesForPlaylist"></app-movie-list>
+<p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false" class="mt-4"></p-button>
+
+<!--Create playlist-->
+<p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true">
+  <div class="flex flex-column gap-2">
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="playlistName"/>
+    <button pButton label="Create" class="w-full" (click)="createPlaylist()"></button>
+  </div>
+</p-dialog>

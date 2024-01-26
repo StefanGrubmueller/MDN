@@ -24,7 +24,6 @@ export class UserProfileComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe((user) => {
         this.user = user;
-        console.log('user', user.toJSON());
       });
   }
 

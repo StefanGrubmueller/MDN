@@ -2,3 +2,7 @@
   word-wrap: break-word; /* For older browser support */
   overflow-wrap: break-word; /* Recommended for newer browsers */
 }
+
+.word-wrap {
+  word-wrap: break-word !important;
+}

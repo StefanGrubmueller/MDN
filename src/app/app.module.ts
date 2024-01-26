@@ -48,6 +48,8 @@ import {SkeletonModule} from "primeng/skeleton";
 import { NavigationComponent } from './navigation/navigation.component';
 import {SidebarModule} from "primeng/sidebar";
 import { PlaylistsComponent } from './playlists/playlists.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
+import {DialogModule} from "primeng/dialog";
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
     SkeletonMainPageComponent,
     NavigationComponent,
     PlaylistsComponent,
+    MovieListComponent,
   ],
   imports: [
     AngularFireAuthModule,
@@ -107,6 +110,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
     StepsModule,
     SkeletonModule,
     SidebarModule,
+    DialogModule,
   ],
   providers: [LoginComponent],
   bootstrap: [AppComponent],

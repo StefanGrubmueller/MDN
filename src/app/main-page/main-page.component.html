@@ -5,40 +5,13 @@
     <button pButton label="Create new entry" (click)="routeToNewEntry()" class="my-4"></button>
   </div>
 
-  <p-table [value]="localMovies" [breakpoint]="'600px'">
-    <ng-template pTemplate="header">
-      <tr>
-        <th *ngIf="screenSize !== ScreenSize.SMALL">#</th>
-        <th>Title</th>
-        <th *ngIf="screenSize !== ScreenSize.SMALL">Added On</th>
-        <th>&nbsp;</th>
-        <th *ngIf="screenSize !== ScreenSize.SMALL">&nbsp;</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-movie let-i="rowIndex">
-      <tr class="cursor-pointer">
-        <td *ngIf="screenSize !== ScreenSize.SMALL">{{ i + 1 }}</td>
-        <td (click)="routeToMovieInfo(movie.id)">{{ movie.name }}</td>
-        <td *ngIf="screenSize !== ScreenSize.SMALL">{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
-        <td>
-          <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
-                    [link]="true"></p-button>
-          {{ movie.code }}
-        </td>
-        <td *ngIf="screenSize !== ScreenSize.SMALL">
-          <p-button [icon]="'pi pi-trash'" (click)="deleteMovie(movie)"
-                    [link]="true"></p-button>
-          {{ movie.code }}
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <app-movie-list [movies]="localMovies"></app-movie-list>
 </div>
 <div *ngIf="!localMovies || localMovies.length <= 0">
   <app-skeleton-main-page></app-skeleton-main-page>
 </div>
 
-<p-toast position="bottom-center"></p-toast>
+
 
 
 

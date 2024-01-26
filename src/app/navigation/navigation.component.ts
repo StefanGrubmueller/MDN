@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, HostListener, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {getScreenSize, ScreenSize} from "../shared/types/screenSize";
 
 @Component({
   selector: 'app-navigation',
@@ -9,7 +10,11 @@ import { Router } from '@angular/router';
 export class NavigationComponent {
   @Input() isVisible = false;
 
-  constructor(private router: Router) {}
+  screenSize: ScreenSize = ScreenSize.SMALL;
+
+  constructor(private router: Router) {
+    this.setScreenSize();
+  }
 
   public navigateToPlaylists() {
     this.router.navigate(['/playlist']);
@@ -25,4 +30,16 @@ export class NavigationComponent {
     this.router.navigate(['login']);
     this.isVisible = false;
   }
+
+  public navigateToSearch(){
+  this.router.navigate(['search']);
+  this.isVisible = false;
+}
+
+  @HostListener('window:resize')
+  private setScreenSize(): void {
+    this.screenSize = getScreenSize();
+  }
+
+  protected readonly ScreenSize = ScreenSize;
 }

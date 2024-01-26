@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
-import { MovieType } from '../../movieType';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFirestore, AngularFirestoreCollection,} from '@angular/fire/compat/firestore';
+import {MovieType} from '../../movieType';
+import {Observable, Subject} from 'rxjs';
 import firebase from 'firebase/compat/app';
 import Timestamp = firebase.firestore.Timestamp;
+import {AngularFireAuth} from "@angular/fire/compat/auth";
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +12,9 @@ import Timestamp = firebase.firestore.Timestamp;
 export class ManageMoviesOfDbService {
   private _dbCollection: AngularFirestoreCollection<MovieType>;
   private _moviesFromDB: Array<MovieType> = [];
+  private _$moviesFromDBO: Subject<MovieType[]> = new Subject<MovieType[]>();
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {
     this._dbCollection = this.getCollection();
     this.downloadAllMoviesFromFirebase();
   }
@@ -28,6 +27,10 @@ export class ManageMoviesOfDbService {
     return this._moviesFromDB;
   }
 
+  public getAllMoviesSub(): Subject<MovieType[]> {
+    return this._$moviesFromDBO;
+  }
+
   public clearAllMovies(): void {
     this._moviesFromDB = [];
   }
@@ -38,17 +41,17 @@ export class ManageMoviesOfDbService {
     this._moviesFromDB.push(movie);
   }
 
-  public getAllLikedMovies(): MovieType[] {
-    return this._moviesFromDB.filter((movie: MovieType) => {
-      return movie.liked;
-    });
-  }
-
   public deleteMovie(id: string): void {
     this._dbCollection.doc(id).delete();
   }
 
   public updateMovie(movie: MovieType): void {
+    // local => for instant sync to decrease reads from firebase
+    const index = this._moviesFromDB.findIndex(item => item.id === movie.id);
+    if (index !== -1) {
+      this._moviesFromDB[index] = movie;
+    }
+    // remote
     this._dbCollection.doc(movie.id).set(movie);
   }
 
@@ -59,9 +62,8 @@ export class ManageMoviesOfDbService {
   }
 
   public movieIsAlreadyInUsersLib(movie: MovieType): boolean {
-    console.log('m', movie);
     return (
-      this._moviesFromDB.filter((localMovie) => {
+      this._moviesFromDB.filter((localMovie: MovieType) => {
         return movie?.imdb?.imdb_id === localMovie?.imdb?.imdb_id;
       }).length >= 1
     );
@@ -78,6 +80,7 @@ export class ManageMoviesOfDbService {
         elem.docs.map((d) => {
           this._moviesFromDB.push(<MovieType>d.data());
         });
+        this._$moviesFromDBO.next(this._moviesFromDB);
       });
   }
 
@@ -85,4 +88,6 @@ export class ManageMoviesOfDbService {
     const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
     return this.db.collection(email);
   }
+
+
 }

@@ -1,8 +1,8 @@
 <div class="min-w-full flex flex-row gap-4 pt-4 align-items-center">
   <i class="pi pi-home align-self-center ml-4 flex cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
   <span class="hidden sm:inline align-self-center flex cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</span>
-  <app-search class="col sm:col-2 sm:col-offset-8" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
+  <app-search class="col sm:col-offset-0 md:col-offset-0 lg:col-offset-7" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
   <p-button icon="pi pi-bars" (click)="toggleNavigation()"
-            class="size"></p-button>
+            class="col"></p-button>
 </div>
 <p-divider class="hidden sm:inline"></p-divider>

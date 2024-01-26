@@ -1,69 +1,84 @@
-<div class="grid " *ngIf="movie">
+<app-skeleton-main-page *ngIf="loading"></app-skeleton-main-page>
+<div class="grid " *ngIf="movie != undefined && movie != null && !loading">
   <div class="hidden sm:inline col-fixed " style="width: 30rem">
     <p-listbox [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
                [listStyle]="{ 'min-height': '100vh' }"
                [(ngModel)]="newMovieFromList" [virtualScroll]="false"
-               (click)="loadNewMovie()"></p-listbox>
+               (click)="loadMovieSelectedFromSideBar()"></p-listbox>
   </div>
   <div class="col">
     <div class="min-w-full grid mb-8 pt-4">
       <div class="ml-4 mt-0 pt-0 col">
-        <h1>{{ movie?.name }}</h1>
+        <h1>{{ movie.name }}</h1>
         <p *ngIf="alreadyWatched" class="font-bold text-primary">You have already watched this movie</p>
       </div>
 
-      <p-image [src]="movie?.imdb?.img_poster" [preview]="true"
+      <p-image [src]="movie?.imdb?.img_poster"
                width="300px" class="col"></p-image>
     </div>
-    <div class="flex flex-row align-items-center">
-      <p-button [icon]="movie?.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
-                class="size" [rounded]="true" severity="help"></p-button>
+    <div class="flex flex-row align-items-center gap-3" *ngIf="alreadyWatched">
+      <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+                class="size" [rounded]="true"></p-button>
+      <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
     </div>
 
 
     <div class="grid">
       <div class="col-6">
         <h4>Genre</h4>
-        <div>{{ movie?.genre }}</div>
-        <div *ngIf="!movie?.genre" class="font-italic">No information</div>
+        <div class="word-wrap">{{ movie.genre }}</div>
+        <div *ngIf="!movie.genre" class="font-italic">No information</div>
       </div>
 
       <div class="col-6">
         <h4>Rating</h4>
-        <div *ngIf="movie?.rating">{{ movie.rating }} / 10</div>
+        <div *ngIf="movie?.rating" class="word-wrap">{{ movie.rating }} / 10</div>
         <div *ngIf="!movie?.rating" class="font-italic">No information</div>
       </div>
 
       <div class="col-6">
         <h4>Author</h4>
-        <div *ngIf="movie?.author">{{ movie.author }} / 10</div>
-        <div *ngIf="!movie?.author" class="font-italic">No information</div>
+        <div *ngIf="movie.author" class="word-wrap">{{ movie.author }} / 10</div>
+        <div *ngIf="!movie.author" class="font-italic">No information</div>
       </div>
 
       <div class="col-6">
         <h4>Release Date</h4>
-        <div *ngIf="movie?.releaseDate">{{ movie?.releaseDate?.toDate() | date : 'shortDate' }}</div>
+        <div *ngIf="movie.releaseDate" class="word-wrap">{{ movie.releaseDate.toDate() | date : 'shortDate' }}</div>
         <div *ngIf="!!movie?.releaseDate && !movie?.releaseDate" class="font-italic">No information</div>
       </div>
 
       <div class="col-6">
         <h4>Actors</h4>
-        <div *ngIf="movie?.imdb?.actors">{{ movie?.imdb?.actors }}</div>
-        <div *ngIf="!movie?.imdb?.actors" class="font-italic">No information</div>
+        <div *ngIf="movie.imdb?.actors" class="word-wrap">{{ movie.imdb?.actors }}</div>
+        <div *ngIf="!movie.imdb?.actors" class="font-italic">No information</div>
       </div>
 
       <div class="col-6">
         <h4>Rank</h4>
-        <div *ngIf="movie?.imdb?.rank">#{{ movie?.imdb?.rank }}</div>
-        <div *ngIf="!movie?.imdb?.rank" class="font-italic">No information</div>
+        <div *ngIf="movie.imdb?.rank" class="word-wrap">#{{ movie.imdb?.rank }}</div>
+        <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
       </div>
 
-      <button *ngIf="!alreadyWatched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold ">
+      <button *ngIf="!alreadyWatched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
         Add movie to library
       </button>
 
     </div>
   </div>
 </div>
+
+<p-dialog header="Add to Playlist" [(visible)]="openAddToPlaylistDialog" class="w-4" [modal]="true">
+  <div class="flex flex-column gap-2">
+      <p-table [value]="allPlaylists">
+        <ng-template pTemplate="body" let-playlist>
+          <tr>
+            <td (click)="addToPlaylist(playlist)" class="cursor-pointer">{{ playlist.name }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+  </div>
+
+</p-dialog>
 
 <p-toast [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>
