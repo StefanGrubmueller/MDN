@@ -25,13 +25,31 @@
 </div>
 
 <!--Playlist content-->
-<app-movie-list *ngIf="playlistIsOpen" [movies]="moviesForPlaylist"></app-movie-list>
-<p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false" class="mt-4"></p-button>
+<div class="flex flex-column gap-4">
+  <p-button *ngIf="playlistIsOpen" icon="pi pi-cog" [rounded]="true" (click)="openPlaylistSettingsDialog = true" class="ml-4"></p-button>
+  <app-movie-list *ngIf="playlistIsOpen" [movies]="moviesForPlaylist" ></app-movie-list>
+  <p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false"></p-button>  
+</div>
 
 <!--Create playlist-->
 <p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true">
   <div class="flex flex-column gap-2">
     <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="playlistName"/>
     <button pButton label="Create" class="w-full" (click)="createPlaylist()"></button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="openPlaylistSettingsDialog" [modal]="true" [style]="{ width: '100vw', height: '100vw' }" class="settings">
+  <div class="flex flex-column gap-4 justify-content-center align-items-center">
+    <h1>Playlist Settings</h1>
+    <p-button label="Rename" icon="pi pi-pencil" [link]="true" (click)="openNewPlaylistNameDialog = true"></p-button>
+    <p-button label="Delete" icon="pi pi-trash" [link]="true" (click)="deletePlaylist(selectedPlaylistId)"></p-button>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="openNewPlaylistNameDialog" [modal]="true" [style]="{ width: '100vw', height: '50vw' }">
+  <div class="flex flex-column gap-4 justify-content-center align-items-center">
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="newPlayListName" />
+    <p-button label="Save" icon="pi pi-save" [link]="true" (click)="renamePlaylist(selectedPlaylistId)"></p-button>
   </div>
 </p-dialog>

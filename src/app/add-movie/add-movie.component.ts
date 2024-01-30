@@ -14,7 +14,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
   styleUrls: ['./add-movie.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, ManageMoviesOfDbService],
 })
 export class AddMovieComponent implements OnInit {
   addMovieForm: FormGroup;

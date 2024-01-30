@@ -10,13 +10,13 @@
     <div class="min-w-full grid mb-8 pt-4">
       <div class="ml-4 mt-0 pt-0 col">
         <h1>{{ movie.name }}</h1>
-        <p *ngIf="alreadyWatched" class="font-bold text-primary">You have already watched this movie</p>
+        <p *ngIf="movie?.watched" class="font-bold text-primary">You have already watched this movie</p>
       </div>
 
       <p-image [src]="movie?.imdb?.img_poster"
                width="300px" class="col"></p-image>
     </div>
-    <div class="flex flex-row align-items-center gap-3" *ngIf="alreadyWatched">
+    <div class="flex flex-row align-items-center gap-3" *ngIf="movie?.watched">
       <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
                 class="size" [rounded]="true"></p-button>
       <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
@@ -60,7 +60,7 @@
         <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
       </div>
 
-      <button *ngIf="!alreadyWatched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
+      <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
         Add movie to library
       </button>
 

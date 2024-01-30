@@ -13,6 +13,7 @@ export type MovieType = {
   liked: boolean;
   meta?: Meta;
   imdb?: ImdbDescription;
+  watched?: boolean;
 };
 
 export type Meta = {
