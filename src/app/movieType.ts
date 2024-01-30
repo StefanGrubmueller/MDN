@@ -14,6 +14,7 @@ export type MovieType = {
   meta?: Meta;
   imdb?: ImdbDescription;
   titleImageUrl?: string;
+  watched?: boolean;
 };
 
 export type Meta = {

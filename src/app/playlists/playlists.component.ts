@@ -14,12 +14,18 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 })
 export class PlaylistsComponent implements OnInit{
   moviesForPlaylist: MovieType[];
+  selectedPlaylistId: string = '';
   openCreatePlaylistDialog = false;
   playlistName: string;
   allPlaylists: Playlist[] = [];
   playlistIsOpen = false;
   allMovies: MovieType[] = [];
   likedMovies: MovieType[];
+  openPlaylistSettingsDialog = false;
+  newPlaylistName: string = '';
+  newPlayListName: string = '';
+  openNewPlaylistNameDialog = false;
+
   constructor(private movieManageService: ManageMoviesOfDbService, private playlistService: PlaylistService, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -38,6 +44,7 @@ export class PlaylistsComponent implements OnInit{
     if (playlistId === 'LIKED') {
       this.moviesForPlaylist = this.likedMovies;
     } else {
+      this.selectedPlaylistId = playlistId;
       this.moviesForPlaylist = this.allMovies.filter((movie: MovieType) => movieIds?.includes(movie.id));
     }
     this.playlistIsOpen = true;
@@ -57,6 +64,11 @@ export class PlaylistsComponent implements OnInit{
 
   public deletePlaylist(playlistId: string) {
     this.playlistService.deletePlaylist(playlistId);
+    this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
+  }
+
+  public renamePlaylist(playlistId: string) {
+    this.playlistService.renamePlaylist(playlistId, this.newPlaylistName);
     this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
   }
 }

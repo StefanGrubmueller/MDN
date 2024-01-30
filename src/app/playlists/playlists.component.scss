@@ -7,3 +7,15 @@
     color: white;
   }
 }
+
+::ng-deep .settings .p-dialog .p-dialog-header,
+::ng-deep .settings .p-dialog .p-dialog-content{
+  background: transparent;
+  backdrop-filter: blur(10px);
+}
+
+::ng-deep .settings .p-dialog {
+  border: none;
+  max-height: 100% !important;
+  height: 100% !important;
+}
