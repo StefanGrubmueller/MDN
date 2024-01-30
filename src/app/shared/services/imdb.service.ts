@@ -90,6 +90,7 @@ export class ImdbService {
           : null,
         img_poster: value.short.image,
       },
+      titleImageUrl: value?.main?.titleMainImages?.edges[0]?.node?.url
     };
   }
 }

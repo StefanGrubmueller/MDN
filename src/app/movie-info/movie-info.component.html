@@ -8,6 +8,7 @@
   </div>
   <div class="col">
     <div class="min-w-full grid mb-8 pt-4">
+      <img [src]="movie?.titleImageUrl" class="w-full h-20rem _title-img" />
       <div class="ml-4 mt-0 pt-0 col">
         <h1>{{ movie.name }}</h1>
         <p *ngIf="alreadyWatched" class="font-bold text-primary">You have already watched this movie</p>

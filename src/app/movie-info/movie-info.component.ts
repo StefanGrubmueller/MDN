@@ -44,7 +44,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.movie = null;
 
     this.allMovies = this.manageMovieService.getAllMovies();
-    this.activeRoute.queryParams.pipe(take(1)).subscribe((queryParams) => {
+    this.activeRoute.queryParams.subscribe((queryParams) => {
       const isImdb = queryParams.imdb === 'true';
       const movieId = queryParams.movieId;
 
@@ -61,6 +61,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.imdbService.getImdbMovieDetails(movieId)
       .subscribe((value) => {
         this.movie = value;
+        console.log("value", value)
         this.loading = false;
       });
   }
