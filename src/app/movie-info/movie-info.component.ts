@@ -14,7 +14,7 @@ import {Playlist} from "../Playlist";
   selector: 'app-movie-info',
   templateUrl: './movie-info.component.html',
   styleUrls: ['./movie-info.component.scss'],
-  providers: [MessageService],
+  providers: [MessageService, PlaylistService],
 })
 export class MovieInfoComponent implements OnInit, OnDestroy {
   movie: MovieType | null = null;
@@ -22,7 +22,6 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   newMovieFromList: MovieType;
   loading = true;
   isImdb: boolean;
-  alreadyWatched: boolean;
 
   // Playlists
   openAddToPlaylistDialog = false;
@@ -74,8 +73,6 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
         if (!movie) {
           return;
         }
-
-        this.alreadyWatched = this.manageMovieService.movieIsAlreadyInUsersLib(movie);
 
         if (movie) {
           this.movie = movie;

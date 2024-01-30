@@ -13,15 +13,24 @@ export class PlaylistService {
   private _dbCollection: AngularFirestoreCollection<Playlist>;
   private _playlistsFromDB: Playlist[] = [];
   private $playlistsFromDB: Subject<Playlist[]> = new Subject<Playlist[]>();
+  private $singleSpecificplaylistsFromDB: Subject<Playlist> = new Subject<Playlist>();
 
   constructor(private db: AngularFirestore) {
-    console.log("bla")
     this._dbCollection = this.getCollection();
     this.downloadAllPlaylistsForUser();
   }
 
   public getAllPlaylistsForUser(): Observable<Playlist[]> {
     return this.$playlistsFromDB;
+  }
+
+  public renamePlaylist(playlistId: string, newName: string) {
+    this.$singleSpecificplaylistsFromDB.subscribe((playlist: Playlist) => {
+      let tempPlaylist = playlist;
+      tempPlaylist.name = newName;
+      this._dbCollection.doc(playlistId).set(playlist);
+      this.downloadAllPlaylistsForUser();
+    })
   }
 
   public createPlaylist(name: string): void {
@@ -40,13 +49,15 @@ export class PlaylistService {
     if (!playlist?.movieIds) {
       playlist.movieIds = [movie.id];
     } else {
-      playlist.movieIds.push(movie.id);
+      // so no movie can be added into a playlist twice
+      if (!playlist.movieIds.includes(movie.id)) {
+        playlist.movieIds.push(movie.id);
+      }
     }
     this._dbCollection.doc(playlist.id).set(playlist);
   }
 
   private downloadAllPlaylistsForUser(): void {
-    console.log("2")
     const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
     this.db
       .collection('playlists')
@@ -63,6 +74,25 @@ export class PlaylistService {
         });
         console.log("here", this._playlistsFromDB)
         this.$playlistsFromDB.next(this._playlistsFromDB)
+      });
+  }
+
+  private getPlaylists(playlistId: string): void {
+    const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
+    let tempPlaylist: Playlist;
+    this.db
+      .collection('playlists')
+      .ref?.where('playlistOwnerEmail', "==", email)
+      .where('id', "==", playlistId)
+      .get()
+      .then((playlists) => {
+        this._playlistsFromDB = [];
+        this.$playlistsFromDB.next({} as Playlist[]);
+        playlists.docs.map((playlist) => {
+          if(playlist.exists) {
+            this.$singleSpecificplaylistsFromDB.next(<Playlist>playlist.data());
+          }
+        });
       });
   }
 

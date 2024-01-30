@@ -2,7 +2,7 @@
   <div class="mb-5">
     <h2>Welcome Home Nerd :) &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; You have watched &nbsp;<span
       class="text-primary">{{ localMovies.length }}</span> &nbsp;movies and series!</h2>
-    <button pButton label="Create new entry" (click)="routeToNewEntry()" class="my-4"></button>
+    <button pButton label="Create new entry" (click)="routeToNewEntry()" icon="pi pi-plus" class="my-4"></button>
   </div>
 
   <app-movie-list [movies]="localMovies"></app-movie-list>
