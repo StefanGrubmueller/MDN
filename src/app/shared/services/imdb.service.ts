@@ -29,6 +29,7 @@ export class ImdbService {
         map((value: any) => {
           let mappedValue = this.mapToMovie(value);
           this._detailsSubject.next(mappedValue);
+          console.log('m', value);
           return mappedValue;
         }),
       );

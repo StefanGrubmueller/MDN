@@ -33,6 +33,11 @@ export class ManageMoviesOfDbService {
     this._moviesFromDB = undefined;
   }
 
+  public reload(): void {
+    this._moviesFromDB = undefined;
+    this.fetchMoviesFromDB();
+  }
+
   public uploadMovie(movie: MovieType): void {
     movie.meta = { uploadedOn: Timestamp.now() };
     this._dbCollection.doc(movie.id).set(movie);

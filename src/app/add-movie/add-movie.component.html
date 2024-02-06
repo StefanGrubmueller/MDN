@@ -7,7 +7,7 @@
            class="flex-grow-1"
            formControlName="name"
            placeholder="Neuer Film">
-    <button pButton (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null"
+    <button pButton (click)="addMovie()" [disabled]="addMovieForm.controls['id'].value === null"
             class="justify-content-center">Add
     </button>
   </div>

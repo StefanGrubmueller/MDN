@@ -64,7 +64,7 @@
             </div>
 
 
-            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb()"
+            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb(true)"
                     class="mt-4 justify-content-center font-bold word-wrap">
               Add movie to library
             </button>
@@ -77,9 +77,9 @@
 </div>
 
 
-<div class="grid " *ngIf="getScreenSize() === ScreenSize.SMALL && movie != undefined && movie != null && !loading">
+<div class="grid " *ngIf="getScreenSize() === ScreenSize.SMALL && movie != undefined && true && !loading">
   <div class="hidden sm:inline col-fixed " style="width: 30rem">
-    <p-listbox [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
+    <p-listbox [options]="allMovies || []" optionLabel="name" [style]="{'min-width':'100%'}"
                [listStyle]="{ 'min-height': '100vh' }"
                [(ngModel)]="newMovieFromList" [virtualScroll]="false"
                (click)="loadMovieSelectedFromSideBar()"></p-listbox>
@@ -138,7 +138,7 @@
         <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
       </div>
 
-      <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb()"
+      <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb(true)"
               class="mt-4 justify-content-center font-bold word-wrap">
         Add movie to library
       </button>

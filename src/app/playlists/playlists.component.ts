@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MovieType } from '../movieType';
 import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
 import { PlaylistService } from '../shared/services/playlist.service';
@@ -22,14 +22,12 @@ export class PlaylistsComponent implements OnInit {
   allMovies: MovieType[] = [];
   likedMovies: MovieType[];
   openPlaylistSettingsDialog = false;
-  newPlaylistName: string = '';
   newPlayListName: string = '';
   openNewPlaylistNameDialog = false;
 
   constructor(
     private movieManageService: ManageMoviesOfDbService,
     private playlistService: PlaylistService,
-    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -38,16 +36,11 @@ export class PlaylistsComponent implements OnInit {
       .subscribe((playlists) => (this.allPlaylists = playlists || []));
 
     this.movieManageService.getAllMovies().subscribe((movies) => {
-      console.log('this.al', movies);
-
       this.allMovies = movies || [];
       this.likedMovies = this.allMovies?.filter((movies) => {
         return movies.liked;
       });
     });
-
-    this.cd.markForCheck();
-    this.cd.detectChanges();
   }
 
   public openPlaylist(playlistId: string, movieIds?: string[]) {
@@ -56,6 +49,7 @@ export class PlaylistsComponent implements OnInit {
       this.moviesForPlaylist = this.likedMovies;
     } else {
       this.selectedPlaylistId = playlistId;
+      console.log('f', this.allMovies);
       this.moviesForPlaylist = this.allMovies.filter(
         (movie: MovieType) => movieIds?.includes(movie.id),
       );
@@ -84,7 +78,7 @@ export class PlaylistsComponent implements OnInit {
   }
 
   public renamePlaylist(playlistId: string) {
-    this.playlistService.renamePlaylist(playlistId, this.newPlaylistName);
+    this.playlistService.renamePlaylist(playlistId, this.newPlayListName);
     this.playlistService
       .getAllPlaylistsForUser()
       .subscribe((playlists) => (this.allPlaylists = playlists || []));

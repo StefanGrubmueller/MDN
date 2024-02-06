@@ -19,7 +19,7 @@ import { map } from 'rxjs';
 })
 export class MovieInfoComponent implements OnInit, OnDestroy {
   movie: MovieType;
-  allMovies: Array<MovieType>;
+  allMovies: Array<MovieType> | undefined;
   newMovieFromList: MovieType;
 
   // Flags
@@ -117,8 +117,9 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.manageMovieService.updateMovie(movie);
   }
 
-  public addMovieToDb() {
+  public addMovieToDb(hasWatched: boolean) {
     if (!this.movie) return;
+    this.movie.watched = hasWatched;
     this.manageMovieService.uploadMovie(this.movie);
     this.showMessage();
   }
@@ -127,9 +128,10 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     if (!this.movie) return;
     this.playlistService.addMovieToPlaylist(this.movie, playlist);
     if (
+      this.allMovies &&
       this.allMovies.filter((movie) => movie.id === this.movie?.id).length <= 0
     ) {
-      this.addMovieToDb();
+      this.addMovieToDb(false);
     }
     this.openAddToPlaylistDialog = false;
   }
