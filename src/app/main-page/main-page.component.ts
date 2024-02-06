@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
-  providers: [MessageService, ManageMoviesOfDbService],
+  providers: [MessageServiceg],
 })
 export class MainPageComponent implements OnInit {
   @Input()

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { User } from '../shared/types/User';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private imdbService: ImdbService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -58,8 +59,10 @@ export class SearchComponent implements OnInit {
 
   //has to be implemented - search and show other not yet added movies
   public routeToIMDBMovie(movieId: string): void {
-    this.router.navigate(['movie'], {
-      queryParams: { movieId: movieId, imdb: true },
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['movie'], {
+        queryParams: { movieId: movieId, imdb: true, isSearch: true },
+      });
     });
   }
 

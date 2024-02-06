@@ -1,27 +1,32 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, ParamMap, Router} from '@angular/router';
 import {MovieType} from '../movieType';
 import {ManageMoviesOfDbService} from '../shared/services/manage-movies-of-db.service';
 import {ImdbService} from '../shared/services/imdb.service';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import {MessageService} from 'primeng/api';
-import {take} from "rxjs";
+import {filter, take, takeUntil} from "rxjs";
 import {PlaylistService} from "../shared/services/playlist.service";
 import {Playlist} from "../Playlist";
+import {getScreenSize, ScreenSize} from "../shared/types/screenSize";
 
 @UntilDestroy()
 @Component({
   selector: 'app-movie-info',
   templateUrl: './movie-info.component.html',
   styleUrls: ['./movie-info.component.scss'],
-  providers: [MessageService, PlaylistService],
+  providers: [MessageService, PlaylistService, ManageMoviesOfDbService],
 })
 export class MovieInfoComponent implements OnInit, OnDestroy {
   movie: MovieType | null = null;
   allMovies: Array<MovieType>;
   newMovieFromList: MovieType;
+
+  // Flags
   loading = true;
   isImdb: boolean;
+  alreadyWatched: boolean;
+  isSearchResult = false;
 
   // Playlists
   openAddToPlaylistDialog = false;
@@ -32,8 +37,14 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     private manageMovieService: ManageMoviesOfDbService,
     private imdbService: ImdbService,
     private messageService: MessageService,
-    private playlistService: PlaylistService
-  ) {}
+    private playlistService: PlaylistService,
+    private router: Router
+  ) {
+    this.activeRoute.paramMap.subscribe(params => {
+      console.log("here")
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit(): void {
     // Playlists
@@ -43,15 +54,11 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.movie = null;
 
     this.allMovies = this.manageMovieService.getAllMovies();
-    this.activeRoute.queryParams.subscribe((queryParams) => {
-      const isImdb = queryParams.imdb === 'true';
+    this.activeRoute.queryParams.pipe(untilDestroyed(this)).subscribe((queryParams) => {
       const movieId = queryParams.movieId;
-
-      if (isImdb) {
-        this.loadImdbMovieDetails(movieId);
-      } else {
-        this.loadLocalMovieInformation(movieId);
-      }
+      this.isSearchResult = queryParams.isSearch;
+      this.loadLocalMovieInformation(movieId);
+      this.loadImdbMovieDetails(movieId);
     }).unsubscribe();
   }
 
@@ -60,7 +67,6 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.imdbService.getImdbMovieDetails(movieId)
       .subscribe((value) => {
         this.movie = value;
-        console.log("value", value)
         this.loading = false;
       });
   }
@@ -76,7 +82,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
         }
 
         if (movie) {
-          this.movie = movie;
+          this.movie!.watched = movie.watched;
         }
         this.loading = false;
       });
@@ -119,6 +125,9 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   public addToPlaylist(playlist: Playlist) {
     if (!this.movie) return;
     this.playlistService.addMovieToPlaylist(this.movie, playlist);
+    if (this.manageMovieService.getAllMovies().filter(movie => movie.id === this.movie?.id).length <= 0) {
+      this.addMovieToDb();
+    }
     this.openAddToPlaylistDialog = false;
   }
 
@@ -135,4 +144,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.movie = null;
     this.loading = true;
   }
+
+  protected readonly getScreenSize = getScreenSize;
+  protected readonly ScreenSize = ScreenSize;
 }

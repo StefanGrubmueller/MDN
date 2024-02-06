@@ -82,6 +82,7 @@ export class ImdbService {
         : null,
       imdb: {
         title: value.main.titleText.text,
+        director: value?.short?.director ? value?.short?.director[0]?.name : null,
         imdb_id: value.imdbId,
         actors: actors,
         year: value.main.releaseYear.year,
@@ -90,7 +91,9 @@ export class ImdbService {
           : null,
         img_poster: value.short.image,
       },
-      titleImageUrl: value?.main?.titleMainImages?.edges[0]?.node?.url
+      titleImageUrl: value?.main?.titleMainImages?.edges[0]?.node?.url,
+      titleImageUrlHeight: value?.main?.titleMainImages?.edges[0]?.node?.height,
+      titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width
     };
   }
 }

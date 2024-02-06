@@ -57,6 +57,7 @@ export class AddMovieComponent implements OnInit {
   }
 
   addMovie(): void {
+    console.log("here", this.isImdbMovie())
     this.isImdbMovie()
       ? this.uploadImdbMovieToDatabase()
       : this.uploadNewlyCreatedMovieToDatabase();
@@ -100,18 +101,15 @@ export class AddMovieComponent implements OnInit {
   private uploadImdbMovieToDatabase(): boolean {
     let success: boolean = false;
 
-    forkJoin(
-      this.imdbService.getImdbMovieDetails(
-        this.addMovieForm.controls['id'].value,
-      ),
-    ).subscribe(
-      (value) => {},
-      (error) => {},
-    );
     this.imdbService
       .getImdbMovieDetails(this.addMovieForm.controls['id'].value)
       .pipe(untilDestroyed(this))
       .subscribe((movie) => {
+        console.log("Add",           movie.name !== '' &&
+          this.manageMovieService.getAllMoviesSub().subscribe(movieDB => {
+            console.log(movieDB.filter((l) => l.id === movie.id).length <= 0);
+          })
+        )
         if (
           movie.name !== '' &&
           !this.manageMovieService.movieIsAlreadyInUsersLib(movie)

@@ -10,7 +10,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
   styleUrls: ['./playlists.component.scss'],
-  providers: [PlaylistService]
+  providers: [PlaylistService, ManageMoviesOfDbService]
 })
 export class PlaylistsComponent implements OnInit{
   moviesForPlaylist: MovieType[];

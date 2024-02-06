@@ -4,5 +4,5 @@
   <i class="pi pi-times cursor-pointer" (click)="clearSearchText()"></i>
 </span>
 <div *ngIf="searchValue">
-  <p-listbox [options]="searchResults" (onChange)="gotoSearchResult($event)" optionLabel="title"></p-listbox>
+  <p-listbox [options]="searchResults" class="absolute z-1" (onChange)="gotoSearchResult($event)" optionLabel="title"></p-listbox>
 </div>

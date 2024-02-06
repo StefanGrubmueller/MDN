@@ -62,6 +62,7 @@ export class ManageMoviesOfDbService {
   }
 
   public movieIsAlreadyInUsersLib(movie: MovieType): boolean {
+    console.log("m", this._moviesFromDB, movie)
     return (
       this._moviesFromDB.filter((localMovie: MovieType) => {
         return movie?.imdb?.imdb_id === localMovie?.imdb?.imdb_id;
@@ -73,11 +74,13 @@ export class ManageMoviesOfDbService {
     const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
     this.db
       .collection(email)
-      .ref?.orderBy('name')
+      .ref
+      .where("watched", "==", true)
       .get()
       .then((elem) => {
         this._moviesFromDB.pop();
-        elem.docs.map((d) => {
+        const movieArray = elem.docs.sort((a,b) => ((a.data() as MovieType)?.name > (b.data() as MovieType)?.name) ? 1 : (((b.data() as MovieType)?.name > (a.data() as MovieType)?.name) ? -1 : 0));
+        movieArray.map((d) => {
           this._moviesFromDB.push(<MovieType>d.data());
         });
         this._$moviesFromDBO.next(this._moviesFromDB);

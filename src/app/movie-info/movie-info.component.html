@@ -1,5 +1,82 @@
 <app-skeleton-main-page *ngIf="loading"></app-skeleton-main-page>
-<div class="grid " *ngIf="movie != undefined && movie != null && !loading">
+    <!--<p-listbox  [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
+               [listStyle]="{ 'min-height': '100vh' }"
+               [(ngModel)]="newMovieFromList" [virtualScroll]="false"
+
+               (click)="loadMovieSelectedFromSideBar()"></p-listbox>-->
+<div  *ngIf="getScreenSize() !== ScreenSize.SMALL  && movie != undefined && movie != null && !loading" class="mb-7">
+  <div class="max-h-30rem overflow-hidden">
+    <img [src]="movie?.titleImageUrl" class="w-full h-full img" alt="Title image"/>
+    <div class="_title-img _overlay absolute w-full"></div>
+  </div>
+
+  <div class="absolute z-1">
+    <div class="flex flex-row gap-8 ml-8">
+      <img [src]="movie?.imdb?.img_poster"
+           width="300px" class="col z-1 -mt-8 max-h-27rem"/>
+      <div class="-mt-8">
+        <h1>{{movie?.name}}</h1>
+        <p>{{movie?.imdb?.year}} Directed by {{movie?.imdb?.director}}</p>
+        <div>
+          <div class="flex flex-row align-items-center gap-3">
+            <p-button  *ngIf="movie?.watched" [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+                      class="size" [rounded]="true"></p-button>
+            <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
+          </div>
+          <div class="grid">
+            <div class="col-6">
+              <h4>Genre</h4>
+              <div class="word-wrap">{{ movie.genre }}</div>
+              <div *ngIf="!movie.genre" class="font-italic">No information</div>
+            </div>
+
+            <div class="col-6">
+              <h4>Rating</h4>
+              <div *ngIf="movie?.rating" class="word-wrap">{{ movie.rating }} / 10</div>
+              <div *ngIf="!movie?.rating" class="font-italic">No information</div>
+            </div>
+
+            <div class="col-6">
+              <h4>Author</h4>
+              <div *ngIf="movie.author" class="word-wrap">{{ movie.author }} / 10</div>
+              <div *ngIf="!movie.author" class="font-italic">No information</div>
+            </div>
+
+            <div class="col-6">
+              <h4>Release Date</h4>
+              <div *ngIf="movie.releaseDate" class="word-wrap">{{ movie.releaseDate.toDate() | date : 'shortDate' }}</div>
+              <div *ngIf="!!movie?.releaseDate && !movie?.releaseDate" class="font-italic">No information</div>
+            </div>
+
+            <div class="col-6">
+              <h4>Actors</h4>
+              <div *ngIf="movie.imdb?.actors" class="word-wrap">{{ movie.imdb?.actors }}</div>
+              <div *ngIf="!movie.imdb?.actors" class="font-italic">No information</div>
+            </div>
+
+            <div class="col-6">
+              <h4>Rank</h4>
+              <div *ngIf="movie.imdb?.rank" class="word-wrap">#{{ movie.imdb?.rank }}</div>
+              <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
+            </div>
+
+
+            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
+              Add movie to library
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="grid " *ngIf="getScreenSize() === ScreenSize.SMALL && movie != undefined && movie != null && !loading">
   <div class="hidden sm:inline col-fixed " style="width: 30rem">
     <p-listbox [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
                [listStyle]="{ 'min-height': '100vh' }"
@@ -8,7 +85,6 @@
   </div>
   <div class="col">
     <div class="min-w-full grid mb-8 pt-4">
-      <img [src]="movie?.titleImageUrl" class="w-full h-20rem _title-img" />
       <div class="ml-4 mt-0 pt-0 col">
         <h1>{{ movie.name }}</h1>
         <p *ngIf="movie?.watched" class="font-bold text-primary">You have already watched this movie</p>
