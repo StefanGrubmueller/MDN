@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { AuthService } from './shared/services/auth.service';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -32,7 +32,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.authService
       .getFirebaseAuthState()
-      .pipe(untilDestroyed(this))
       .subscribe((state) => (this.isUserLoggedIn = state != null));
   }
 

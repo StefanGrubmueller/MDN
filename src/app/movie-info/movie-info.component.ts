@@ -1,31 +1,30 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, NavigationStart, ParamMap, Router} from '@angular/router';
-import {MovieType} from '../movieType';
-import {ManageMoviesOfDbService} from '../shared/services/manage-movies-of-db.service';
-import {ImdbService} from '../shared/services/imdb.service';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {MessageService} from 'primeng/api';
-import {filter, take, takeUntil} from "rxjs";
-import {PlaylistService} from "../shared/services/playlist.service";
-import {Playlist} from "../Playlist";
-import {getScreenSize, ScreenSize} from "../shared/types/screenSize";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MovieType } from '../movieType';
+import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
+import { ImdbService } from '../shared/services/imdb.service';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { MessageService } from 'primeng/api';
+import { PlaylistService } from '../shared/services/playlist.service';
+import { Playlist } from '../Playlist';
+import { getScreenSize, ScreenSize } from '../shared/types/screenSize';
+import { map } from 'rxjs';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-movie-info',
   templateUrl: './movie-info.component.html',
   styleUrls: ['./movie-info.component.scss'],
-  providers: [MessageService, PlaylistService, ManageMoviesOfDbService],
+  providers: [MessageService],
 })
 export class MovieInfoComponent implements OnInit, OnDestroy {
-  movie: MovieType | null = null;
+  movie: MovieType;
   allMovies: Array<MovieType>;
   newMovieFromList: MovieType;
 
   // Flags
   loading = true;
   isImdb: boolean;
-  alreadyWatched: boolean;
   isSearchResult = false;
 
   // Playlists
@@ -38,51 +37,55 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     private imdbService: ImdbService,
     private messageService: MessageService,
     private playlistService: PlaylistService,
-    private router: Router
+    private router: Router,
   ) {
-    this.activeRoute.paramMap.subscribe(params => {
-      console.log("here")
+    this.activeRoute.paramMap.subscribe((params) => {
       this.ngOnInit();
     });
   }
 
   ngOnInit(): void {
     // Playlists
-    this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
+    this.playlistService
+      .getAllPlaylistsForUser()
+      .subscribe((playlists) => (this.allPlaylists = playlists || []));
 
     this.loading = true;
-    this.movie = null;
 
-    this.allMovies = this.manageMovieService.getAllMovies();
-    this.activeRoute.queryParams.pipe(untilDestroyed(this)).subscribe((queryParams) => {
-      const movieId = queryParams.movieId;
-      this.isSearchResult = queryParams.isSearch;
-      this.loadLocalMovieInformation(movieId);
-      this.loadImdbMovieDetails(movieId);
-    }).unsubscribe();
+    this.manageMovieService
+      .getAllMovies()
+      .pipe(map((movies) => (this.allMovies = movies || [])));
+
+    this.activeRoute.queryParams
+      .subscribe((queryParams) => {
+        const movieId = queryParams.movieId;
+        this.isSearchResult = queryParams.isSearch;
+        this.loadLocalMovieInformation(movieId);
+        this.loadImdbMovieDetails(movieId);
+      })
+      .unsubscribe();
   }
 
   private loadImdbMovieDetails(movieId: string): void {
     this.isImdb = true;
-    this.imdbService.getImdbMovieDetails(movieId)
-      .subscribe((value) => {
-        this.movie = value;
-        this.loading = false;
-      });
+    this.imdbService.getImdbMovieDetails(movieId).subscribe((value) => {
+      this.movie = value;
+      this.loading = false;
+    });
   }
 
   private loadLocalMovieInformation(movieId: string): void {
     this.isImdb = false;
 
-    this.manageMovieService.downloadMovieInformation(movieId)
-      .pipe(untilDestroyed(this))
+    this.manageMovieService
+      .downloadMovieInformation(movieId)
       .subscribe((movie) => {
         if (!movie) {
           return;
         }
 
-        if (movie) {
-          this.movie!.watched = movie.watched;
+        if (movie?.watched) {
+          this.movie.watched = movie.watched;
         }
         this.loading = false;
       });
@@ -94,7 +97,6 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.imdbService
         .getImdbMovieDetails(this.newMovieFromList.id)
-        .pipe(untilDestroyed(this))
         .subscribe((value) => {
           this.movie = value;
           this.loading = false;
@@ -103,9 +105,8 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
       this.isImdb = false;
       this.manageMovieService
         .downloadMovieInformation(this.newMovieFromList.id)
-        .pipe(untilDestroyed(this))
         .subscribe((movie) => {
-          return movie ? (this.movie = movie) : ''
+          return movie ? (this.movie = movie) : '';
         });
     }
   }
@@ -117,7 +118,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   }
 
   public addMovieToDb() {
-    if(!this.movie) return;
+    if (!this.movie) return;
     this.manageMovieService.uploadMovie(this.movie);
     this.showMessage();
   }
@@ -125,7 +126,9 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   public addToPlaylist(playlist: Playlist) {
     if (!this.movie) return;
     this.playlistService.addMovieToPlaylist(this.movie, playlist);
-    if (this.manageMovieService.getAllMovies().filter(movie => movie.id === this.movie?.id).length <= 0) {
+    if (
+      this.allMovies.filter((movie) => movie.id === this.movie?.id).length <= 0
+    ) {
       this.addMovieToDb();
     }
     this.openAddToPlaylistDialog = false;
@@ -141,7 +144,6 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.movie = null;
     this.loading = true;
   }
 

@@ -3,21 +3,23 @@ import { MovieType } from '../movieType';
 import { Router } from '@angular/router';
 import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
 import { UserService } from '../shared/services/user.service';
-import {getScreenSize, ScreenSize} from '../shared/types/screenSize';
+import { getScreenSize, ScreenSize } from '../shared/types/screenSize';
 import { MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
-  providers: [MessageServiceg],
+  providers: [MessageService],
 })
 export class MainPageComponent implements OnInit {
   @Input()
   email: string = '';
 
   screenSize: ScreenSize = ScreenSize.SMALL;
-  localMovies: Array<MovieType> = [];
+  localMovies$: Observable<MovieType[] | undefined> =
+    this.manageMoviesOfDbService.getAllMovies();
   logged: boolean = false;
 
   constructor(
@@ -27,20 +29,16 @@ export class MainPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.localMovies$ = this.manageMoviesOfDbService.getAllMovies();
     this.setScreenSize();
     this.logged = this.userService.getUserStatus();
     if (!this.logged) {
       this.router.navigate(['login']);
     }
-    this.initialLoadAllMovies();
   }
 
   public routeToNewEntry() {
     this.router.navigate(['ADD']);
-  }
-
-  private initialLoadAllMovies() {
-    this.localMovies = this.manageMoviesOfDbService.getAllMovies();
   }
 
   @HostListener('window:resize')

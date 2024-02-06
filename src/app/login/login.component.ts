@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
       .signIn(email, password)
       .catch((error: string) => this.setErrorMessage(error));
     if (localStorage.getItem('user') != null) {
-      this.manageMovieService.update();
       this.router.navigate(['']);
     } else {
       this.loggedIn = false;

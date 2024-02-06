@@ -1,12 +1,12 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User } from '../shared/types/User';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { ImdbDescription } from '../shared/types/imdb';
 import { ImdbService } from '../shared/services/imdb.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -21,7 +21,7 @@ export class SearchComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private imdbService: ImdbService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +31,6 @@ export class SearchComponent implements OnInit {
   search(searchString: string | null) {
     this.imdbService
       .getMovieListBasedOnSearch(searchString)
-      .pipe(untilDestroyed(this))
       .subscribe((value) => {
         if (value.description) {
           this.searchResults = this.imdbService.getMappedMovieList(value);

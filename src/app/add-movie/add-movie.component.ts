@@ -3,18 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MovieType } from '../movieType';
 import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
 import { v4 as uuidv4 } from 'uuid';
-import { debounceTime, forkJoin } from 'rxjs';
+import { debounceTime } from 'rxjs';
 import { ImdbService } from '../shared/services/imdb.service';
 import { ImdbDescription } from '../shared/types/imdb';
 import { MessageService } from 'primeng/api';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-add-movie',
   templateUrl: './add-movie.component.html',
   styleUrls: ['./add-movie.component.scss'],
-  providers: [MessageService, ManageMoviesOfDbService],
+  providers: [MessageService],
 })
 export class AddMovieComponent implements OnInit {
   addMovieForm: FormGroup;
@@ -34,13 +34,13 @@ export class AddMovieComponent implements OnInit {
       id: [null, []],
     });
     this.addMovieForm.valueChanges
-      .pipe(debounceTime(500), untilDestroyed(this))
+      .pipe(debounceTime(500))
       .subscribe((search) => {
+        console.log('as', search);
         // after adding value is cleared and value null should not be looked up in imdb db
         if (search.name != null) {
           this.imdbService
             .getMovieListBasedOnSearch(search.name)
-            .pipe(untilDestroyed(this))
             .subscribe((value) => {
               if (value.description) {
                 this.searchResults = this.imdbService.getMappedMovieList(value);
@@ -57,10 +57,7 @@ export class AddMovieComponent implements OnInit {
   }
 
   addMovie(): void {
-    console.log("here", this.isImdbMovie())
-    this.isImdbMovie()
-      ? this.uploadImdbMovieToDatabase()
-      : this.uploadNewlyCreatedMovieToDatabase();
+    this.uploadImdbMovieToDatabase();
 
     this.showMessage(true);
     this.clearForm();
@@ -100,34 +97,20 @@ export class AddMovieComponent implements OnInit {
 
   private uploadImdbMovieToDatabase(): boolean {
     let success: boolean = false;
-
     this.imdbService
       .getImdbMovieDetails(this.addMovieForm.controls['id'].value)
-      .pipe(untilDestroyed(this))
       .subscribe((movie) => {
-        console.log("Add",           movie.name !== '' &&
-          this.manageMovieService.getAllMoviesSub().subscribe(movieDB => {
-            console.log(movieDB.filter((l) => l.id === movie.id).length <= 0);
-          })
-        )
         if (
           movie.name !== '' &&
           !this.manageMovieService.movieIsAlreadyInUsersLib(movie)
         ) {
+          movie.watched = true;
           this.manageMovieService.uploadMovie(movie);
           success = true;
         }
         return success;
       });
     return success;
-  }
-
-  private isImdbMovie() {
-    return (
-      this.searchResults.find(
-        (movie) => movie.title === this.addMovieForm.controls['name'].value,
-      ) != null
-    );
   }
 
   private gatherDetailedMovieInformationIfAvailable(): MovieType {

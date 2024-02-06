@@ -1,18 +1,18 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {MovieType} from "../movieType";
-import {ManageMoviesOfDbService} from "../shared/services/manage-movies-of-db.service";
-import {PlaylistService} from "../shared/services/playlist.service";
-import {Playlist} from "../Playlist";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MovieType } from '../movieType';
+import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
+import { PlaylistService } from '../shared/services/playlist.service';
+import { Playlist } from '../Playlist';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
   styleUrls: ['./playlists.component.scss'],
-  providers: [PlaylistService, ManageMoviesOfDbService]
+  providers: [],
 })
-export class PlaylistsComponent implements OnInit{
+export class PlaylistsComponent implements OnInit {
   moviesForPlaylist: MovieType[];
   selectedPlaylistId: string = '';
   openCreatePlaylistDialog = false;
@@ -26,15 +26,26 @@ export class PlaylistsComponent implements OnInit{
   newPlayListName: string = '';
   openNewPlaylistNameDialog = false;
 
-  constructor(private movieManageService: ManageMoviesOfDbService, private playlistService: PlaylistService, private cd: ChangeDetectorRef) {}
+  constructor(
+    private movieManageService: ManageMoviesOfDbService,
+    private playlistService: PlaylistService,
+    private cd: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
-    this.playlistService.getAllPlaylistsForUser().pipe(untilDestroyed(this)).subscribe(playlists => this.allPlaylists = playlists);
+    this.playlistService
+      .getAllPlaylistsForUser()
+      .subscribe((playlists) => (this.allPlaylists = playlists || []));
 
-    this.allMovies = this.movieManageService.getAllMovies();
-    this.likedMovies = this.allMovies?.filter(movies => {
-      return movies.liked;
+    this.movieManageService.getAllMovies().subscribe((movies) => {
+      console.log('this.al', movies);
+
+      this.allMovies = movies || [];
+      this.likedMovies = this.allMovies?.filter((movies) => {
+        return movies.liked;
+      });
     });
+
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
@@ -45,10 +56,11 @@ export class PlaylistsComponent implements OnInit{
       this.moviesForPlaylist = this.likedMovies;
     } else {
       this.selectedPlaylistId = playlistId;
-      this.moviesForPlaylist = this.allMovies.filter((movie: MovieType) => movieIds?.includes(movie.id));
+      this.moviesForPlaylist = this.allMovies.filter(
+        (movie: MovieType) => movieIds?.includes(movie.id),
+      );
     }
     this.playlistIsOpen = true;
-
   }
 
   public showCreatePlaylist() {
@@ -59,16 +71,22 @@ export class PlaylistsComponent implements OnInit{
     this.playlistService.createPlaylist(this.playlistName);
     this.openCreatePlaylistDialog = false;
     this.playlistName = '';
-    this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
+    this.playlistService
+      .getAllPlaylistsForUser()
+      .subscribe((playlists) => (this.allPlaylists = playlists || []));
   }
 
   public deletePlaylist(playlistId: string) {
     this.playlistService.deletePlaylist(playlistId);
-    this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
+    this.playlistService
+      .getAllPlaylistsForUser()
+      .subscribe((playlists) => (this.allPlaylists = playlists || []));
   }
 
   public renamePlaylist(playlistId: string) {
     this.playlistService.renamePlaylist(playlistId, this.newPlaylistName);
-    this.playlistService.getAllPlaylistsForUser().subscribe(playlists => this.allPlaylists = playlists);
+    this.playlistService
+      .getAllPlaylistsForUser()
+      .subscribe((playlists) => (this.allPlaylists = playlists || []));
   }
 }

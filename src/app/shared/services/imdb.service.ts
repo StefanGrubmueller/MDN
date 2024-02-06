@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, map, Observable, switchMap} from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { MovieType } from '../../movieType';
 import { ImdbDescription } from '../types/imdb';
@@ -30,7 +30,7 @@ export class ImdbService {
           let mappedValue = this.mapToMovie(value);
           this._detailsSubject.next(mappedValue);
           return mappedValue;
-        })
+        }),
       );
   }
 
@@ -82,10 +82,12 @@ export class ImdbService {
         : null,
       imdb: {
         title: value.main.titleText.text,
-        director: value?.short?.director ? value?.short?.director[0]?.name : null,
+        director: value?.short?.director
+          ? value?.short?.director[0]?.name
+          : null,
         imdb_id: value.imdbId,
         actors: actors,
-        year: value.main.releaseYear.year,
+        year: value.main.releaseYear?.year,
         rank: value.main.ratingsSummary.topRanking
           ? value.main.ratingsSummary.topRanking.rank
           : null,
@@ -93,7 +95,7 @@ export class ImdbService {
       },
       titleImageUrl: value?.main?.titleMainImages?.edges[0]?.node?.url,
       titleImageUrlHeight: value?.main?.titleMainImages?.edges[0]?.node?.height,
-      titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width
+      titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width,
     };
   }
 }

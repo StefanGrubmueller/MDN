@@ -1,10 +1,11 @@
-<app-skeleton-main-page *ngIf="loading"></app-skeleton-main-page>
-    <!--<p-listbox  [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
-               [listStyle]="{ 'min-height': '100vh' }"
-               [(ngModel)]="newMovieFromList" [virtualScroll]="false"
+<!--<p-listbox  [options]="allMovies" optionLabel="name" [style]="{'min-width':'100%'}"
+           [listStyle]="{ 'min-height': '100vh' }"
+           [(ngModel)]="newMovieFromList" [virtualScroll]="false"
 
-               (click)="loadMovieSelectedFromSideBar()"></p-listbox>-->
-<div  *ngIf="getScreenSize() !== ScreenSize.SMALL  && movie != undefined && movie != null && !loading" class="mb-7">
+           (click)="loadMovieSelectedFromSideBar()"></p-listbox>-->
+<div
+  *ngIf="getScreenSize() !== ScreenSize.SMALL  && movie != undefined && true && !loading; else skeletonMainPageComponent"
+  class="mb-7">
   <div class="max-h-30rem overflow-hidden">
     <img [src]="movie?.titleImageUrl" class="w-full h-full img" alt="Title image"/>
     <div class="_title-img _overlay absolute w-full"></div>
@@ -15,11 +16,12 @@
       <img [src]="movie?.imdb?.img_poster"
            width="300px" class="col z-1 -mt-8 max-h-27rem"/>
       <div class="-mt-8">
-        <h1>{{movie?.name}}</h1>
-        <p>{{movie?.imdb?.year}} Directed by {{movie?.imdb?.director}}</p>
+        <h1>{{ movie?.name }}</h1>
+        <p>{{ movie?.imdb?.year }} Directed by {{ movie?.imdb?.director }}</p>
         <div>
           <div class="flex flex-row align-items-center gap-3">
-            <p-button  *ngIf="movie?.watched" [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
+            <p-button *ngIf="movie?.watched" [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'"
+                      (click)="likeMovie(movie)"
                       class="size" [rounded]="true"></p-button>
             <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
           </div>
@@ -44,7 +46,8 @@
 
             <div class="col-6">
               <h4>Release Date</h4>
-              <div *ngIf="movie.releaseDate" class="word-wrap">{{ movie.releaseDate.toDate() | date : 'shortDate' }}</div>
+              <div *ngIf="movie.releaseDate" class="word-wrap">{{ movie.releaseDate.toDate() | date : 'shortDate' }}
+              </div>
               <div *ngIf="!!movie?.releaseDate && !movie?.releaseDate" class="font-italic">No information</div>
             </div>
 
@@ -61,7 +64,8 @@
             </div>
 
 
-            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
+            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb()"
+                    class="mt-4 justify-content-center font-bold word-wrap">
               Add movie to library
             </button>
 
@@ -71,9 +75,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 
 <div class="grid " *ngIf="getScreenSize() === ScreenSize.SMALL && movie != undefined && movie != null && !loading">
@@ -137,7 +138,8 @@
         <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
       </div>
 
-      <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb()" class="mt-4 justify-content-center font-bold word-wrap">
+      <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb()"
+              class="mt-4 justify-content-center font-bold word-wrap">
         Add movie to library
       </button>
 
@@ -147,15 +149,18 @@
 
 <p-dialog header="Add to Playlist" [(visible)]="openAddToPlaylistDialog" class="w-4" [modal]="true">
   <div class="flex flex-column gap-2">
-      <p-table [value]="allPlaylists">
-        <ng-template pTemplate="body" let-playlist>
-          <tr>
-            <td (click)="addToPlaylist(playlist)" class="cursor-pointer">{{ playlist.name }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
+    <p-table [value]="allPlaylists">
+      <ng-template pTemplate="body" let-playlist>
+        <tr>
+          <td (click)="addToPlaylist(playlist)" class="cursor-pointer">{{ playlist.name }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 
 </p-dialog>
 
 <p-toast [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>
+<ng-template #skeletonMainPageComponent>
+  <app-skeleton-main-page></app-skeleton-main-page>
+</ng-template>
