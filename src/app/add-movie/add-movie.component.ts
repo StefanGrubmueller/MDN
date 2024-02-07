@@ -36,7 +36,6 @@ export class AddMovieComponent implements OnInit {
     this.addMovieForm.valueChanges
       .pipe(debounceTime(500))
       .subscribe((search) => {
-        console.log('as', search);
         // after adding value is cleared and value null should not be looked up in imdb db
         if (search.name != null) {
           this.imdbService
@@ -60,7 +59,6 @@ export class AddMovieComponent implements OnInit {
     this.uploadImdbMovieToDatabase();
 
     this.showMessage(true);
-    this.clearForm();
   }
 
   private clearForm() {
@@ -85,14 +83,6 @@ export class AddMovieComponent implements OnInit {
         life: 1000,
       });
     }
-  }
-
-  private uploadNewlyCreatedMovieToDatabase(): boolean {
-    const movieDetails = this.gatherDetailedMovieInformationIfAvailable();
-    if (movieDetails.name !== '') {
-      this.manageMovieService.uploadMovie(movieDetails);
-    }
-    return true;
   }
 
   private uploadImdbMovieToDatabase(): boolean {

@@ -31,9 +31,7 @@ export class PlaylistsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.playlistService
-      .getAllPlaylistsForUser()
-      .subscribe((playlists) => (this.allPlaylists = playlists || []));
+    this.fetchPlaylists();
 
     this.movieManageService.getAllMovies().subscribe((movies) => {
       this.allMovies = movies || [];
@@ -45,14 +43,22 @@ export class PlaylistsComponent implements OnInit {
 
   public openPlaylist(playlistId: string, movieIds?: string[]) {
     this.moviesForPlaylist = [];
+    console.log("playlistId");
+    
     if (playlistId === 'LIKED') {
       this.moviesForPlaylist = this.likedMovies;
     } else {
       this.selectedPlaylistId = playlistId;
-      console.log('f', this.allMovies);
-      this.moviesForPlaylist = this.allMovies.filter(
-        (movie: MovieType) => movieIds?.includes(movie.id),
-      );
+      console.log("f", this.selectedPlaylistId, this.moviesForPlaylist, movieIds);
+      
+      this.movieManageService.getAllMovies().subscribe((movies) => {
+        this.allMovies = movies || [];
+        this.moviesForPlaylist = this.allMovies.filter(
+          (movie: MovieType) => movieIds?.includes(movie.id),
+        );
+      });
+
+      
     }
     this.playlistIsOpen = true;
   }
@@ -65,16 +71,12 @@ export class PlaylistsComponent implements OnInit {
     this.playlistService.createPlaylist(this.playlistName);
     this.openCreatePlaylistDialog = false;
     this.playlistName = '';
-    this.playlistService
-      .getAllPlaylistsForUser()
-      .subscribe((playlists) => (this.allPlaylists = playlists || []));
+    this.fetchPlaylists();
   }
 
   public deletePlaylist(playlistId: string) {
     this.playlistService.deletePlaylist(playlistId);
-    this.playlistService
-      .getAllPlaylistsForUser()
-      .subscribe((playlists) => (this.allPlaylists = playlists || []));
+    this.fetchPlaylists();
   }
 
   public renamePlaylist(playlistId: string) {
@@ -82,5 +84,11 @@ export class PlaylistsComponent implements OnInit {
     this.playlistService
       .getAllPlaylistsForUser()
       .subscribe((playlists) => (this.allPlaylists = playlists || []));
+  }
+
+  private fetchPlaylists() {
+    this.playlistService
+    .getAllPlaylistsForUser()
+    .subscribe((playlists) => (this.allPlaylists = playlists || []));
   }
 }

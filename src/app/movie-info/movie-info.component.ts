@@ -83,10 +83,7 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
         if (!movie) {
           return;
         }
-
-        if (movie?.watched) {
-          this.movie.watched = movie.watched;
-        }
+        this.movie.watched = movie.watched;
         this.loading = false;
       });
   }

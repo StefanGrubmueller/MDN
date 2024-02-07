@@ -63,8 +63,7 @@
               <div *ngIf="!movie.imdb?.rank" class="font-italic">No information</div>
             </div>
 
-
-            <button *ngIf="!movie.watched" pButton (click)="addMovieToDb(true)"
+            <button *ngIf="!movie?.watched" pButton (click)="addMovieToDb(true)"
                     class="mt-4 justify-content-center font-bold word-wrap">
               Add movie to library
             </button>

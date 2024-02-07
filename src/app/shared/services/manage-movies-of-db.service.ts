@@ -45,9 +45,11 @@ export class ManageMoviesOfDbService {
       this._moviesFromDB = [];
     }
     this._moviesFromDB.push(movie);
+    this.sortMoviesByName(this._moviesFromDB);
   }
 
   public deleteMovie(id: string): void {
+    this._moviesFromDB = this._moviesFromDB?.filter(movie => movie.id !== id);
     this._dbCollection.doc(id).delete();
   }
 
@@ -88,10 +90,13 @@ export class ManageMoviesOfDbService {
 
   private fetchMoviesFromDB(): Observable<MovieType[] | undefined> {
     const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
+    if(!this.db.collection(email).ref){
+        return of();
+    }
     return from(
       this.db.collection(email).ref?.where('watched', '==', true).get(),
     ).pipe(
-      map((elem) => this.sortMoviesAlphabetically(elem)),
+      map((elem) => this.sortMoviesSnapshotByName(elem)),
       catchError((error) => {
         console.error('Error fetching data:', error);
         return of(null);
@@ -104,7 +109,7 @@ export class ManageMoviesOfDbService {
     );
   }
 
-  private sortMoviesAlphabetically(
+  private sortMoviesSnapshotByName(
     elem: firebase.firestore.QuerySnapshot<unknown>,
   ) {
     return elem.docs.sort((a, b) =>
@@ -114,5 +119,15 @@ export class ManageMoviesOfDbService {
           ? -1
           : 0,
     );
+  }
+
+  private sortMoviesByName(movies: MovieType[]) {
+    return movies.sort((a, b) =>
+    (a as MovieType)?.name > (b as MovieType)?.name
+      ? 1
+      : (b as MovieType)?.name > (a as MovieType)?.name
+        ? -1
+        : 0,
+  );
   }
 }

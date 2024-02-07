@@ -1,4 +1,4 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {getScreenSize, ScreenSize} from "../shared/types/screenSize";
 import {Router} from "@angular/router";
 import {MovieType} from "../movieType";
@@ -11,12 +11,16 @@ import {MessageService} from "primeng/api";
   styleUrls: ['./movie-list.component.scss'],
   providers: [MessageService],
 })
-export class MovieListComponent {
+export class MovieListComponent implements OnInit {
   @Input() movies: MovieType[] | undefined;
 
   screenSize: ScreenSize = ScreenSize.SMALL;
 
   constructor(private router: Router, private manageMoviesOfDbService: ManageMoviesOfDbService, private messageService: MessageService) {
+  }
+
+  ngOnInit(): void {
+    this.setScreenSize();
   }
 
   public routeToMovieInfo(movieId: string): void {
