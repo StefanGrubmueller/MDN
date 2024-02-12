@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.service';
 
 @Component({
   selector: 'app-settings',
@@ -15,6 +16,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
+    private manageMovieService: ManageMoviesOfDbService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +44,8 @@ export class SettingsComponent implements OnInit {
 
   private logout(): void {
     this.authService.logout();
+    this.manageMovieService.clearAllMovies();
+    localStorage.setItem('user', '');
     this.router.navigate(['login']);
   }
 }

@@ -1,13 +1,13 @@
 <form [formGroup]="addMovieForm">
   <div class="flex justify-content-center">
-    <h2>Gib einen Namen für deinen neuen Film ein.</h2>
+    <h2>Add a movie/series to your watched movies.</h2>
   </div>
   <div class="flex flex-row gap-4 mb-4 ">
     <input pInputText
            class="flex-grow-1"
            formControlName="name"
-           placeholder="Neuer Film">
-    <button pButton (click)="addMovie()" [disabled]="addMovieForm.controls['name'].value === null"
+           placeholder="Enter name">
+    <button pButton (click)="addMovie()" [disabled]="addMovieForm.controls['id'].value === null"
             class="justify-content-center">Add
     </button>
   </div>
@@ -41,4 +41,4 @@
   </div>
 </form>
 
-<p-toast [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>
+<p-toast position="top-center" [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>

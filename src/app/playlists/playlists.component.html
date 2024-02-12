@@ -27,7 +27,7 @@
 <!--Playlist content-->
 <div class="flex flex-column gap-4">
   <p-button *ngIf="playlistIsOpen" icon="pi pi-cog" [rounded]="true" (click)="openPlaylistSettingsDialog = true" class="ml-4"></p-button>
-  <app-movie-list *ngIf="playlistIsOpen" [movies]="moviesForPlaylist" ></app-movie-list>
+  <app-movie-list [showLikeIcon]="false" (clearIconClicked)="removeMovieFromPlaylist($event, moviesForPlaylist)" *ngIf="playlistIsOpen" [movies]="moviesForPlaylist" ></app-movie-list>
   <p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false"></p-button>  
 </div>
 
@@ -53,3 +53,5 @@
     <p-button label="Save" icon="pi pi-save" [link]="true" (click)="renamePlaylist(selectedPlaylistId)"></p-button>
   </div>
 </p-dialog>
+
+<p-toast position="bottom-center"></p-toast>

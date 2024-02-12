@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { AuthService } from '../shared/services/auth.service';
 import { MessageService } from 'primeng/api';
 
-@UntilDestroy()
+@UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -19,12 +19,9 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService
-      .getUserDetails()
-      .pipe(untilDestroyed(this))
-      .subscribe((user) => {
-        this.user = user;
-      });
+    this.authService.getUserDetails().subscribe((user) => {
+      this.user = user;
+    });
   }
 
   resetPassword() {

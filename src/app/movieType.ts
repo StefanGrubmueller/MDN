@@ -13,6 +13,9 @@ export type MovieType = {
   liked: boolean;
   meta?: Meta;
   imdb?: ImdbDescription;
+  titleImageUrl?: string;
+  titleImageUrlHeight?: string;
+  titleImageUrlWidth?: string;
   watched?: boolean;
 };
 

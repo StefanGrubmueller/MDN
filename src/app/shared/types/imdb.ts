@@ -9,4 +9,5 @@ export type ImdbDescription= {
   year: number;
   photo_height?: number;
   photo_width?: number;
+  director?: string;
 }
