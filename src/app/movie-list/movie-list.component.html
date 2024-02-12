@@ -5,16 +5,16 @@
         <th *ngIf="screenSize !== ScreenSize.SMALL">#</th>
         <th>Title</th>
         <th *ngIf="screenSize !== ScreenSize.SMALL">Added On</th>
-        <th>&nbsp;</th>
+        <th *ngIf="showLikeIcon">&nbsp;</th>
         <th *ngIf="screenSize !== ScreenSize.SMALL">&nbsp;</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-movie let-i="rowIndex">
-      <tr class="cursor-pointer">
+      <tr class="cursor-pointer" *ngIf="movieIncludesSearchValue(movie)">
         <td *ngIf="screenSize !== ScreenSize.SMALL">{{ i + 1 }}</td>
         <td (click)="routeToMovieInfo(movie.id)">{{ movie.name }}</td>
         <td *ngIf="screenSize !== ScreenSize.SMALL">{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
-        <td>
+        <td *ngIf="showLikeIcon">
           <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
                     [link]="true"></p-button>
           {{ movie.code }}
@@ -30,4 +30,4 @@
 </div>
 
 
-<p-toast position="bottom-center"></p-toast>
+

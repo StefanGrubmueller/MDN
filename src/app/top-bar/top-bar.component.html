@@ -1,11 +1,10 @@
-<div class="w-full flex flex-row gap-4 pt-4 align-items-center h-6rem">
-  <div class=" flex flex-row align-items-center gap-2">
-    <i class="pi pi-home ml-4 flex cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
-    <span class="hidden sm:inline flex cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</span>
+<div class="justify-content-between :w-full flex sm:flex-row sm:gap-4 pt-4 align-items-center h-6rem">
+  <div class="hidden flex flex-row align-items-center gap-2">
+    <i class="pi pi-home flex cursor-pointer" style="font-size: 2rem" (click)="routeToHome()"></i>
+    <p class="flex-grow-1 sm:inline flex cursor-pointer font-bold" (click)="routeToHome()">Movie Data Network</p>
   </div>
 
-  <app-search class="col-offset-6 xl:col-offset-8" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
-  <p-button icon="pi pi-bars" (click)="toggleNavigation()"
-            class=""></p-button>
+  <app-search class="col-offset-4 xl:col-offset-8" *ngIf="screenSize !== ScreenSize.SMALL"></app-search>
+  <p-button icon="pi pi-bars" (click)="toggleNavigation()"></p-button>
 </div>
 <p-divider class="hidden sm:inline"></p-divider>

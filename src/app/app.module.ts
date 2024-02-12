@@ -50,6 +50,7 @@ import {SidebarModule} from "primeng/sidebar";
 import { PlaylistsComponent } from './playlists/playlists.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
 import {DialogModule} from "primeng/dialog";
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import {DialogModule} from "primeng/dialog";
     SkeletonModule,
     SidebarModule,
     DialogModule,
+    CardModule
   ],
   providers: [LoginComponent],
   bootstrap: [AppComponent],

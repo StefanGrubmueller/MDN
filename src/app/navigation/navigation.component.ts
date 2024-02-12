@@ -32,9 +32,14 @@ export class NavigationComponent {
   }
 
   public navigateToSearch(){
-  this.router.navigate(['search']);
-  this.isVisible = false;
-}
+    this.router.navigate(['search']);
+    this.isVisible = false;
+  }
+
+  public navigateToAddMovies(){
+    this.router.navigate(['ADD']);
+    this.isVisible = false;
+  }
 
   @HostListener('window:resize')
   private setScreenSize(): void {

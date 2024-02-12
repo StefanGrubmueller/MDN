@@ -1,12 +1,19 @@
 <p-sidebar [(visible)]="isVisible" [fullScreen]="screenSize === ScreenSize.SMALL" position="right">
   <div class="flex flex-column gap-3">
     <p-button icon="pi pi-forward" (click)="navigateToPlaylists()"
-              [link]="true" [rounded]="true" label="Playlists"></p-button>
-    <p-button icon="pi pi-user" (click)="navigateToUser()"
-              [link]="true" [rounded]="true" label="User"></p-button>
+              [link]="true" [rounded]="true" label="Playlists">
+    </p-button>
     <p-button *ngIf="screenSize === ScreenSize.SMALL" icon="pi pi-search" (click)="navigateToSearch()"
-              [link]="true" [rounded]="true" label="Search"></p-button>
+              [link]="true" [rounded]="true" label="Search">
+    </p-button>
+    <p-button *ngIf="screenSize === ScreenSize.SMALL" icon="pi pi-plus" (click)="navigateToAddMovies()"
+              [link]="true" [rounded]="true" label="Add entry">
+    </p-button>
+    <p-button icon="pi pi-user" (click)="navigateToUser()"
+              [link]="true" [rounded]="true" label="User">
+    </p-button>
     <p-button icon="pi pi-lock" (click)="navigateToLogin()"
-              [link]="true" [rounded]="true" label="Logout"></p-button>
+              [link]="true" [rounded]="true" label="Logout">
+    </p-button>
   </div>
 </p-sidebar>

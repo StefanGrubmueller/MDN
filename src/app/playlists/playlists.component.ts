@@ -4,13 +4,14 @@ import { ManageMoviesOfDbService } from '../shared/services/manage-movies-of-db.
 import { PlaylistService } from '../shared/services/playlist.service';
 import { Playlist } from '../Playlist';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { MessageService } from 'primeng/api';
 
 @UntilDestroy({ checkProperties: true })
 @Component({
   selector: 'app-playlists',
   templateUrl: './playlists.component.html',
   styleUrls: ['./playlists.component.scss'],
-  providers: [],
+  providers: [MessageService],
 })
 export class PlaylistsComponent implements OnInit {
   moviesForPlaylist: MovieType[];
@@ -28,12 +29,13 @@ export class PlaylistsComponent implements OnInit {
   constructor(
     private movieManageService: ManageMoviesOfDbService,
     private playlistService: PlaylistService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.fetchPlaylists();
 
-    this.movieManageService.getAllMovies().subscribe((movies) => {
+    this.movieManageService.getAllMovies$().subscribe((movies) => {
       this.allMovies = movies || [];
       this.likedMovies = this.allMovies?.filter((movies) => {
         return movies.liked;
@@ -49,13 +51,16 @@ export class PlaylistsComponent implements OnInit {
       this.moviesForPlaylist = this.likedMovies;
     } else {
       this.selectedPlaylistId = playlistId;
-      console.log("f", this.selectedPlaylistId, this.moviesForPlaylist, movieIds);
       
-      this.movieManageService.getAllMovies().subscribe((movies) => {
+      this.movieManageService.getAllMovies$().subscribe((movies) => {
         this.allMovies = movies || [];
         this.moviesForPlaylist = this.allMovies.filter(
           (movie: MovieType) => movieIds?.includes(movie.id),
         );
+      });
+
+      this.movieManageService.getAllWatchedMovies$().subscribe((movies) => {
+        this.likedMovies = movies || [];
       });
 
       
@@ -84,6 +89,16 @@ export class PlaylistsComponent implements OnInit {
     this.playlistService
       .getAllPlaylistsForUser()
       .subscribe((playlists) => (this.allPlaylists = playlists || []));
+  }
+
+  public removeMovieFromPlaylist(movie: MovieType, allMoviesFromPlaylist: MovieType[]) {
+    this.moviesForPlaylist = this.moviesForPlaylist.filter((m) => m.id !== movie.id);
+    this.playlistService.removeMovieFromPlaylist(this.selectedPlaylistId, movie.id, allMoviesFromPlaylist);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Movie Deleted',
+    });
   }
 
   private fetchPlaylists() {

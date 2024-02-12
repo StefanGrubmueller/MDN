@@ -53,8 +53,8 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.manageMovieService
-      .getAllMovies()
-      .pipe(map((movies) => (this.allMovies = movies || [])));
+      .getAllMovies$()
+      .subscribe((movies) => (this.allMovies = movies || []));
 
     this.activeRoute.queryParams
       .subscribe((queryParams) => {

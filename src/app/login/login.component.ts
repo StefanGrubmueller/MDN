@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     await this.authService
       .signIn(email, password)
       .catch((error: string) => this.setErrorMessage(error));
-    if (localStorage.getItem('user') != null) {
+    if (localStorage.getItem('user') != null && localStorage.getItem('user') !== '') {
       this.router.navigate(['']);
     } else {
       this.loggedIn = false;
