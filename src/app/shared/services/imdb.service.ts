@@ -1,44 +1,41 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable } from "rxjs";
-import { HttpClient } from "@angular/common/http";
 import { MovieType } from "../../shared/types/movieType";
 import { ImdbDescription } from "../types/imdb";
 import firebase from "firebase/compat/app";
 import Timestamp = firebase.firestore.Timestamp;
+import { ImdbApiService } from "./imdb-api.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class ImdbService {
-  private _searchSubject = new BehaviorSubject<any>({});
-  private _searchObservable = this._searchSubject.asObservable();
+  private searchSubject = new BehaviorSubject<any>({});
+  private searchObservable = this.searchSubject.asObservable();
 
   private _detailsSubject = new BehaviorSubject<MovieType>({
     name: "",
     id: "",
     liked: false,
   });
-  private _detailsObservable = this._detailsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private imdbApi: ImdbApiService) {}
 
   public getImdbMovieDetails(movieId: string): Observable<MovieType> {
-    return this.http
-      .get(`https://search.imdbot.workers.dev/?tt=${movieId}`)
-      .pipe(
-        map((value: any) => {
-          let mappedValue = this.mapToMovie(value);
-          this._detailsSubject.next(mappedValue);
-          return mappedValue;
-        }),
-      );
+    return this.imdbApi.movieDetails(movieId).pipe(
+      map((value: any) => {
+        let mappedValue = this.mapToMovie(value);
+        this._detailsSubject.next(mappedValue);
+        return mappedValue;
+      }),
+    );
   }
 
   public getMovieListBasedOnSearch(searchText: string | null): Observable<any> {
-    this.http
-      .get(`https://search.imdbot.workers.dev/?q=${searchText}`)
-      .subscribe((value) => this._searchSubject.next(value));
-    return this._searchObservable;
+    this.imdbApi
+      .search(searchText ?? "")
+      .subscribe((value: any) => this.searchSubject.next(value));
+    return this.searchObservable;
   }
 
   public getMappedMovieList(value: any): Array<ImdbDescription> {
