@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { MovieType } from '../../movieType';
-import { ImdbDescription } from '../types/imdb';
-import firebase from 'firebase/compat/app';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, map, Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { MovieType } from "../../shared/types/movieType";
+import { ImdbDescription } from "../types/imdb";
+import firebase from "firebase/compat/app";
 import Timestamp = firebase.firestore.Timestamp;
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ImdbService {
   private _searchSubject = new BehaviorSubject<any>({});
   private _searchObservable = this._searchSubject.asObservable();
 
   private _detailsSubject = new BehaviorSubject<MovieType>({
-    name: '',
-    id: '',
+    name: "",
+    id: "",
     liked: false,
   });
   private _detailsObservable = this._detailsSubject.asObservable();
@@ -46,16 +46,16 @@ export class ImdbService {
     value.description.map((movie: any) => {
       let jsonMovie = JSON.parse(JSON.stringify(movie));
       movies.push({
-        title: jsonMovie['#TITLE'],
-        actors: jsonMovie['#ACTORS'],
-        imdb_id: jsonMovie['#IMDB_ID'],
-        imdb_iv: jsonMovie['#IMDB_IV'],
-        imdb_url: jsonMovie['#IMDB_URL'],
-        img_poster: jsonMovie['#IMG_POSTER'],
-        rank: jsonMovie['#RANK'],
-        year: jsonMovie['#YEAR'],
-        photo_height: jsonMovie['photo_height'],
-        photo_width: jsonMovie['photo_width'],
+        title: jsonMovie["#TITLE"],
+        actors: jsonMovie["#ACTORS"],
+        imdb_id: jsonMovie["#IMDB_ID"],
+        imdb_iv: jsonMovie["#IMDB_IV"],
+        imdb_url: jsonMovie["#IMDB_URL"],
+        img_poster: jsonMovie["#IMG_POSTER"],
+        rank: jsonMovie["#RANK"],
+        year: jsonMovie["#YEAR"],
+        photo_height: jsonMovie["photo_height"],
+        photo_width: jsonMovie["photo_width"],
       });
     });
     return movies;
@@ -97,9 +97,10 @@ export class ImdbService {
       titleImageUrlHeight: value?.main?.titleMainImages?.edges[0]?.node?.height,
       titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width,
       suggestions: {
-        relatedMoviePosterUrl: value?.main?.moreLikeThisTitles?.edges[0]?.node?.primaryImage?.url,
-        suggestionId: value?.main?.moreLikeThisTitles?.edges[0]?.node?.id
-      }
+        relatedMoviePosterUrl:
+          value?.main?.moreLikeThisTitles?.edges[0]?.node?.primaryImage?.url,
+        suggestionId: value?.main?.moreLikeThisTitles?.edges[0]?.node?.id,
+      },
     };
   }
 }

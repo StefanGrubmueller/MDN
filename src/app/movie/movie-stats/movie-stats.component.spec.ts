@@ -1,0 +1,21 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { MovieStatsComponent } from './movie-stats.component';
+
+describe('MovieStatsComponent', () => {
+  let component: MovieStatsComponent;
+  let fixture: ComponentFixture<MovieStatsComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [MovieStatsComponent]
+    });
+    fixture = TestBed.createComponent(MovieStatsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
