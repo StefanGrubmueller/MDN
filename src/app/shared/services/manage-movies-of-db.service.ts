@@ -68,8 +68,6 @@ export class ManageMoviesOfDbService {
     if (index !== -1) {
       this._cachedWatchedMovies[index] = movie;
     }
-    console.log("t", this._cachedWatchedMovies);
-    
     // remote
     this._dbCollection.doc(movie.id).set(movie);
   }

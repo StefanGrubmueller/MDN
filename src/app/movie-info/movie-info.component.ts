@@ -30,14 +30,15 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
   // Playlists
   openAddToPlaylistDialog = false;
   allPlaylists: Playlist[] = [];
+  openCreatePlaylistDialog = false;
+  playlistName: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private manageMovieService: ManageMoviesOfDbService,
     private imdbService: ImdbService,
     private messageService: MessageService,
-    private playlistService: PlaylistService,
-    private router: Router,
+    private playlistService: PlaylistService
   ) {
     this.activeRoute.paramMap.subscribe((params) => {
       this.ngOnInit();
@@ -133,6 +134,18 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
     this.openAddToPlaylistDialog = false;
   }
 
+  public showCreatePlaylist() {
+    this.openCreatePlaylistDialog = true;
+  }
+
+  public createPlaylist() {
+    this.playlistService.createPlaylist(this.playlistName);
+    this.openCreatePlaylistDialog = false;
+    this.playlistName = '';
+    this.playlistService.clearPlaylists();
+    this.fetchPlaylists();
+  }
+
   private showMessage() {
     this.messageService.add({
       severity: 'success',
@@ -140,6 +153,12 @@ export class MovieInfoComponent implements OnInit, OnDestroy {
       detail: 'You have added this movie to your library',
       life: 1000,
     });
+  }
+
+  private fetchPlaylists() {
+    this.playlistService
+    .getAllPlaylistsForUser()
+    .subscribe((playlists) => (this.allPlaylists = playlists || []));
   }
 
   ngOnDestroy(): void {

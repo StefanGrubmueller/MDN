@@ -96,6 +96,10 @@ export class ImdbService {
       titleImageUrl: value?.main?.titleMainImages?.edges[0]?.node?.url,
       titleImageUrlHeight: value?.main?.titleMainImages?.edges[0]?.node?.height,
       titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width,
+      suggestions: {
+        relatedMoviePosterUrl: value?.main?.moreLikeThisTitles?.edges[0]?.node?.primaryImage?.url,
+        suggestionId: value?.main?.moreLikeThisTitles?.edges[0]?.node?.id
+      }
     };
   }
 }
