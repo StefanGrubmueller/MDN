@@ -14,6 +14,7 @@ import { RegisterPasswordComponent } from './register-password/register-password
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegisterFinishedComponent } from './register-finished/register-finished.component';
 import { PlaylistsComponent } from './playlists/playlists.component';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 const routes: Routes = [
   { path: '', component: MainPageComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'LIB', component: LibraryComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'playlist', component: PlaylistsComponent },
+  { path: 'suggestions', component: SuggestionsComponent },
   {
     path: 'register',
     component: CreateProfileComponent,

@@ -51,6 +51,7 @@ import { PlaylistsComponent } from './playlists/playlists.component';
 import { MovieListComponent } from './movie-list/movie-list.component';
 import {DialogModule} from "primeng/dialog";
 import { CardModule } from 'primeng/card';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CardModule } from 'primeng/card';
     NavigationComponent,
     PlaylistsComponent,
     MovieListComponent,
+    SuggestionsComponent,
   ],
   imports: [
     AngularFireAuthModule,

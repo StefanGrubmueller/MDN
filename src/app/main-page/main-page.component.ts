@@ -11,6 +11,7 @@ import { Playlist } from '../Playlist';
 import * as _ from 'underscore';
 import { ImdbService } from '../shared/services/imdb.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { SuggestionsService } from '../shared/services/suggestions.service';
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -37,8 +38,8 @@ export class MainPageComponent implements OnInit {
     private userService: UserService,
     private messageService: MessageService,
     private playlistService: PlaylistService,
-    private imdbService: ImdbService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private suggestionService: SuggestionsService
   ) {}
 
   ngOnInit(): void {
@@ -77,19 +78,12 @@ export class MainPageComponent implements OnInit {
   }
 
   public loadSuggestions() {
-    this.localMovies$.subscribe((movies: MovieType[] | undefined) => {
-      const suggestedMovieIds: string[] = _.sample(movies as MovieType[], 26).map(movies => movies.id);
-      this.sugestions = [];
-      suggestedMovieIds.forEach((movieId: string) => {
-        this.imdbService.getImdbMovieDetails(movieId).subscribe((movieDetails) => {
-          if (movieDetails?.suggestions?.relatedMoviePosterUrl) {
-            this.sugestions.push(movieDetails?.suggestions);
-          }
-        });
-      })
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
+   this.suggestionService.loadSuggestions(26).subscribe(suggestions => {
+    this.sugestions = suggestions;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+    
+  });
   }
 
   @HostListener('window:resize')

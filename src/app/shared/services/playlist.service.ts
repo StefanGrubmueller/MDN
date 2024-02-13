@@ -22,8 +22,6 @@ export class PlaylistService {
   }
 
   public getAllPlaylistsForUser(): Observable<Playlist[] | undefined> {
-    console.log("f", this.playlistsFromDB);
-    
     return this.playlistsFromDB != undefined
       ? of(this.playlistsFromDB)
       : this.fetchPlaylistsFromDB();
@@ -110,7 +108,7 @@ export class PlaylistService {
     return this.db.collection('playlists');
   }
 
-  private clearPlaylists(): void {
+  public clearPlaylists(): void {
     this.playlistsFromDB = undefined;
   }
 }

@@ -45,8 +45,6 @@ export class PlaylistsComponent implements OnInit {
 
   public openPlaylist(playlistId: string, movieIds?: string[]) {
     this.moviesForPlaylist = [];
-    console.log("playlistId");
-    
     if (playlistId === 'LIKED') {
       this.moviesForPlaylist = this.likedMovies;
     } else {

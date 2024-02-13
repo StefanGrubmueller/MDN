@@ -146,20 +146,38 @@
   </div>
 </div>
 
-<p-dialog header="Add to Playlist" [(visible)]="openAddToPlaylistDialog" class="w-4" [modal]="true">
-  <div class="flex flex-column gap-2">
-    <p-table [value]="allPlaylists">
-      <ng-template pTemplate="body" let-playlist>
-        <tr>
-          <td (click)="addToPlaylist(playlist)" class="cursor-pointer">{{ playlist.name }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+
+<!-- Playlists -->
+<p-dialog [header]="openCreatePlaylistDialog ? 'Create new playlist' :'Add to Playlist'" [(visible)]="openAddToPlaylistDialog" class="w-4" [modal]="true" [style]="{width: '50vw'}">
+  <!-- Create playlist -->
+  <div *ngIf="openCreatePlaylistDialog; else playlistList">
+    <input pInputText type="text" class="p-inputtext-sm w-full" placeholder="Playlist name" [(ngModel)]="playlistName"/>
+    <div class="flex flex-row justify-content-between mt-4">
+      <button pButton label="Create" (click)="createPlaylist()"></button>
+      <button pButton label="Back" (click)="openCreatePlaylistDialog = false"></button>
+    </div>
   </div>
 
+  <!-- Playlist list -->
+  <ng-template #playlistList >
+    <div class="flex flex-column gap-2 my-4">
+      <p-table [value]="allPlaylists">
+        <ng-template pTemplate="body" let-playlist>
+          <tr>
+            <td (click)="addToPlaylist(playlist)" class="cursor-pointer">{{ playlist.name }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <p-button icon="pi pi-plus" [rounded]="true" label="Create new playlist" (click)="showCreatePlaylist()" class="mt-4"></p-button>
+    </div>
+    
+  </ng-template>
 </p-dialog>
 
+<!-- Toast -->
 <p-toast position="top-center" [breakpoints]="{'400px': {width: '50%', height: '2rem', left: 0, top: '4rem'}}"></p-toast>
+
+<!-- Skeleton -->
 <ng-template #skeletonMainPageComponent>
   <app-skeleton-main-page></app-skeleton-main-page>
 </ng-template>

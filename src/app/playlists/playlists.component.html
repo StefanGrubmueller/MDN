@@ -32,7 +32,7 @@
 </div>
 
 <!--Create playlist-->
-<p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true">
+<p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true" [style]="{width: '50vw'}">
   <div class="flex flex-column gap-2">
     <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="playlistName"/>
     <button pButton label="Create" class="w-full" (click)="createPlaylist()"></button>
