@@ -17,7 +17,13 @@ export type MovieType = {
   titleImageUrlHeight?: string;
   titleImageUrlWidth?: string;
   watched?: boolean;
+  suggestions?: Suggestion;
 };
+
+export type Suggestion = {
+  suggestionId: string;
+  relatedMoviePosterUrl?: string;
+}
 
 export type Meta = {
   uploadedOn: Timestamp;

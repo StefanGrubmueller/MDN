@@ -12,6 +12,7 @@
     </div>
   </div>
 
+  <!-- Dashboard -->
   <div class="grid mb-4" *ngIf="screenSize !== ScreenSize.SMALL">
     <div class="col-4">
       <p-card header="Total Watched">
@@ -38,6 +39,16 @@
     </div>
   </div>
 
+  <!-- Suggestions -->
+  <h2 *ngIf="screenSize !== ScreenSize.SMALL">Suggestions</h2>
+  <div class="flex flex-row overflow-scroll gap-2 mb-8" *ngIf="screenSize !== ScreenSize.SMALL">
+    <div *ngFor="let suggestion of sugestions">
+        <img width="170px" class="h-15rem cursor-pointer" [src]="suggestion.relatedMoviePosterUrl" (click)="routeToMovieInfo(suggestion.suggestionId)">
+    </div>
+  </div>
+  <!-- <button pButton label="Generate new suggestions" icon="pi pi-refresh" iconPos="right" class="mb-8" (click)="loadSuggestions()"></button> -->
+
+  <!-- Movie list -->
   <span class="mb-4 w-full p-input-icon-right">
     <i class="pi pi-search cursor-pointer"></i>
     <input pInputText class="w-full" [(ngModel)]="searchValue" placeholder="Search inside your own movies" />

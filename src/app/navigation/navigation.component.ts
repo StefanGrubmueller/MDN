@@ -16,6 +16,11 @@ export class NavigationComponent {
     this.setScreenSize();
   }
 
+  public navigateToHome(){
+    this.router.navigate(['/']);
+    this.isVisible = false;
+  }
+
   public navigateToPlaylists() {
     this.router.navigate(['/playlist']);
     this.isVisible = false;
@@ -38,6 +43,11 @@ export class NavigationComponent {
 
   public navigateToAddMovies(){
     this.router.navigate(['ADD']);
+    this.isVisible = false;
+  }
+
+  public navigateToSuggestions(){
+    this.router.navigate(['suggestions']);
     this.isVisible = false;
   }
 
