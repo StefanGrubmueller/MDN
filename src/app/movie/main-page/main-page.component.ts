@@ -64,6 +64,7 @@ export class MainPageComponent implements OnInit {
 
   public deleteMovie(movie: MovieType) {
     this.manageMoviesOfDbService.deleteMovie(movie.id);
+    this.localMovies$ = this.manageMoviesOfDbService.getAllWatchedMovies$();
     this.messageService.add({
       severity: "success",
       summary: "Success",
