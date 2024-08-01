@@ -1,5 +1,5 @@
-<div *ngIf="movies" class="mb-3">
-  <p-table [value]="movies" [breakpoint]="'600px'">
+<div *ngIf="movies" class="mb-9">
+  <p-table [value]="movies" [breakpoint]="'600px'" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header">
       <tr>
         <th *ngIf="screenSize !== ScreenSize.SMALL">#</th>
@@ -16,18 +16,14 @@
         <td *ngIf="screenSize !== ScreenSize.SMALL">{{ movie.meta?.uploadedOn?.toDate() | date : "shortDate" }}</td>
         <td *ngIf="showLikeIcon">
           <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie(movie)"
-                    [link]="true"></p-button>
+            [link]="true"></p-button>
           {{ movie.code }}
         </td>
         <td *ngIf="screenSize !== ScreenSize.SMALL">
-          <p-button [icon]="'pi pi-trash'" (click)="deleteMovie(movie)"
-                    [link]="true"></p-button>
+          <p-button [icon]="'pi pi-trash'" (click)="deleteMovie(movie)" [link]="true"></p-button>
           {{ movie.code }}
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
-
-
-

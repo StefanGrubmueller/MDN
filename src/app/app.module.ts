@@ -54,6 +54,7 @@ import { CardModule } from "primeng/card";
 import { SuggestionsComponent } from "./movie/suggestions/suggestions.component";
 import { MovieStatsComponent } from "./movie/movie-stats/movie-stats.component";
 import { MovieInfoSmComponent } from "./movie/movie-info/movie-info-sm/movie-info-sm.component";
+import { AccordionModule, AccordionTab } from 'primeng/accordion';
 
 @NgModule({
   declarations: [
@@ -119,8 +120,9 @@ import { MovieInfoSmComponent } from "./movie/movie-info/movie-info-sm/movie-inf
     SidebarModule,
     DialogModule,
     CardModule,
+    AccordionModule,
   ],
   providers: [LoginComponent],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

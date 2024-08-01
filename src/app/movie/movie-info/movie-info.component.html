@@ -1,48 +1,24 @@
 <!-- Large screen -->
 <div *ngIf="getScreenSize() !== ScreenSize.SMALL; else movieInfoSM">
-  <div
-    *ngIf="movie != undefined && true && !loading; else skeletonMainPageComponent"
-    class="mb-7"
-  >
+  <div *ngIf="movie != undefined && true && !loading; else skeletonMainPageComponent" class="mb-7">
     <div class="max-h-30rem overflow-hidden">
-      <img
-        [src]="movie?.titleImageUrl"
-        class="w-full h-full img"
-        alt="Title image"
-      />
+      <img [src]="movie.titleImageUrl" class="w-full h-full img" alt="Title image" />
       <div class="_title-img _overlay absolute w-full"></div>
     </div>
 
     <div class="absolute z-1">
       <div class="flex flex-row gap-8 ml-8">
-        <img
-          [src]="movie?.imdb?.img_poster"
-          width="300px"
-          class="col z-1 -mt-8 max-h-27rem"
-        />
+        <img [src]="movie.imdb?.img_poster" width="300px" class="col z-1 -mt-8 max-h-27rem" />
         <div class="-mt-8">
-          <h1>{{ movie?.name }}</h1>
-          <p>{{ movie?.imdb?.year }} Directed by {{ movie?.imdb?.director }}</p>
+          <h1>{{ movie.name }}</h1>
+          <p>{{ movie.imdb?.year }} Directed by {{ movie.imdb?.director }}</p>
           <div>
             <div class="flex flex-row align-items-center gap-3">
-              <p-button
-                *ngIf="movie?.watched"
-                [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'"
-                (click)="likeMovie(movie)"
-                class="size"
-                [rounded]="true"
-              ></p-button>
-              <p-button
-                label="Add to playlist"
-                icon="pi pi-plus"
-                (click)="openAddToPlaylistDialog = true"
-              ></p-button>
-              <p-button
-                *ngIf="!movie?.watched"
-                (click)="addMovieToDb(true)"
-                class="font-bold word-wrap"
-                label="Add movie to library"
-              ></p-button>
+              <p-button *ngIf="movie?.watched" [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'"
+                (click)="likeMovie(movie)" class="size" [rounded]="true"></p-button>
+              <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
+              <p-button *ngIf="!movie?.watched" (click)="addMovieToDb(true)" class="font-bold word-wrap"
+                label="Add movie to library"></p-button>
             </div>
             <div class="grid">
               <div class="col-6">
@@ -78,10 +54,7 @@
                 <div *ngIf="movie.releaseDate" class="word-wrap">
                   {{ movie.releaseDate.toDate() | date : 'shortDate' }}
                 </div>
-                <div
-                  *ngIf="!!movie?.releaseDate && !movie?.releaseDate"
-                  class="font-italic"
-                >
+                <div *ngIf="!!movie?.releaseDate && !movie?.releaseDate" class="font-italic">
                   No information
                 </div>
               </div>
@@ -115,38 +88,19 @@
 
 <!-- Small screen -->
 <ng-template #movieInfoSM>
-  <app-movie-info-sm
-    [movie]="movie"
-    [loading]="loading"
-    (onAddMovie)="addMovieToDb(movie?.watched ?? false)"
-    (onLikeMovie)="likeMovie(movie)"
-  ></app-movie-info-sm
-></ng-template>
+  <app-movie-info-sm [movie]="movie" [loading]="loading" (onAddMovie)="addMovieToDb(movie.watched ?? false)"
+    (onLikeMovie)="likeMovie(movie)"></app-movie-info-sm></ng-template>
 
 <!-- Playlists -->
-<p-dialog
-  [header]="openCreatePlaylistDialog ? 'Create new playlist' :'Add to Playlist'"
-  [(visible)]="openAddToPlaylistDialog"
-  class="w-4"
-  [modal]="true"
-  [style]="{width: '50vw'}"
->
+<p-dialog [header]="openCreatePlaylistDialog ? 'Create new playlist' :'Add to Playlist'"
+  [(visible)]="openAddToPlaylistDialog" class="w-4" [modal]="true" [style]="{width: '50vw'}">
   <!-- Create playlist -->
   <div *ngIf="openCreatePlaylistDialog; else playlistList">
-    <input
-      pInputText
-      type="text"
-      class="p-inputtext-sm w-full"
-      placeholder="Playlist name"
-      [(ngModel)]="playlistName"
-    />
+    <input pInputText type="text" class="p-inputtext-sm w-full" placeholder="Playlist name"
+      [(ngModel)]="playlistName" />
     <div class="flex flex-row justify-content-between mt-4">
       <button pButton label="Create" (click)="createPlaylist()"></button>
-      <button
-        pButton
-        label="Back"
-        (click)="openCreatePlaylistDialog = false"
-      ></button>
+      <button pButton label="Back" (click)="openCreatePlaylistDialog = false"></button>
     </div>
   </div>
 
@@ -162,13 +116,8 @@
           </tr>
         </ng-template>
       </p-table>
-      <p-button
-        icon="pi pi-plus"
-        [rounded]="true"
-        label="Create new playlist"
-        (click)="showCreatePlaylist()"
-        class="mt-4"
-      ></p-button>
+      <p-button icon="pi pi-plus" [rounded]="true" label="Create new playlist" (click)="showCreatePlaylist()"
+        class="mt-4"></p-button>
     </div>
   </ng-template>
 </p-dialog>

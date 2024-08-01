@@ -1,7 +1,4 @@
-<div
-  class="grid"
-  *ngIf="screenSize === ScreenSize.SMALL && movie != undefined && true && !loading"
->
+<div class="grid" *ngIf="screenSize === ScreenSize.SMALL && movie != undefined && true && !loading">
   <div class="col">
     <div class="min-w-full grid mb-8 pt-4">
       <div class="ml-4 mt-0 pt-0 col">
@@ -11,31 +8,14 @@
         </p>
       </div>
 
-      <p-image
-        [src]="movie?.imdb?.img_poster"
-        width="300px"
-        class="col"
-      ></p-image>
+      <p-image [src]="movie.imdb?.img_poster" width="300px" class="col"></p-image>
     </div>
     <div class="flex flex-row align-items-center gap-3">
-      <p-button
-        [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'"
-        (click)="likeMovie()"
-        class="size"
-        [rounded]="true"
-        *ngIf="movie?.watched"
-      ></p-button>
-      <p-button
-        label="Add to playlist"
-        icon="pi pi-plus"
-        (click)="openAddToPlaylistDialog = true"
-      ></p-button>
-      <p-button
-        *ngIf="!movie?.watched"
-        label="Add movie to library"
-        (click)="addMovie()"
-        class="justify-content-center font-bold word-wrap"
-      >
+      <p-button [icon]="movie.liked ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="likeMovie()" class="size"
+        [rounded]="true" *ngIf="movie?.watched"></p-button>
+      <p-button label="Add to playlist" icon="pi pi-plus" (click)="openAddToPlaylistDialog = true"></p-button>
+      <p-button *ngIf="!movie?.watched" label="Add movie to library" (click)="addMovie()"
+        class="justify-content-center font-bold word-wrap">
       </p-button>
     </div>
 

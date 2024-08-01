@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { ChangeDetectorRef, Component, Input } from "@angular/core";
 import { SuggestionsService } from "../../shared/services/suggestions.service";
 import { Suggestion } from "../../shared/types/movieType";
 import { Router } from "@angular/router";
+import { ScreenSize } from "src/app/shared/types/screenSize";
 
 @Component({
   selector: "app-suggestions",
@@ -9,21 +10,33 @@ import { Router } from "@angular/router";
   styleUrls: ["./suggestions.component.scss"],
 })
 export class SuggestionsComponent {
+  isLoading: boolean = false;
+  smallScreenSize = ScreenSize.SMALL;
   sugestions: Suggestion[] = [];
+
+  @Input({ required: true }) screenSize: any;
 
   constructor(
     private router: Router,
     private suggestionService: SuggestionsService,
+    private cd: ChangeDetectorRef,
   ) {
     this.loadSuggestions();
   }
 
   public loadSuggestions() {
+    this.isLoading = true;
     this.suggestionService
       .loadSuggestions(200)
-      .subscribe((suggestions: Suggestion[]) => {
-        this.sugestions = suggestions;
-        console.log("this.", this.sugestions);
+      .subscribe({
+        next: (suggestions: Suggestion[]) => {
+          this.sugestions = suggestions;
+          this.isLoading = false;
+          this.cd.detectChanges();
+        },
+        error: () => {
+          this.isLoading = false;
+        }
       });
   }
 

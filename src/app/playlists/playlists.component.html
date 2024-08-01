@@ -3,18 +3,20 @@
   <div class="flex justify-content-start ml-3">
     <p-button icon="pi pi-plus" [rounded]="true" (click)="showCreatePlaylist()"></p-button>
   </div>
-  <div  class="flex flex-row bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
-       (click)="openPlaylist('LIKED')">
+  <div
+    class="flex flex-row bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
+    (click)="openPlaylist('LIKED')">
 
     <p>Liked Movies</p>
-    <p>{{likedMovies?.length ?? 0}}</p>
+    <p>{{likedMovies.length}}</p>
   </div>
 
   <!--Other playlists-->
   <div *ngFor="let playlist of allPlaylists">
     <div class="flex flex-row align-items-center">
-      <div  class="flex flex-row flex-grow-1 bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
-            (click)="openPlaylist(playlist.id, playlist.movieIds)">
+      <div
+        class="flex flex-row flex-grow-1 bg-indigo-300 _shadow border-round mt-3 mx-3 align-items-center justify-content-between px-4 cursor-pointer"
+        (click)="openPlaylist(playlist.id, playlist.movieIds)">
         <p>{{playlist.name}}</p>
         <p>{{playlist?.movieIds?.length ?? 0}}</p>
       </div>
@@ -26,20 +28,24 @@
 
 <!--Playlist content-->
 <div class="flex flex-column gap-4">
-  <p-button *ngIf="playlistIsOpen" icon="pi pi-cog" [rounded]="true" (click)="openPlaylistSettingsDialog = true" class="ml-4"></p-button>
-  <app-movie-list [showLikeIcon]="false" (clearIconClicked)="removeMovieFromPlaylist($event, moviesForPlaylist)" *ngIf="playlistIsOpen" [movies]="moviesForPlaylist" ></app-movie-list>
-  <p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false"></p-button>  
+  <p-button *ngIf="playlistIsOpen" icon="pi pi-cog" [rounded]="true" (click)="openPlaylistSettingsDialog = true"
+    class="ml-4"></p-button>
+  <app-movie-list [showLikeIcon]="false" (clearIconClicked)="removeMovieFromPlaylist($event, moviesForPlaylist)"
+    *ngIf="playlistIsOpen" [movies]="moviesForPlaylist"></app-movie-list>
+  <p-button label="Back" *ngIf="playlistIsOpen" (click)="playlistIsOpen = false"></p-button>
 </div>
 
 <!--Create playlist-->
-<p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true" [style]="{width: '50vw'}">
+<p-dialog header="Create Playlist" [(visible)]="openCreatePlaylistDialog" class="w-4" [modal]="true"
+  [style]="{width: '50vw'}">
   <div class="flex flex-column gap-2">
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="playlistName"/>
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name" [(ngModel)]="playlistName" />
     <button pButton label="Create" class="w-full" (click)="createPlaylist()"></button>
   </div>
 </p-dialog>
 
-<p-dialog [(visible)]="openPlaylistSettingsDialog" [modal]="true" [style]="{ width: '100vw', height: '100vw' }" class="settings">
+<p-dialog [(visible)]="openPlaylistSettingsDialog" [modal]="true" [style]="{ width: '100vw', height: '100vw' }"
+  class="settings">
   <div class="flex flex-column gap-4 justify-content-center align-items-center">
     <h1>Playlist Settings</h1>
     <p-button label="Rename" icon="pi pi-pencil" [link]="true" (click)="openNewPlaylistNameDialog = true"></p-button>
@@ -49,7 +55,7 @@
 
 <p-dialog [(visible)]="openNewPlaylistNameDialog" [modal]="true" [style]="{ width: '100vw', height: '50vw' }">
   <div class="flex flex-column gap-4 justify-content-center align-items-center">
-    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name"  [(ngModel)]="newPlayListName" />
+    <input pInputText type="text" class="p-inputtext-sm" placeholder="Playlist name" [(ngModel)]="newPlayListName" />
     <p-button label="Save" icon="pi pi-save" [link]="true" (click)="renamePlaylist(selectedPlaylistId)"></p-button>
   </div>
 </p-dialog>

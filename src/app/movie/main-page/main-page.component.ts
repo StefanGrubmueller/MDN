@@ -17,7 +17,6 @@ import { PlaylistService } from "../../shared/services/playlist.service";
 import { Playlist } from "../../shared/types/Playlist";
 import * as _ from "underscore";
 import { UntilDestroy } from "@ngneat/until-destroy";
-import { SuggestionsService } from "../../shared/services/suggestions.service";
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -45,12 +44,10 @@ export class MainPageComponent implements OnInit {
     private messageService: MessageService,
     private playlistService: PlaylistService,
     private cd: ChangeDetectorRef,
-    private suggestionService: SuggestionsService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.localMovies$ = this.manageMoviesOfDbService.getAllWatchedMovies$();
-    this.loadSuggestions();
     this.setScreenSize();
     this.logged = this.userService.getUserStatus();
     if (!this.logged) {
@@ -81,16 +78,6 @@ export class MainPageComponent implements OnInit {
 
   public routeToMovieInfo(movieId: string): void {
     this.router.navigate(["movie"], { queryParams: { movieId: movieId } });
-  }
-
-  public loadSuggestions() {
-    this.suggestionService
-      .loadSuggestions(26)
-      .subscribe((suggestions: Suggestion[]) => {
-        this.sugestions = suggestions;
-        this.cd.markForCheck();
-        this.cd.detectChanges();
-      });
   }
 
   @HostListener("window:resize")
