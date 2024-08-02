@@ -1,6 +1,0 @@
-<h2 class="flex justify-content-center">Suggestions</h2>
-<div class="flex overflow-scroll flex-wrap justify-content-center gap-4">
-    <div *ngFor="let suggestion of sugestions" class="overflow-scroll">
-        <img width="130px" class="h-12rem cursor-pointer" [src]="suggestion.relatedMoviePosterUrl" (click)="routeToMovieInfo(suggestion.suggestionId)">
-    </div>
-</div>

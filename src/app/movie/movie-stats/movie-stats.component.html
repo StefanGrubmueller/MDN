@@ -1,0 +1,37 @@
+<div class="grid" *ngIf="movie">
+    <div class="col-6">
+        <h4>Genre</h4>
+        <div class="word-wrap">{{ movie.genre }}</div>
+        <div *ngIf="movie.genre" class="font-italic">No information</div>
+    </div>
+
+    <div class="col-6">
+        <h4>Rating</h4>
+        <div *ngIf="movie?.rating" class="word-wrap">{{ movie.rating }} / 10</div>
+        <div *ngIf="movie?.rating" class="font-italic">No information</div>
+    </div>
+
+    <div class="col-6">
+        <h4>Author</h4>
+        <div *ngIf="movie.author" class="word-wrap">{{ movie.author }} / 10</div>
+        <div *ngIf="movie.author" class="font-italic">No information</div>
+    </div>
+
+    <div class="col-6">
+        <h4>Release Date</h4>
+        <div *ngIf="movie.releaseDate" class="word-wrap">{{ movie.releaseDate.toDate() | date : 'shortDate' }}</div>
+        <div *ngIf="movie?.releaseDate && movie?.releaseDate" class="font-italic">No information</div>
+    </div>
+
+    <div class="col-6">
+        <h4>Actors</h4>
+        <div *ngIf="movie.imdb?.actors" class="word-wrap">{{ movie.imdb?.actors }}</div>
+        <div *ngIf="movie.imdb?.actors" class="font-italic">No information</div>
+    </div>
+
+    <div class="col-6">
+        <h4>Rank</h4>
+        <div *ngIf="movie.imdb?.rank" class="word-wrap">#{{ movie.imdb?.rank }}</div>
+        <div *ngIf="movie.imdb?.rank" class="font-italic">No information</div>
+    </div>
+    </div>

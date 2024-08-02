@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   AngularFirestore,
   AngularFirestoreCollection,
-} from '@angular/fire/compat/firestore';
-import { MovieType } from '../../movieType';
-import { catchError, from, map, Observable, of, Subject } from 'rxjs';
-import { Playlist } from '../../Playlist';
-import { v4 as uuidv4 } from 'uuid';
-import firebase from 'firebase/compat';
+} from "@angular/fire/compat/firestore";
+import { MovieType } from "../../shared/types/movieType";
+import { catchError, from, map, Observable, of, Subject } from "rxjs";
+import { Playlist } from "../../shared/types/Playlist";
+import { v4 as uuidv4 } from "uuid";
+import firebase from "firebase/compat";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class PlaylistService {
   private dbCollection: AngularFirestoreCollection<Playlist>;
@@ -36,7 +36,7 @@ export class PlaylistService {
   }
 
   public createPlaylist(name: string): void {
-    const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
+    const email = JSON.parse(localStorage.getItem("user") ?? "{}").email;
     const playlistId = uuidv4();
     this.dbCollection.doc(playlistId).set({
       name: name,
@@ -51,9 +51,15 @@ export class PlaylistService {
     this.fetchPlaylistsFromDB();
   }
 
-  public removeMovieFromPlaylist(playlistId: string, movieId: string, playlistMovies: MovieType[]) {
-   this.dbCollection.doc(playlistId).update({
-      movieIds: playlistMovies.map((playlistMovie: MovieType) => playlistMovie.id).filter((id: string) => id !== movieId)
+  public removeMovieFromPlaylist(
+    playlistId: string,
+    movieId: string,
+    playlistMovies: MovieType[],
+  ) {
+    this.dbCollection.doc(playlistId).update({
+      movieIds: playlistMovies
+        .map((playlistMovie: MovieType) => playlistMovie.id)
+        .filter((id: string) => id !== movieId),
     } as Playlist);
   }
 
@@ -72,16 +78,16 @@ export class PlaylistService {
   }
 
   private fetchPlaylistsFromDB(): Observable<Playlist[] | undefined> {
-    const email = JSON.parse(localStorage.getItem('user') ?? '{}').email;
+    const email = JSON.parse(localStorage.getItem("user") ?? "{}").email;
     return from(
       this.db
-        .collection('playlists')
-        .ref?.where('playlistOwnerEmail', '==', email)
+        .collection("playlists")
+        .ref?.where("playlistOwnerEmail", "==", email)
         .get(),
     ).pipe(
       map((elem) => this.sortPlaylistsAlphabetically(elem)),
       catchError((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         return of(null);
       }),
       map((data) => {
@@ -105,7 +111,7 @@ export class PlaylistService {
   }
 
   private getCollection(): AngularFirestoreCollection<Playlist> {
-    return this.db.collection('playlists');
+    return this.db.collection("playlists");
   }
 
   public clearPlaylists(): void {

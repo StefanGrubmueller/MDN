@@ -1,44 +1,41 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { MovieType } from '../../movieType';
-import { ImdbDescription } from '../types/imdb';
-import firebase from 'firebase/compat/app';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, map, Observable } from "rxjs";
+import { MovieType } from "../../shared/types/movieType";
+import { ImdbDescription } from "../types/imdb";
+import firebase from "firebase/compat/app";
 import Timestamp = firebase.firestore.Timestamp;
+import { ImdbApiService } from "./imdb-api.service";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ImdbService {
-  private _searchSubject = new BehaviorSubject<any>({});
-  private _searchObservable = this._searchSubject.asObservable();
+  private searchSubject = new BehaviorSubject<any>({});
+  private searchObservable = this.searchSubject.asObservable();
 
   private _detailsSubject = new BehaviorSubject<MovieType>({
-    name: '',
-    id: '',
+    name: "",
+    id: "",
     liked: false,
   });
-  private _detailsObservable = this._detailsSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private imdbApi: ImdbApiService) {}
 
   public getImdbMovieDetails(movieId: string): Observable<MovieType> {
-    return this.http
-      .get(`https://search.imdbot.workers.dev/?tt=${movieId}`)
-      .pipe(
-        map((value: any) => {
-          let mappedValue = this.mapToMovie(value);
-          this._detailsSubject.next(mappedValue);
-          return mappedValue;
-        }),
-      );
+    return this.imdbApi.movieDetails(movieId).pipe(
+      map((value: any) => {
+        let mappedValue = this.mapToMovie(value);
+        this._detailsSubject.next(mappedValue);
+        return mappedValue;
+      }),
+    );
   }
 
   public getMovieListBasedOnSearch(searchText: string | null): Observable<any> {
-    this.http
-      .get(`https://search.imdbot.workers.dev/?q=${searchText}`)
-      .subscribe((value) => this._searchSubject.next(value));
-    return this._searchObservable;
+    this.imdbApi
+      .search(searchText ?? "")
+      .subscribe((value: any) => this.searchSubject.next(value));
+    return this.searchObservable;
   }
 
   public getMappedMovieList(value: any): Array<ImdbDescription> {
@@ -46,16 +43,16 @@ export class ImdbService {
     value.description.map((movie: any) => {
       let jsonMovie = JSON.parse(JSON.stringify(movie));
       movies.push({
-        title: jsonMovie['#TITLE'],
-        actors: jsonMovie['#ACTORS'],
-        imdb_id: jsonMovie['#IMDB_ID'],
-        imdb_iv: jsonMovie['#IMDB_IV'],
-        imdb_url: jsonMovie['#IMDB_URL'],
-        img_poster: jsonMovie['#IMG_POSTER'],
-        rank: jsonMovie['#RANK'],
-        year: jsonMovie['#YEAR'],
-        photo_height: jsonMovie['photo_height'],
-        photo_width: jsonMovie['photo_width'],
+        title: jsonMovie["#TITLE"],
+        actors: jsonMovie["#ACTORS"],
+        imdb_id: jsonMovie["#IMDB_ID"],
+        imdb_iv: jsonMovie["#IMDB_IV"],
+        imdb_url: jsonMovie["#IMDB_URL"],
+        img_poster: jsonMovie["#IMG_POSTER"],
+        rank: jsonMovie["#RANK"],
+        year: jsonMovie["#YEAR"],
+        photo_height: jsonMovie["photo_height"],
+        photo_width: jsonMovie["photo_width"],
       });
     });
     return movies;
@@ -97,9 +94,10 @@ export class ImdbService {
       titleImageUrlHeight: value?.main?.titleMainImages?.edges[0]?.node?.height,
       titleImageUrlWidth: value?.main?.titleMainImages?.edges[0]?.node?.width,
       suggestions: {
-        relatedMoviePosterUrl: value?.main?.moreLikeThisTitles?.edges[0]?.node?.primaryImage?.url,
-        suggestionId: value?.main?.moreLikeThisTitles?.edges[0]?.node?.id
-      }
+        relatedMoviePosterUrl:
+          value?.main?.moreLikeThisTitles?.edges[0]?.node?.primaryImage?.url,
+        suggestionId: value?.main?.moreLikeThisTitles?.edges[0]?.node?.id,
+      },
     };
   }
 }

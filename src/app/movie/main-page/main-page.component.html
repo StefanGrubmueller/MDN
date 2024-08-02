@@ -1,0 +1,65 @@
+<div *ngIf="(localMovies$ | async); let movies; else skeleton">
+
+  <div class="mb-5">
+    <div class="flex flex-row align-items-center justify-content-between">
+      <div class="flex flex-column">
+        <h2 class="m-0">Welcome Home Nerd :)</h2>
+        <p *ngIf="screenSize === ScreenSize.SMALL" class="m-0"> You have watched
+          <span class="text-primary">{{ movies.length }} </span>
+          movies and series!
+        </p>
+      </div>
+      <button *ngIf="screenSize !== ScreenSize.SMALL" pButton label="Create new entry" (click)="routeToNewEntry()"
+        icon="pi pi-plus" class="my-4"></button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="grid mb-4" *ngIf="screenSize !== ScreenSize.SMALL">
+    <div class="col-4">
+      <p-card header="Total Watched">
+        <h2 class="m-0 text-primary">
+          {{movies.length}}
+        </h2>
+      </p-card>
+    </div>
+
+    <div class="col-4">
+      <p-card header="Total Liked">
+        <h2 class="m-0 text-primary">
+          {{getTotalLikedMovies(movies)}}
+        </h2>
+      </p-card>
+    </div>
+
+    <div class="col-4">
+      <p-card header="Number of Playlists">
+        <h2 class="m-0 text-primary" *ngIf="getTotalNumberOfPlaylists() | async as playlists">
+          {{playlists?.length}}
+        </h2>
+      </p-card>
+    </div>
+  </div>
+  <p-divider class="mb-8"></p-divider>
+
+  <!-- Suggestions -->
+  <app-suggestions [screenSize]="screenSize"></app-suggestions>
+
+  <!-- Movie list -->
+  <div>
+    <h2>Watched Movies</h2>
+    <span class="mb-4 w-full p-input-icon-right">
+      <i class="pi pi-search cursor-pointer"></i>
+      <input pInputText class="w-full" [(ngModel)]="searchValue" placeholder="Search inside your own movies" />
+    </span>
+    <app-movie-list [movies]="movies" [showLikeIcon]="true" (clearIconClicked)="deleteMovie($event)"
+      [searchValue]="searchValue" class="mb-8"></app-movie-list>
+  </div>
+
+</div>
+<ng-template #skeleton>
+  <app-skeleton-main-page></app-skeleton-main-page>
+</ng-template>
+
+
+<p-toast position="bottom-center"></p-toast>
