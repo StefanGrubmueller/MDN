@@ -1,5 +1,5 @@
 <div *ngIf="movies" class="mb-9">
-  <p-table [value]="movies" [breakpoint]="'600px'" [paginator]="true" [rows]="10">
+  <p-table [value]="movies" [breakpoint]="'600px'" styleClass="p-datatable-sm" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header">
       <tr>
         <th *ngIf="screenSize !== ScreenSize.SMALL">#</th>
