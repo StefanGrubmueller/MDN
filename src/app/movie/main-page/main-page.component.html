@@ -48,12 +48,8 @@
   <!-- Movie list -->
   <div>
     <h2>Watched Movies</h2>
-    <span class="mb-4 w-full p-input-icon-right">
-      <i class="pi pi-search cursor-pointer"></i>
-      <input pInputText class="w-full" [(ngModel)]="searchValue" placeholder="Search inside your own movies" />
-    </span>
     <app-movie-list [movies]="movies" [showLikeIcon]="true" (clearIconClicked)="deleteMovie($event)"
-      [searchValue]="searchValue" class="mb-8"></app-movie-list>
+      class="mb-8"></app-movie-list>
   </div>
 
 </div>
