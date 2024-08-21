@@ -30,7 +30,7 @@ export class MovieListComponent implements OnInit {
   constructor(
     private router: Router,
     private manageMoviesOfDbService: ManageMoviesOfDbService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.setScreenSize();

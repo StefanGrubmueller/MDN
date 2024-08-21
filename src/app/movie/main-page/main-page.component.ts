@@ -30,7 +30,6 @@ export class MainPageComponent implements OnInit {
   @Input()
   email: string = "";
 
-  searchValue: string = "";
   screenSize: ScreenSize = ScreenSize.SMALL;
   localMovies$: Observable<MovieType[] | undefined> =
     this.manageMoviesOfDbService.getAllMovies$();
